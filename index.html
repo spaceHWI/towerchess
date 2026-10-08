@@ -123,6 +123,98 @@ canvas#c{display:block;box-sizing:content-box;image-rendering:pixelated;image-re
 .bigcode{font-family:var(--display);font-size:28px;letter-spacing:.15em;color:var(--gold);margin:2px 0 14px;user-select:text;-webkit-user-select:text}
 .btn:disabled{opacity:.5;cursor:default}
 .ib:disabled{opacity:.35;cursor:default}
+
+/* lobby / meta screens */
+#meta{position:fixed;inset:0;z-index:15;overflow-y:auto;-webkit-overflow-scrolling:touch;background:var(--bg) repeating-conic-gradient(var(--bg2) 0 25%,var(--bg) 0 50%) 0 0/8px 8px;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+#meta[hidden]{display:none}
+#mtoast{position:fixed;left:50%;top:calc(10px + env(safe-area-inset-top,0px));transform:translate(-50%,0);background:var(--panel);color:var(--fg-hi);border:2px solid var(--fg);padding:6px 12px;font-size:13px;font-weight:500;pointer-events:none;opacity:0;transition:opacity .15s;white-space:nowrap;z-index:30}
+#mtoast.show{opacity:1}
+.mw{max-width:520px;margin:0 auto;padding:10px 12px 18px;display:flex;flex-direction:column;gap:10px}
+.res{display:grid;grid-template-columns:auto auto 1fr;align-items:center;gap:10px;padding:6px 8px}
+.res .cur{display:flex;align-items:center;font-family:var(--display);font-size:10px;color:var(--fg-hi)}
+.tixs{display:flex;flex-wrap:wrap;gap:4px;justify-content:flex-end}
+.tx{font-size:10px;color:var(--muted);border:2px solid var(--plum);padding:1px 4px;white-space:nowrap}
+.tx b{color:var(--fg-hi);font-family:var(--display);font-size:8px}
+.mtitle{font-family:var(--display);font-size:20px;text-align:center;color:var(--fg-hi);margin:8px 0 2px;letter-spacing:.05em}
+.hero{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 10px}
+.hero .big{font-family:var(--display);font-size:22px;color:var(--gold)}
+.hero .sub{font-size:13px;color:var(--fg)}
+.row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.grid2 .btn{width:100%}
+.mfoot{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted)}
+.mh{font-family:var(--display);font-size:12px;color:var(--fg-hi);margin:4px 0 0}
+.mh3{font-size:13px;color:var(--fg);margin:2px 0}
+.mnote{font-size:12px;color:var(--muted);margin:0;line-height:1.5}
+.mback{display:flex;justify-content:center;margin-top:4px}
+.muted{color:var(--muted)}
+.stg{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.sbtn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-height:58px;border:2px solid var(--fg);background:var(--panel);color:var(--fg);cursor:pointer;padding:4px 2px;font:inherit;min-width:0}
+.sbtn .sn{font-family:var(--display);font-size:12px}
+.sbtn .ss{font-size:10px;color:var(--muted)}
+.sbtn .su{font-size:9px;color:var(--gold);white-space:nowrap;overflow:hidden;max-width:100%}
+.sbtn.clr{border-color:var(--gold)} .sbtn.clr .sn{color:var(--gold)}
+.sbtn.cur{background:var(--foe);border-color:var(--foe-hi);color:var(--fg-hi)} .sbtn.cur .ss{color:var(--fg-hi)}
+.sbtn.lock{opacity:.35;cursor:default}
+.deck6{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.slot{display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 0;min-height:64px;background:var(--panel);color:var(--fg);cursor:pointer;font:inherit;min-width:0}
+.slot.empty{justify-content:center;color:var(--muted);font-family:var(--display);font-size:12px;cursor:default}
+.slot canvas,.tcard canvas,.ti{width:36px;height:36px;image-rendering:pixelated;display:block}
+.lv{font-family:var(--display);font-size:8px;color:var(--gold)}
+.coll{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.tcard{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 2px;background:var(--panel);color:var(--fg);cursor:pointer;font:inherit;min-width:0}
+.tcard .tn{font-size:12px;font-weight:600;white-space:nowrap}
+.tcard .tl{font-size:10px;color:var(--muted);font-variant-numeric:tabular-nums}
+.tcard.locked{opacity:.45;cursor:default}
+.tcard.indeck .tn{color:var(--you-hi)}
+.tcard.canup .tl{color:var(--ok)}
+.slot.sel,.tcard.sel{background:#1c1812;outline:2px solid var(--gold);outline-offset:-6px}
+.prog{display:block;width:80%;height:6px;border:2px solid var(--fg);background:#0c0a0c}
+.prog i{display:block;height:100%;background:var(--ok)}
+.detail{padding:10px}
+.detail .dh{display:flex;gap:10px;align-items:center}
+.detail .dh canvas{width:48px;height:48px}
+.detail .dn{font-weight:700;font-size:15px;color:var(--fg-hi)}
+.detail .ds{font-size:12px;color:var(--muted)}
+.detail .dd{font-size:13px;margin:8px 0 4px}
+.detail .dl{font-size:12px;color:var(--gold);margin:0 0 8px}
+.tier{padding:10px;display:flex;flex-direction:column;gap:6px}
+.tier .th{display:flex;justify-content:space-between;align-items:baseline}
+.tier .th b{font-size:15px;color:var(--fg-hi)}
+.tier .th span{font-family:var(--display);font-size:9px;color:var(--muted)}
+.tier .tm{font-size:12px;color:var(--fg)}
+.lb{margin:0;padding:0;list-style:none;font-size:12px;display:flex;flex-direction:column;gap:2px}
+.lb li{display:flex;justify-content:space-between;border-bottom:1px solid var(--plum);padding:2px 0}
+.lb li.me{color:var(--gold)}
+.lb li.muted{justify-content:center;border:0}
+.namerow{display:flex;align-items:center;gap:8px}
+.namerow .nm{flex:1;min-width:0;font:inherit;font-size:14px;background:var(--bg);color:var(--fg-hi);border:2px solid var(--fg);border-radius:0;padding:7px 8px;user-select:text;-webkit-user-select:text}
+.shop{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.shop4{grid-template-columns:repeat(4,1fr)}
+.item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px;background:var(--panel);color:var(--fg);cursor:pointer;font:inherit;font-size:12px;text-align:center;min-width:0}
+.item b{font-size:13px;color:var(--fg-hi)}
+.price{display:flex;align-items:center;font-family:var(--display);font-size:10px;color:#9fe0ff}
+.result{padding:16px 12px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.result .rt{font-family:var(--display);font-size:18px;color:var(--fg-hi);margin:0}
+.result .rs{font-size:13px;color:var(--fg);margin:0}
+.result .big{font-family:var(--display);font-size:28px;color:var(--gold);margin:6px 0}
+.reward{display:flex;flex-direction:column;align-items:center;gap:8px;width:100%}
+.unlock{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px;width:100%}
+.unlock canvas.big{width:72px;height:72px;image-rendering:pixelated}
+.unlock b{color:var(--gold);font-size:15px}
+.items{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.it{display:flex;align-items:center;gap:4px;font-family:var(--display);font-size:9px;color:var(--fg-hi);border:2px solid var(--plum);padding:4px 6px}
+.it.tk{font-family:var(--body);font-size:12px;font-weight:600}
+.it.card1 canvas{width:24px;height:24px;image-rendering:pixelated}
+.coin{display:inline-block;width:12px;height:12px;background:var(--gold);border:2px solid var(--o);box-shadow:inset -2px -2px 0 #b8891a;margin-right:5px;flex:none}
+.gem{display:inline-block;width:12px;height:12px;background:#7fd6ff;clip-path:polygon(50% 0,100% 40%,50% 100%,0 40%);margin-right:5px;flex:none}
+.chest{display:inline-block;width:22px;height:16px;border:2px solid var(--o);background:#8a5a2b;box-shadow:inset 0 -6px 0 #5a3a1e;flex:none}
+.chest.c-silver{background:#cfd2da;box-shadow:inset 0 -6px 0 #6e727f}
+.chest.c-gold{background:#ffd23f;box-shadow:inset 0 -6px 0 #b8891a}
+.card{position:relative}
+.card.empty{opacity:.3;min-height:66px}
+.card .clv{position:absolute;top:3px;left:5px;font-family:var(--display);font-size:7px;color:var(--gold)}
+.cx-src{font-size:11px;color:var(--muted)}
 </style>
 <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-auth-compat.js"></script>
@@ -139,10 +231,11 @@ window.FIREBASE_CONFIG = {
 };
 </script>
 <script>
-// TOWERCHESS online: Firebase Realtime Database transport. It offers the same small interface the game
-// uses for the Claude artifact room — join(name) -> presence(patch) / peers() / onPeers() / leave() —
-// so the lockstep code is shared. Each open tab writes one object at rooms/<room>/p/<uid>-<tab>;
-// onDisconnect() removes it when the tab closes or loses its connection.
+// TOWERCHESS online: Firebase Realtime Database transport.
+// 1) TC_ROOM_PROVIDER: the same small interface the game uses for the Claude artifact room —
+//    join(name) -> presence(patch) / peers() / onPeers() / leave() — so the lockstep code is shared.
+//    Each open tab writes one object at rooms/<room>/p/<uid>-<tab>; onDisconnect() removes it.
+// 2) TC_FB: ranked matchmaking (mm/<queue>), recent decks for bots (dk/<queue>) and leaderboards (lb/<board>/<period>).
 (function(){
   const TAB=Math.random().toString(36).slice(2,10);
   window.TC_NET_SEND_MS=100;
@@ -151,16 +244,17 @@ window.FIREBASE_CONFIG = {
     friendNote:'방을 만든 사람이 초대 링크나 코드를 보내 주면 됩니다.',
     connPerm:'Firebase의 익명 로그인과 데이터베이스 규칙 설정을 확인해 주세요.',
   };
-  window.TC_ROOM_PROVIDER=function(){
+  let F;   // undefined until first use, null when Firebase is not configured
+  function init(){
+    if(F!==undefined) return F;
     const cfg=window.FIREBASE_CONFIG;
-    if(!window.firebase||!cfg||!cfg.apiKey||!cfg.databaseURL) return Promise.resolve(null);
-    try{ if(!firebase.apps.length) firebase.initializeApp(cfg); }catch(e){ console.error(e); return Promise.resolve(null); }
+    if(!window.firebase||!cfg||!cfg.apiKey||!cfg.databaseURL) return (F=null);
+    try{ if(!firebase.apps.length) firebase.initializeApp(cfg); }catch(e){ console.error(e); return (F=null); }
     const auth=firebase.auth(), db=firebase.database();
     if(window.FB_EMULATOR){ auth.useEmulator('http://127.0.0.1:9099'); db.useEmulator('127.0.0.1',9000); }
-    db.goOffline();   // stay off the connection count until someone opens a friend match
-    let signing=null, watching=false;
+    db.goOffline();   // stay off the connection count until something needs the server
+    let signing=null, watching=false, keep=false, offset=0;
     const conn={v:false,hs:new Set()};
-    const rooms=new Map();
     function signIn(){
       if(auth.currentUser) return Promise.resolve(auth.currentUser);
       if(!signing) signing=auth.signInAnonymously().then(c=>c.user).catch(e=>{ signing=null; throw {code:e.code||'auth/error',message:e.message}; });
@@ -168,13 +262,22 @@ window.FIREBASE_CONFIG = {
     }
     function online(){
       db.goOnline();
-      if(!watching){ watching=true; db.ref('.info/connected').on('value',s=>{ conn.v=!!s.val(); for(const h of conn.hs){ try{h(conn.v);}catch(e){} } }); }
+      if(!watching){ watching=true;
+        db.ref('.info/connected').on('value',s=>{ conn.v=!!s.val(); for(const h of conn.hs){ try{h(conn.v);}catch(e){} } });
+        db.ref('.info/serverTimeOffset').on('value',s=>{ offset=s.val()||0; }); }
     }
+    F={auth,db,signIn,online,conn,now:()=>Date.now()+offset,keep:()=>{keep=true;},kept:()=>keep};
+    return F;
+  }
+
+  window.TC_ROOM_PROVIDER=function(){
+    const f=init(); if(!f) return Promise.resolve(null);
+    const {db}=f, rooms=new Map();
     async function join(name){
       if(!/^tc-[a-z0-9]{4}$/.test(name)) throw {code:'invalid_argument',message:'room name'};
       if(rooms.has(name)) return rooms.get(name);
-      const user=await signIn();
-      online();
+      const user=await f.signIn();
+      f.online();
       const myId=user.uid+'-'+TAB, base=db.ref('rooms/'+name+'/p'), me=base.child(myId);
       const others=new Map(), hs=new Set(), errs=new Set();
       let my={}, left=false, snap=null, queued=false;
@@ -187,7 +290,7 @@ window.FIREBASE_CONFIG = {
       function notify(){ build(); if(queued) return; queued=true; setTimeout(()=>{ queued=false; if(left) return; const s=build(); for(const h of hs){ try{h({peers:s,joined:[],left:[],updated:[]});}catch(e){console.error(e);} } },0); }
       const onSet=s=>{ if(s.key===myId) return; others.set(s.key,{p:Object.freeze(s.val()||{}),t:performance.now()}); notify(); };
       const onRem=s=>{ if(others.delete(s.key)) notify(); };
-      const onErr=e=>{ for(const f of errs){ try{f({code:'not_permitted',message:String((e&&e.message)||e)});}catch(_){} } };
+      const onErr=e=>{ for(const fn of errs){ try{fn({code:'not_permitted',message:String((e&&e.message)||e)});}catch(_){} } };
       base.on('child_added',onSet,onErr); base.on('child_changed',onSet,onErr); base.on('child_removed',onRem,onErr);
       await me.onDisconnect().remove();
       const api={
@@ -200,13 +303,13 @@ window.FIREBASE_CONFIG = {
         peers(){ return snap; },
         onPeers(h,onError){ hs.add(h); if(onError) errs.add(onError); setTimeout(()=>{ if(hs.has(h)) h({peers:build(),joined:snap,left:[],updated:[]}); },0); return ()=>{ hs.delete(h); if(onError) errs.delete(onError); }; },
         emit(){ return Promise.resolve(); }, on(){ return ()=>{}; },
-        connected(){ return conn.v; },
-        onConnection(h){ conn.hs.add(h); setTimeout(()=>h(conn.v),0); return ()=>conn.hs.delete(h); },
+        connected(){ return f.conn.v; },
+        onConnection(h){ f.conn.hs.add(h); setTimeout(()=>h(f.conn.v),0); return ()=>f.conn.hs.delete(h); },
         leave(){
           if(left) return Promise.resolve(); left=true; rooms.delete(name);
           base.off('child_added',onSet); base.off('child_changed',onSet); base.off('child_removed',onRem); hs.clear(); errs.clear();
           // remove() is sent first; the onDisconnect() removal stays armed in case the page closes before it lands
-          return me.remove().catch(()=>{}).then(()=>{ if(!rooms.size) db.goOffline(); });
+          return me.remove().catch(()=>{}).then(()=>{ if(!rooms.size&&!f.kept()) db.goOffline(); });
         }
       };
       rooms.set(name,api);
@@ -214,6 +317,56 @@ window.FIREBASE_CONFIG = {
     }
     window.addEventListener('pagehide',()=>{ for(const r of [...rooms.values()]) r.leave(); });
     return Promise.resolve({join});
+  };
+
+  const QUEUES=/^(normal|gold|dia|outlaw)$/;
+  const CH='abcdefghjkmnpqrstuvwxyz23456789';
+  const code4=()=>Array.from({length:4},()=>CH[Math.floor(Math.random()*CH.length)]).join('');
+  async function ready(){ const f=init(); if(!f) throw {code:'unavailable'}; const u=await f.signIn(); f.keep(); f.online(); return {f,uid:u.uid}; }
+  window.TC_FB={
+    // Pair with another player waiting in the same queue. The newer entry claims the oldest waiting one
+    // (a transaction on its `r`) and hosts; the claimed player sees the room code appear in its own `r`.
+    // Resolves {role:'h'|'g', code} or {bot:true} after timeoutMs, or {cancelled:true}.
+    async findMatch(q,info,timeoutMs,token){
+      if(!QUEUES.test(q)) throw {code:'invalid_argument'};
+      const {f,uid}=await ready(), db=f.db, qref=db.ref('mm/'+q), me=qref.child(uid);
+      await me.onDisconnect().remove();
+      await me.set({t:firebase.database.ServerValue.TIMESTAMP,r:'',n:String(info&&info.name||'').slice(0,16)});
+      const myT=(await me.child('t').once('value')).val();
+      return await new Promise(resolve=>{
+        let done=false, busy=false, iv=0, to=0;
+        const finish=res=>{ if(done) return; done=true; clearInterval(iv); clearTimeout(to); me.child('r').off('value',onR); me.remove().catch(()=>{}); me.onDisconnect().cancel().catch(()=>{}); resolve(res); };
+        const onR=s=>{ const v=s.val(); if(typeof v==='string'&&v.length===4) finish({role:'g',code:v}); };
+        me.child('r').on('value',onR);
+        if(token) token.abort=()=>finish({cancelled:true});   // leave the queue at once when the player cancels
+        const closeMe=()=>me.child('r').transaction(cur=>(cur===''||cur===null)?'x':undefined);
+        const tryPair=async()=>{
+          if(done||busy) return; if(token&&token.cancelled){ finish({cancelled:true}); return; }
+          busy=true;
+          try{
+            const now=f.now(), snap=await qref.orderByChild('t').limitToFirst(25).once('value'), cands=[];
+            snap.forEach(ch=>{ const v=ch.val(); if(ch.key!==uid&&v&&v.r===''&&typeof v.t==='number'&&now-v.t<30000&&(v.t<myT||(v.t===myT&&ch.key<uid))) cands.push(ch.key); });
+            for(const k of cands){
+              if(done) break;
+              const code=code4();
+              let tr=null; try{ tr=await qref.child(k).child('r').transaction(cur=>(cur===''||cur===null)?code:undefined); }catch(e){ continue; }
+              if(tr&&tr.committed&&tr.snapshot.val()===code){ await closeMe().catch(()=>{}); finish({role:'h',code}); return; }
+            }
+          }catch(e){}
+          busy=false;
+        };
+        iv=setInterval(tryPair,1500); tryPair();
+        to=setTimeout(async()=>{ if(done) return; try{ const tr=await closeMe(); if(tr.committed&&tr.snapshot.val()==='x') finish({bot:true}); }catch(e){ finish({bot:true}); } },timeoutMs);
+      });
+    },
+    // remember my deck so bots in this queue can play it against someone else later
+    async pushDeck(q,deck){ if(!QUEUES.test(q)) return; const {f,uid}=await ready(); await f.db.ref('dk/'+q+'/'+uid).set({d:deck.d,l:deck.l,n:String(deck.n||'').slice(0,16),t:firebase.database.ServerValue.TIMESTAMP}); },
+    async pickDeck(q){ if(!QUEUES.test(q)) return null; const {f,uid}=await ready(); const s=await f.db.ref('dk/'+q).orderByChild('t').limitToLast(30).once('value'); const arr=[]; s.forEach(c=>{ if(c.key!==uid) arr.push(c.val()); }); return arr.length?arr[Math.floor(Math.random()*arr.length)]:null; },
+    async lbSubmit(board,period,best,name){ const {f,uid}=await ready(); const ref=f.db.ref('lb/'+board+'/'+period+'/'+uid), n=String(name||'').slice(0,16);
+      await ref.transaction(cur=>{ const b=Math.max(best|0,cur&&cur.b|0); return (!cur||cur.b<b||cur.n!==n)?{n,b,t:f.now()}:undefined; }); },
+    async lbTop(board,period,n){ const {f,uid}=await ready(); const s=await f.db.ref('lb/'+board+'/'+period).orderByChild('b').limitToLast(n||10).once('value'); const arr=[]; s.forEach(c=>{ const v=c.val()||{}; arr.push({n:String(v.n||''),b:v.b|0,t:v.t||0,me:c.key===uid}); }); return arr.sort((a,b)=>b.b-a.b||a.t-b.t); },
+    async lbRank(board,period){ const {f,uid}=await ready(); const mine=(await f.db.ref('lb/'+board+'/'+period+'/'+uid).once('value')).val(); if(!mine) return null;
+      const s=await f.db.ref('lb/'+board+'/'+period).orderByChild('b').startAt((mine.b|0)+1).once('value'); return s.numChildren()+1; },
   };
 })();
 </script>
@@ -242,12 +395,12 @@ window.FIREBASE_CONFIG = {
     <div class="boardframe frame" id="boardframe"><canvas id="c" width="640" height="640" aria-label="게임 보드"></canvas></div>
     <div class="toast" id="toast"></div>
     <div class="menu frame" id="menu" hidden></div>
-    <div class="overlay" id="overlay">
+    <div class="overlay" id="overlay" hidden>
       <div class="card2 frame">
         <h2 id="ovTitle">TOWERCHESS</h2>
         <p id="ovText">병사는 자동으로 출격합니다. 타워로 길을 열어 상대 킹을 부수세요.</p>
         <div id="ovBody"></div>
-        <div class="ovbtns" id="ovBtns"><button class="btn" id="btnFriend">친구 대전</button><button class="btn primary" id="btnAI">AI 대전</button></div>
+        <div class="ovbtns" id="ovBtns"></div>
         <p class="ovnote" id="ovNote" hidden></p>
       </div>
     </div>
@@ -273,11 +426,13 @@ window.FIREBASE_CONFIG = {
         <button class="rb" data-t="siege" id="rb-siege">공성+1</button>
       </div>
     </div>
-    <div class="footrow"><span class="hint">카드를 끌어 놓거나 탭 → 칸 탭. 내 타워를 누르면 강화·판매. 자세한 규칙은 ? 버튼.</span><button class="btn sm" id="newBtn">새 게임</button></div>
+    <div class="footrow"><span class="hint">카드를 끌어 놓거나 탭 → 칸 탭. 내 타워를 누르면 강화·판매. 규칙은 ? 버튼.</span><button class="btn sm" id="newBtn">나가기</button></div>
   </div>
 </div>
 <div id="flash"></div>
 <div class="ghost" id="ghost"><canvas width="48" height="48"></canvas></div>
+<div id="meta" hidden></div>
+<div id="mtoast" role="status"></div>
 <div id="codex" hidden>
   <div class="codex frame">
     <div class="cx-head"><h2>CODEX</h2><button class="ib" id="cxClose" aria-label="닫기">X</button></div>
@@ -290,18 +445,25 @@ window.FIREBASE_CONFIG = {
 (() => {
 'use strict';
 const TEST=window.__TC_TEST||null;
-const N=10, CELL=32, TPS=20, TICK=1/TPS;
+// the board is N×N; N is set per match (6~10)
+let N=10;
+const CELL=32, TPS=20, TICK=1/TPS;
 const cv=document.getElementById('c'), ctx=cv.getContext('2d');
 
 const TOWERS={
-  arrow :{name:'화살탑', cost:3, hp:120, range:2.6, dmg:14, cd:0.9, desc:'가장 가까운 적 병사를 빠르게 쏜다. 기본 방어 타워, 어디에나 무난하다.'},
-  cannon:{name:'대포',   cost:5, hp:140, range:2.2, dmg:30, cd:2.9, splash:1.0, desc:'포탄이 떨어진 자리 1칸 범위를 함께 때린다. 뭉쳐 오는 병사에 강하고, 빠른 척후에는 자주 빗나간다.'},
-  frost :{name:'서리탑', cost:4, hp:110, range:2.2, dmg:4,  cd:1.45, slow:0.4, desc:'범위 안 적 병사를 40% 느리게 만들고 조금씩 피해를 준다. 둔화는 중첩되지 않는다. 대포 옆에 두면 좋다.'},
-  banner:{name:'깃발',   cost:4, hp:90,  range:0, max:1, rally:true, desc:'아군 병사가 이 깃발을 먼저 거친 뒤 여기서부터 적 킹으로 진격한다. 적 방어가 약한 쪽으로 길을 틀 때 쓴다. 한 번에 1개.'},
-  wall  :{name:'성벽',   cost:1, hp:150, range:0, max:3, desc:'공격하지 않는 길막기용. 병사는 성벽을 부수며 전진하므로 시간을 번다. 한 번에 3개까지.'},
-  shrine:{name:'신전',   cost:4, hp:100, range:2.0, heal:6, cd:1.0, desc:'범위 안 아군 병사를 초당 6 회복한다. 거한과 궁합이 좋다.'},
+  arrow :{name:'화살탑', cost:3, hp:120, range:2.6, dmg:14, cd:0.9, up:'피해·HP +50%씩, 사거리 +0.25', desc:'가장 가까운 적 병사를 빠르게 쏜다. 기본 방어 타워, 어디에나 무난하다.'},
+  cannon:{name:'대포',   cost:5, hp:140, range:2.2, dmg:30, cd:2.9, splash:1.0, up:'피해·HP +50%씩, 사거리 +0.25', desc:'포탄이 떨어진 자리 1칸 범위를 함께 때린다. 뭉쳐 오는 병사에 강하고, 빠른 척후에는 자주 빗나간다.'},
+  frost :{name:'서리탑', cost:4, hp:110, range:2.2, dmg:4,  cd:1.45, slow:0.4, up:'피해·HP +50%씩, 사거리 +0.25', desc:'범위 안 적 병사를 40% 느리게 만들고 조금씩 피해를 준다. 둔화는 중첩되지 않는다. 대포 옆에 두면 좋다.'},
+  wall  :{name:'성벽',   cost:1, hp:150, range:0, max:3, up:'HP +50%씩', desc:'공격하지 않는 길막기용. 병사는 성벽을 부수며 전진하므로 시간을 번다. 한 번에 3개까지.'},
+  banner:{name:'깃발',   cost:4, hp:90,  range:0, max:1, rally:true, up:'HP +50%씩', desc:'아군 병사가 이 깃발을 먼저 거친 뒤 여기서부터 적 킹으로 진격한다. 적 방어가 약한 쪽으로 길을 틀 때 쓴다. 한 번에 1개.'},
+  shrine:{name:'신전',   cost:4, hp:100, range:2.0, heal:6, cd:1.0, up:'회복 +50%씩, 사거리 +0.25', desc:'범위 안 아군 병사를 초당 6 회복한다. 거한과 궁합이 좋다.'},
+  lightning:{name:'번개탑', cost:5, hp:110, range:2.4, dmg:12, cd:1.5, chain:3, jump:1.6, up:'피해·HP +50%씩, 사거리 +0.25', desc:'가장 가까운 적 병사에게 번개를 쏘고, 1.6칸 안의 다른 병사에게 두 번 더 튄다. 튈 때마다 피해가 20%씩 준다.'},
+  sniper:{name:'저격탑', cost:5, hp:100, range:4.2, dmg:48, cd:2.8, snipe:true, up:'피해·HP +50%씩, 사거리 +0.25', desc:'사거리 안에서 체력이 가장 높은 적 병사 하나를 노려 큰 피해를 준다. 거한과 공성차에 강하다.'},
+  well  :{name:'마나샘', cost:4, hp:80,  range:0, max:2, mana:0.05, up:'마나 증가 +50%씩, HP +50%씩', desc:'공격하지 않고 내 마나 재생을 초당 0.05 올린다. 한 번에 2개까지.'},
+  barracks:{name:'병영', cost:5, hp:120, range:0, max:2, spawn:12, up:'출격 간격 2초씩 단축, HP +50%씩', desc:'12초마다 옆 칸에서 아군 보병을 한 명 더 내보낸다. 한 번에 2개까지.'},
 };
 const TKEYS=Object.keys(TOWERS);
+const BASIC=['arrow','cannon','frost','wall'];
 const SOLDIERS={
   footman:{name:'보병', hp:70,  dmg:8,  spd:0.55, cd:1.45, desc:'기본 병사. 체력·속도·공격이 모두 보통이다.'},
   scout  :{name:'척후', hp:40,  dmg:6,  spd:1.0,  cd:1.1, desc:'빠르지만 약하다. 대포를 피해 먼저 도착해 타워를 흔든다.'},
@@ -314,7 +476,9 @@ const KING_HP=1000, MANA_MAX=10, MANA_REGEN=0.2, WAVE_T=14, PREP_T=10, BOOST_T=1
 // with SOLDIER_BOOST the soldiers that spawn from then on get the same multiplier on HP and attack, so games still end
 const SOLDIER_BOOST=true;
 const boostAt=tick=>1+Math.floor(tick/(BOOST_T*TPS));
-const lvlMul=l=>1+0.5*(l-1);
+const lvlMul=l=>1+0.5*(l-1);            // in-match upgrade (Lv1~3)
+const cardMul=l=>1+0.08*((l||1)-1);     // card level (1~10, meta growth)
+const tpow=t=>lvlMul(t.lvl)*cardMul(t.cl);
 // sqrt is exactly rounded in every engine (Math.hypot is not), so the simulation stays identical on both players' devices
 const hyp=(x,y)=>Math.sqrt(x*x+y*y);
 
@@ -328,15 +492,19 @@ const other=s=>s==='you'?'foe':'you';
 
 let S;
 function newSeed(){ return ((Date.now()^Math.floor(Math.random()*4294967296))>>>0)||1; }
-function newState(seed){
-  seed=(seed==null?newSeed():seed)>>>0;
+// cfg: {n, decks:{you,foe} (null = every tower), lv:{you:{type:level},foe:{...}}, aiSlow, kingHp:{you,foe}}
+function newState(seed,cfg){
+  seed=(seed==null?newSeed():seed)>>>0; cfg=cfg||{};
+  const n=cfg.n||10; N=n;
+  const kc=Math.floor((n-1)/2), dk=cfg.decks||{}, lv=cfg.lv||{}, kh=cfg.kingHp||{}, hy=kh.you||KING_HP, hf=kh.foe||KING_HP;
   return {
-    tick:0, t:0, acc:0, running:false, over:false, boost:1, result:null, seed, rng:mulberry32(seed),
-    kings:{you:{hp:KING_HP,cell:[9,4],cd:0}, foe:{hp:KING_HP,cell:[0,4],cd:0}},
+    tick:0, t:0, acc:0, running:false, over:false, boost:1, result:null, seed, rng:mulberry32(seed), n,
+    kings:{you:{hp:hy,max:hy,cell:[n-1,kc],cd:0}, foe:{hp:hf,max:hf,cell:[0,kc],cd:0}},
     mana:{you:5, foe:5},
     towers:[], soldiers:[],
-    waveTimer:PREP_T, wave:0, aiTimer:2,
+    waveTimer:PREP_T, wave:0, aiTimer:2, aiSlow:cfg.aiSlow||1, aiCap:cfg.aiCap||0,
     reinforce:{you:null, foe:null},
+    decks:{you:dk.you||null, foe:dk.foe||null}, lv:{you:lv.you||{}, foe:lv.foe||{}},
     sel:null, hover:null, menuTower:null, dist:{you:null,foe:null}, rally:{you:null,foe:null},
   };
 }
@@ -376,9 +544,12 @@ function spawnCells(side){
     if(!blocked(r,c)&&S.dist[side][r][c]<Infinity) out.push([r,c]);}
   return out;
 }
-function ownHalf(side,r){return side==='you'?r>=5:r<=4;}
+// each side owns the half next to its king; on odd boards the middle row belongs to no one
+function ownHalf(side,r){const h=Math.floor(N/2); return side==='you'?r>=N-h:r<h;}
 function nearOwnSoldier(side,r,c){return S.soldiers.some(s=>s.side===side&&s.hp>0&&Math.abs(Math.round(s.y)-r)<=1&&Math.abs(Math.round(s.x)-c)<=1);}
+const inDeck=(side,type)=>!S.decks[side]||S.decks[side].includes(type);
 function canPlace(side,r,c,type){
+  if(!inDeck(side,type)) return {ok:false,why:'덱에 없는 타워입니다'};
   if(r<0||c<0||r>=N||c>=N||blocked(r,c)) return {ok:false,why:'빈 칸이 아닙니다'};
   if(S.soldiers.some(s=>s.hp>0&&Math.round(s.y)===r&&Math.round(s.x)===c)) return {ok:false,why:'병사가 서 있습니다'};
   if(!ownHalf(side,r)&&!nearOwnSoldier(side,r,c)) return {ok:false,why:'내 진영 또는 아군 병사 주변 1칸만'};
@@ -397,11 +568,13 @@ function previewState(side,type,r,c,mana){ // what a drop here would do
   const chk=canPlace(side,r,c,type); return {ok:chk.ok,why:chk.why,mode:'place'};
 }
 function place(side,type,r,c){
-  const def=TOWERS[type], pv=previewState(side,type,r,c);
+  const def=TOWERS[type]; if(!def) return false;
+  const pv=previewState(side,type,r,c);
   if(!pv.ok){ if(side===ME){toast(MODE==='pvp'?`설치 실패: ${pv.why}`:pv.why);sfx('error');} return false; }
   if(pv.mode==='up'){ return upgrade(side,towerAt(r,c)); }
   S.mana[side]-=def.cost;
-  S.towers.push({side,type,r,c,lvl:1,hp:def.hp,maxhp:def.hp,cd:0,built:S.t,hitAt:-9});
+  const cl=Math.max(1,Math.min(10,S.lv[side][type]|0||1)), hp=Math.round(def.hp*cardMul(cl));
+  S.towers.push({side,type,r,c,lvl:1,cl,hp,maxhp:hp,cd:def.spawn||0,built:S.t,hitAt:-9});
   vfxBuild(c,r); refreshDist();
   // a new flag also reroutes the soldiers still behind it; the ones already past its row keep going
   if(def.rally) for(const s of S.soldiers) if(s.side===side&&s.hp>0) s.via=side==='you'?Math.round(s.y)>r:Math.round(s.y)<r;
@@ -410,7 +583,7 @@ function place(side,type,r,c){
 function upgrade(side,t){
   const def=TOWERS[t.type]; if(t.lvl>=3||S.mana[side]<def.cost) return false;
   S.mana[side]-=def.cost; t.lvl++;
-  const ratio=t.hp/t.maxhp; t.maxhp=Math.round(def.hp*lvlMul(t.lvl)); t.hp=Math.min(t.maxhp,Math.round(t.maxhp*ratio)+def.hp*0.5);
+  const ratio=t.hp/t.maxhp; t.maxhp=Math.round(def.hp*lvlMul(t.lvl)*cardMul(t.cl)); t.hp=Math.min(t.maxhp,Math.round(t.maxhp*ratio)+def.hp*0.5);
   t.built=S.t; if(side===ME&&MODE!=='pvp') sfx('place'); return true;
 }
 const refundOf=t=>TOWERS[t.type].cost*t.lvl*0.25;
@@ -421,6 +594,10 @@ function sellTower(side,t){
   if(side===ME){ sfx('sell'); toast(`${TOWERS[t.type].name} 판매 +${fmtNum(refundOf(t))}`); }
 }
 
+function spawnSoldier(side,type,r,c,pw){
+  const def=SOLDIERS[type], x=c+(S.rng()-.5)*.3, y=r+(S.rng()-.5)*.3;
+  S.soldiers.push({side,type,pw,x,y,px:x,py:y,hp:def.hp*pw,maxhp:def.hp*pw,cd:S.rng()*def.cd,slow:0,moving:false,ph:Math.floor(S.rng()*2),hitAt:-9,via:!!flagOf(side)});
+}
 function spawnWave(){
   S.wave++;
   const base=2+Math.floor(S.wave/3);
@@ -430,22 +607,26 @@ function spawnWave(){
     for(let i=0;i<base;i++){const roll=S.rng(); list.push(roll<0.15?'siege': roll<0.35?'brute': roll<0.6?'scout':'footman');}
     if(side===AI_SIDE&&!S.reinforce[side]){const r=S.rng(); S.reinforce[side]= r<0.35?'footman': r<0.6?'scout': r<0.8?'brute':'siege';}
     if(S.reinforce[side]) list.push(S.reinforce[side]);
-    const via=!!flagOf(side), pw=SOLDIER_BOOST?S.boost:1;
-    for(const type of list){
-      const [r,c]=cells[Math.floor(S.rng()*cells.length)]; const def=SOLDIERS[type];
-      const x=c+(S.rng()-.5)*.3, y=r+(S.rng()-.5)*.3;
-      S.soldiers.push({side,type,pw,x,y,px:x,py:y,hp:def.hp*pw,maxhp:def.hp*pw,cd:S.rng()*def.cd,slow:0,buff:0,buffAmt:0,moving:false,ph:Math.floor(S.rng()*2),hitAt:-9,via});
-    }
+    const pw=SOLDIER_BOOST?S.boost:1;
+    for(const type of list){ const [r,c]=cells[Math.floor(S.rng()*cells.length)]; spawnSoldier(side,type,r,c,pw); }
     if(side===AI_SIDE) S.reinforce[side]=null;
   }
   sfx('wave');
+}
+// a barracks sends one footman out of the free neighbour cell nearest the enemy king
+function barracksSpawn(t){
+  const d=S.dist[t.side]; let best=null,bd=Infinity;
+  for(const [dr,dc] of DIRS){ const r=t.r+dr,c=t.c+dc; if(r<0||c<0||r>=N||c>=N||blocked(r,c)) continue; const v=d[r][c]; if(v<bd||(!best&&v===Infinity)){bd=v;best=[r,c];} }
+  if(!best) return;
+  spawnSoldier(t.side,'footman',best[0],best[1],(SOLDIER_BOOST?S.boost:1)*cardMul(t.cl));
+  vfxPoof(best[1],best[0]);
 }
 const dist=(a,b)=>hyp(a.x-b.x,a.y-b.y);
 function damage(obj,amt,bySide){obj.hp-=amt;obj.hitAt=S.t;hit(obj.x??obj.c,obj.y??obj.r,bySide);}
 
 function updateSoldier(s,dt){
   const def=SOLDIERS[s.type], enemy=other(s.side);
-  const spdMul=(s.slow>0?0.6:1)*(1+(s.buff>0?s.buffAmt:0)), dmgMul=(1+(s.buff>0?s.buffAmt:0))*s.pw;
+  const spdMul=s.slow>0?0.6:1, dmgMul=s.pw||1;
   s.cd-=dt; s.moving=false;
   const structMul=def.structMul||1;
   let target=null, best=0.75;
@@ -465,21 +646,36 @@ function updateSoldier(s,dt){
   let tw=null;
   for(const [dr,dc] of DIRS){const t=towerAt(r+dr,c+dc); if(t&&t.side===enemy){ if(noPath||def.siege||t.type==='wall'||S.rng()<0.02){tw=t;break;} }}
   if(tw&&hyp(tw.r-s.y,tw.c-s.x)<1.2){ if(s.cd<=0){damage(tw,def.dmg*dmgMul*structMul,enemy);s.cd=def.cd;sfx('hit'); if(tw.hp<=0){vfxRubble(tw);S.towers=S.towers.filter(x=>x.hp>0);refreshDist();sfx('death');}} return; }
-  if(noPath){ const dir=s.side==='you'?-1:1; s.y+=dir*def.spd*spdMul*dt*0.3; s.moving=true; return; }
+  if(noPath){ const dir=s.side==='you'?-1:1; s.y+=dir*def.spd*spdMul*dt*0.3; s.y=Math.max(0,Math.min(N-1,s.y)); s.moving=true; return; }
   const dx=nc-s.x, dy=nr-s.y, L=hyp(dx,dy), step=def.spd*spdMul*dt;
   s.moving=true; if(L<=step){s.x=nc;s.y=nr;} else {s.x+=dx/L*step;s.y+=dy/L*step;}
   for(const o of S.soldiers){ if(o!==s&&o.hp>0&&o.side===s.side){const dd=dist(s,o); if(dd<0.35&&dd>0){const k=Math.min(0.02,dt*0.5);s.x+=(s.x-o.x)/dd*k;s.y+=(s.y-o.y)/dd*k;}}}
 }
+function nearestEnemy(p,range,enemy){ let tg=null,best=range; for(const s of S.soldiers) if(s.side===enemy&&s.hp>0){const d=dist(p,s); if(d<=best){best=d;tg=s;}} return tg; }
 function updateTower(t,dt){
-  const def=TOWERS[t.type], m=lvlMul(t.lvl), range=def.range+0.25*(t.lvl-1), p={x:t.c,y:t.r}, enemy=other(t.side);
+  const def=TOWERS[t.type], m=tpow(t), range=def.range+0.25*(t.lvl-1), p={x:t.c,y:t.r}, enemy=other(t.side);
   t.cd-=dt;
   if(S.t-t.built<0.3) return; // under construction
-  if(def.buff){ const amt=def.buff+0.1*(t.lvl-1); for(const s of S.soldiers) if(s.side===t.side&&s.hp>0&&dist(p,s)<=range){s.buff=1;s.buffAmt=Math.max(s.buffAmt,amt);} return; }
+  if(def.spawn){ if(t.cd<=0){ t.cd=def.spawn-2*(t.lvl-1); barracksSpawn(t); } return; }
   if(def.heal){ if(t.cd<=0){t.cd=def.cd; for(const s of S.soldiers) if(s.side===t.side&&s.hp>0&&s.hp<s.maxhp&&dist(p,s)<=range){s.hp=Math.min(s.maxhp,s.hp+def.heal*m);vfxHeal(s.x,s.y);}} return; }
   if(def.slow){ if(t.cd<=0){t.cd=def.cd; let any=false; for(const s of S.soldiers) if(s.side===enemy&&s.hp>0&&dist(p,s)<=range){s.slow=1;s.hp-=def.dmg*m;any=true;vfxIce(s.x,s.y);} if(any) vfxFrost(p.x,p.y,range);} return; }
+  if(def.chain){
+    if(t.cd>0) return;
+    const first=nearestEnemy(p,range,enemy); if(!first) return;
+    t.cd=def.cd;
+    const hitL=[first]; let cur=first;
+    for(let k=1;k<def.chain;k++){ let nx=null,b=def.jump; for(const s of S.soldiers) if(s.side===enemy&&s.hp>0&&!hitL.includes(s)){const d=dist(cur,s); if(d<=b){b=d;nx=s;}} if(!nx) break; hitL.push(nx); cur=nx; }
+    let dmg=def.dmg*m; for(const s of hitL){ s.hp-=dmg; s.hitAt=S.t; dmg*=0.8; }
+    vfxBolt(p,hitL); sfx('zap'); return;
+  }
+  if(def.snipe){
+    if(t.cd>0) return;
+    let tg=null,best=-1; for(const s of S.soldiers) if(s.side===enemy&&s.hp>0&&dist(p,s)<=range&&s.hp>best){best=s.hp;tg=s;}
+    if(!tg) return;
+    t.cd=def.cd; tg.hp-=def.dmg*m; tg.hitAt=S.t; vfxSnipe(p,tg); sfx('snipe'); return;
+  }
   if(!def.dmg||t.cd>0) return;
-  let target=null,best=Infinity;
-  for(const s of S.soldiers) if(s.side===enemy&&s.hp>0){const d=dist(p,s); if(d<=range&&d<best){best=d;target=s;}}
+  const target=nearestEnemy(p,range,enemy);
   if(!target) return;
   t.cd=def.cd;
   vfxShot(def.splash?'ball':'arrow',t.side,p.x,p.y,target.x,target.y,def.splash||0);
@@ -487,37 +683,51 @@ function updateTower(t,dt){
   else { target.hp-=def.dmg*m; target.hitAt=S.t; }
 }
 function hit(x,y,side){vfxHit(x,y,side);}
+function wellBonus(side){ let b=0; for(const t of S.towers) if(t.side===side&&t.type==='well'&&t.hp>0&&S.t-t.built>=0.3) b+=TOWERS.well.mana*tpow(t); return b; }
 
-// ---- AI (plays either side; row lists are written for the top side and mirrored for the bottom) ----
+// ---- AI (plays either side; rows are written for the top side and mirrored for the bottom) ----
 function aiThink(side){
-  const opp=other(side), m=S.mana[side], rng=S.rng, R=r=>side==='foe'?r:N-1-r;
+  const opp=other(side), m=S.mana[side], rng=S.rng, h=Math.floor(N/2), center=(N-1)/2;
+  const R=r=>side==='foe'?r:N-1-r;
+  const deck=S.decks[side]||TKEYS, has=k=>deck.includes(k);
   const threats=S.soldiers.filter(s=>s.side===opp&&s.hp>0);
+  const heavy=threats.filter(s=>s.type==='brute'||s.type==='siege').length;
   const mine=S.towers.filter(t=>t.side===side);
   const counts=k=>mine.filter(t=>t.type===k).length;
   const oppGuns=S.towers.filter(t=>t.side===opp&&TOWERS[t.type].dmg);
+  const scale=N/10;
   let choice=null;
-  if(threats.length>=3&&m>=5&&counts('cannon')<3) choice='cannon';
-  else if(m>=4&&counts('frost')<2&&S.wave>=2) choice='frost';
-  else if(m>=3&&counts('arrow')<4) choice='arrow';
-  else if(m>=4&&counts('banner')<1&&S.wave>=1&&oppGuns.length>=2) choice='banner';
-  else if(m>=4&&counts('shrine')<1&&S.wave>=3) choice='shrine';
-  else if(m>=1&&rng()<0.4&&counts('wall')<3) choice='wall';
-  else if(m>=3&&rng()<0.35){ const ups=mine.filter(t=>(t.type==='arrow'||t.type==='cannon')&&t.lvl<3&&TOWERS[t.type].cost<=m); if(ups.length){upgrade(side,ups[Math.floor(rng()*ups.length)]);return;} }
-  else if(m>=9) choice=rng()<0.5?'arrow':'cannon';
+  const capped=S.aiCap&&side===AI_SIDE&&mine.length>=S.aiCap;   // easy stages: the AI only keeps a few towers (it can still upgrade them)
+  const want=(k,cond)=>{ if(!choice&&!capped&&has(k)&&cond) choice=k; };
+  want('cannon', threats.length>=3&&m>=5&&counts('cannon')<Math.ceil(3*scale));
+  want('lightning', threats.length>=3&&m>=5&&counts('lightning')<2);
+  want('sniper', heavy>=1&&m>=5&&counts('sniper')<2);
+  want('well', S.wave>=1&&m>=4&&counts('well')<1&&threats.length<2);
+  want('frost', m>=4&&counts('frost')<2&&S.wave>=2);
+  want('arrow', m>=3&&counts('arrow')<Math.max(2,Math.round(4*scale)));
+  want('barracks', m>=5&&counts('barracks')<1&&S.wave>=2);
+  want('banner', m>=4&&counts('banner')<1&&S.wave>=1&&oppGuns.length>=2);
+  want('shrine', m>=4&&counts('shrine')<1&&S.wave>=3);
+  if(!choice&&!capped&&has('wall')&&m>=1&&rng()<0.4&&counts('wall')<3) choice='wall';
+  if(!choice&&m>=3&&rng()<0.35){ const ups=mine.filter(t=>TOWERS[t.type].dmg&&t.lvl<3&&TOWERS[t.type].cost<=m); if(ups.length){upgrade(side,ups[Math.floor(rng()*ups.length)]);return;} }
+  if(!choice&&!capped&&m>=9){ const atk=deck.filter(k=>TOWERS[k].dmg&&!TOWERS[k].slow); if(atk.length) choice=atk[Math.floor(rng()*atk.length)]; }
   if(!choice) return;
-  const cand=[];
-  const rows=(choice==='wall'||choice==='banner'?[3,4]: choice==='shrine'?[1,2]:[1,2,3,4]).map(R);
-  const seen=new Set();
+  const front=[Math.max(1,h-2),h-1], back=[1,Math.min(2,h-1)], all=[]; for(let r=1;r<h;r++) all.push(r);
+  const rowsFor={wall:front,banner:front,barracks:front,shrine:back,well:back};
+  const rows=[...new Set(rowsFor[choice]||all)].map(R);
+  const attack=!!TOWERS[choice].dmg;
+  const cand=[], seen=new Set();
   const push=(r,c)=>{const k=r*N+c; if(seen.has(k)||r<0||c<0||r>=N||c>=N||blocked(r,c)) return; seen.add(k);
     let score=rng();
-    if(choice==='arrow'||choice==='cannon'||choice==='frost'){ for(const s of threats) score+=Math.max(0,3-hyp(s.x-c,s.y-r))*0.5; score+=(c>=2&&c<=7)?0.8:0; score-=Math.abs(c-4.5)*0.1; }
-    if(choice==='wall'){ score+=S.dist[opp][r][c]<Infinity?1:0; score+=(c>=3&&c<=6)?0.6:0; }
-    if(choice==='shrine'){ score+=(c>=3&&c<=6)?1:0; }
+    if(attack){ for(const s of threats) score+=Math.max(0,3-hyp(s.x-c,s.y-r))*0.5; score+=Math.abs(c-center)<=N*0.25?0.8:0; score-=Math.abs(c-center)*0.1; }
+    if(choice==='wall'){ score+=S.dist[opp][r][c]<Infinity?1:0; score+=Math.abs(c-center)<=1.5?0.6:0; }
+    if(choice==='shrine'||choice==='barracks'){ score+=Math.abs(c-center)<=1.5?1:0; }
+    if(choice==='well'){ score-=Math.abs(c-center)*0.05; }
     // the flag goes in front of our half, on the column the opponent's guns cover least
-    if(choice==='banner'){ let cover=0; for(const t of oppGuns) cover+=Math.max(0,3-Math.abs(t.c-c)); score=score*0.3-cover*0.6-Math.abs(c-4.5)*0.05; }
+    if(choice==='banner'){ let cover=0; for(const t of oppGuns) cover+=Math.max(0,3-Math.abs(t.c-c)); score=score*0.3-cover*0.6-Math.abs(c-center)*0.05; }
     cand.push({r,c,score});};
   for(const r of rows) for(let c=0;c<N;c++) push(r,c);
-  if(choice==='arrow'||choice==='cannon'||choice==='frost') for(const s of S.soldiers) if(s.side===side&&s.hp>0){const r0=Math.round(s.y),c0=Math.round(s.x); for(let dr=-1;dr<=1;dr++) for(let dc=-1;dc<=1;dc++) push(r0+dr,c0+dc);}
+  if(attack) for(const s of S.soldiers) if(s.side===side&&s.hp>0){const r0=Math.round(s.y),c0=Math.round(s.x); for(let dr=-1;dr<=1;dr++) for(let dc=-1;dc<=1;dc++) push(r0+dr,c0+dc);}
   cand.sort((a,b)=>b.score-a.score);
   for(const k of cand.slice(0,8)){ if(place(side,choice,k.r,k.c)) return; }
 }
@@ -528,10 +738,10 @@ function step(dt){
   S.tick++; S.t=S.tick*TICK;
   if(TEST&&TEST.endAt&&S.tick===TEST.endAt){ endGame(winnerByHp()); return; }
   const boost=boostAt(S.tick); if(boost!==S.boost){ S.boost=boost; toast(SOLDIER_BOOST?`마나 재생·병사 능력치 x${boost}`:`마나 재생 x${boost}`); sfx('wave'); }
-  for(const side of ['you','foe']) S.mana[side]=Math.min(MANA_MAX,S.mana[side]+MANA_REGEN*S.boost*dt);
+  for(const side of ['you','foe']) S.mana[side]=Math.min(MANA_MAX,S.mana[side]+(MANA_REGEN+wellBonus(side))*S.boost*dt);
   S.waveTimer-=dt; if(S.waveTimer<=0){S.waveTimer=WAVE_T;spawnWave();}
-  if(AI_SIDE){ S.aiTimer-=dt; if(S.aiTimer<=0){S.aiTimer=1.5+S.rng()*1.5;aiThink(AI_SIDE);} }
-  for(const s of S.soldiers){s.px=s.x;s.py=s.y;s.slow=Math.max(0,s.slow-dt*0.8);s.buff=Math.max(0,s.buff-dt*1.1); if(s.buff<=0) s.buffAmt=0;}
+  if(AI_SIDE){ S.aiTimer-=dt; if(S.aiTimer<=0){S.aiTimer=(1.5+S.rng()*1.5)*S.aiSlow;aiThink(AI_SIDE);} }
+  for(const s of S.soldiers){s.px=s.x;s.py=s.y;s.slow=Math.max(0,s.slow-dt*0.8);}
   for(const t of S.towers) updateTower(t,dt);
   for(const s of S.soldiers) if(s.hp>0) updateSoldier(s,dt);
   for(const side of ['you','foe']){const k=S.kings[side]; k.cd-=dt; if(k.cd<=0){const kp={x:k.cell[1],y:k.cell[0]}; let tg=null,b=2.3; for(const s of S.soldiers) if(s.side===other(side)&&s.hp>0){const d=dist(kp,s); if(d<b){b=d;tg=s;}} if(tg){tg.hp-=10;tg.hitAt=S.t;k.cd=1.6;vfxShot('arrow',side,kp.x,kp.y,tg.x,tg.y,0);}}}
@@ -550,8 +760,8 @@ function endGame(winner){
 }
 function stateHash(){
   let h=2166136261>>>0; const mix=v=>{h=Math.imul(h^(v|0),16777619)>>>0;};
-  mix(S.tick); mix(Math.round(S.kings.you.hp*1000)); mix(Math.round(S.kings.foe.hp*1000)); mix(Math.round(S.mana.you*1e6)); mix(Math.round(S.mana.foe*1e6));
-  for(const t of S.towers){ mix(t.r*16+t.c); mix(TKEYS.indexOf(t.type)); mix(t.lvl); mix(Math.round(t.hp*1000)); mix(t.side==='you'?1:2); }
+  mix(S.tick); mix(S.n); mix(Math.round(S.kings.you.hp*1000)); mix(Math.round(S.kings.foe.hp*1000)); mix(Math.round(S.mana.you*1e6)); mix(Math.round(S.mana.foe*1e6));
+  for(const t of S.towers){ mix(t.r*16+t.c); mix(TKEYS.indexOf(t.type)); mix(t.lvl); mix(t.cl); mix(Math.round(t.hp*1000)); mix(t.side==='you'?1:2); }
   mix(S.soldiers.length);
   for(const s of S.soldiers){ mix(Math.round(s.x*1e6)); mix(Math.round(s.y*1e6)); mix(Math.round(s.hp*1000)); mix(s.via?1:0); }
   return h;
@@ -940,7 +1150,107 @@ const SPR={
  '.okkkdkkkookkkdkkko.',
  '.okkkdkkkookkkdkkko.',
  '..okkdkko..okkdkko..',
- '...okkko....okkko...']]
+ '...okkko....okkko...']],
+ lightning:[
+ '..........oooo..........',
+ '........ooGGGGoo........',
+ '.......oGGWWGGGGo.......',
+ '.......oGWWGGGGGo.......',
+ '......oGGGGGGGGGGo......',
+ '......ogGGGGGGGGgo......',
+ '.......oggGGGGggo.......',
+ '........oogggoo.........',
+ '..........oso...........',
+ '.........ossso..........',
+ '........oosSsoo.........',
+ '.......oddddddddo.......',
+ '......oaaaaaaaaaao......',
+ '......oabbaaaaGGao......',
+ '......obaaaaaGGaao......',
+ '......oaaaaaGGaaao......',
+ '......oaaaaGGGGGao......',
+ '......oaaaaaaGGaao......',
+ '......oaaaaaGGaaao......',
+ '......oaaaaaGaaaao......',
+ '......oaaaaaaaaaao......',
+ '.....oocccccccccoo......',
+ '....occcccccccccccco....',
+ '.....oooooooooooooo.....'],
+ sniper:[
+ '........................',
+ '...................oo...',
+ '..................odo...',
+ '.................odo....',
+ '................odo.....',
+ '..........oo...odo......',
+ '.........owwo.odo.......',
+ '........owwwwodo........',
+ '.......owwwwwdo.........',
+ '........oowsso..........',
+ '.........ossSso.........',
+ '........ooooooo.........',
+ '........oaaaaao.........',
+ '........obbaaao.........',
+ '........oaaoaao.........',
+ '........oaaoaao.........',
+ '........oaaaaao.........',
+ '........oaaaaao.........',
+ '........oaaoaao.........',
+ '........oaaoaao.........',
+ '.......ooaaaaaoo........',
+ '......occcccccccco......',
+ '......occcccccccco......',
+ '.......oooooooooo.......'],
+ well:[
+ '........................',
+ '...........oo...........',
+ '..........oGGo..........',
+ '...........oo...........',
+ '....oooooooooooooooo....',
+ '...oaaaaaaaaaaaaaaaao...',
+ '..oabbbbbbbbbbbbbbbbao..',
+ '..oaaaaaaaaaaaaaaaaaao..',
+ '...oooovooooooooovoooo..',
+ '......ov........ov......',
+ '......ov...oo...ov......',
+ '......ov..owwo..ov......',
+ '......ov..owwo..ov......',
+ '....ooovooooooooovooo...',
+ '...osssssssssssssssso...',
+ '..osSoooooooooooooSsso..',
+ '..osoGGGGGGWGGGGGGGoso..',
+ '..osogGGGGGGGGGGGGgoso..',
+ '..ossoooooooooooooosso..',
+ '..osdssssdssssdssssdso..',
+ '..osssssssssssssssssso..',
+ '..odddddddddddddddddo...',
+ '...ooooooooooooooooo....',
+ '........................'],
+ barracks:[
+ '...........o............',
+ '...........oGGo.........',
+ '...........oGGGo........',
+ '...........oGGo.........',
+ '...........o............',
+ '..........oao...........',
+ '.........oabao..........',
+ '........oabbbao.........',
+ '.......oabbbbbao........',
+ '......oaabbbbbaao.......',
+ '.....oaaaabbbaaaao......',
+ '....oaaaaaabaaaaaao.....',
+ '...oaaaaaaoooaaaaaao....',
+ '..oaaaaaaokkkoaaaaaao...',
+ '.oaaaaaaokkkkkoaaaaaao..',
+ '.occaaaaokkkkkoaaaacco..',
+ '.occcaaaokkkkkoaaaccco..',
+ '.occccaaokkkkkoaacccco..',
+ '.occcccaokkkkkoaccccco..',
+ '.occcccco.kkk.occcccco..',
+ '.owwwwwwwwwwwwwwwwwwwo..',
+ '.ovvvvvvvvvvvvvvvvvvvo..',
+ '..ooooooooooooooooooo...',
+ '........................']
 };
 // enemy variants: pointed helmets / masks / spiked frames
 const SPR_FOE={
@@ -1199,6 +1509,8 @@ function vfxBuild(c,r){ const X=LX(c),Y=LY(r)+11; for(let i=0;i<6;i++) vfxAdd({k
 function vfxIce(x,y){ vfxAdd({k:'ice',layer:'air',x:LX(x)+rnd(-3,3),y:LY(y)-4,t:0,life:0.32}); }
 function vfxFrost(x,y,range){ vfxAdd({k:'ringp',layer:'ground',x:LX(x),y:LY(y),t:0,life:0.3,r0:6,r1:range*CELL,c1:PAL.ice,c2:PAL.iceD}); }
 function vfxHeal(x,y){ vfxAdd({k:'heal',layer:'air',x:LX(x)+rnd(-3,3),y:LY(y)-8,t:0,life:0.5}); }
+function vfxBolt(p,list){ let x0=LX(p.x), y0=LY(p.y)-12; for(const s of list){ const x1=LX(s.x), y1=LY(s.y)-2; vfxAdd({k:'bolt',layer:'air',x0,y0,x1,y1,t:0,life:0.2}); vfxAdd({k:'spark',layer:'air',x:x1,y:y1,t:0,life:0.12,small:true}); x0=x1; y0=y1; } }
+function vfxSnipe(p,s){ const ex=LX(s.x), ey=LY(s.y)-2; vfxAdd({k:'tracer',layer:'air',sx:LX(p.x),sy:LY(p.y)-12,ex,ey,t:0,life:0.14}); vfxAdd({k:'spark',layer:'air',x:ex,y:ey,t:0,life:0.16}); burst(ex,ey,4,[PAL.white,PAL.steel],70,20,200,0.3,1); }
 function vfxNum(c,r,dmg,side){ vfxAdd({k:'num',layer:'air',x:LX(c),y:LY(r)-16,t:0,life:0.8,txt:'-'+Math.round(dmg),col:side===ME?HIT_RED:PAL.gold}); }
 function vfxUpdate(dt){
   for(let i=VFX.length-1;i>=0;i--){ const e=VFX[i]; e.t+=dt;
@@ -1237,6 +1549,15 @@ function vfxDraw(layer){
         if(f&&!e.small){ ctx.fillStyle=PAL.gold; for(const [dx,dy] of [[-2,-2],[2,-2],[-2,2],[2,2]]) ctx.fillRect(X+dx,Y+dy,1,1); } break; }
       case 'ice': { const X=Math.round(e.x), Y=Math.round(e.y-p*6); ctx.globalAlpha=1-p; ctx.fillStyle=PAL.ice; ctx.fillRect(X-2,Y,5,1); ctx.fillRect(X,Y-2,1,5); ctx.fillStyle=PAL.white; ctx.fillRect(X,Y,1,1); ctx.globalAlpha=1; break; }
       case 'heal': { const X=Math.round(e.x), Y=Math.round(e.y-p*14); ctx.globalAlpha=1-p*0.8; ctx.fillStyle=PAL.o; ctx.fillRect(X-3,Y-1,7,3); ctx.fillRect(X-1,Y-3,3,7); ctx.fillStyle=PAL.hp; ctx.fillRect(X-2,Y,5,1); ctx.fillRect(X,Y-2,1,5); ctx.globalAlpha=1; break; }
+      case 'bolt': { const dx=e.x1-e.x0, dy=e.y1-e.y0, L=Math.sqrt(dx*dx+dy*dy)||1, nx=-dy/L, ny=dx/L, seg=5; let px0=e.x0, py0=e.y0;
+        ctx.globalAlpha=1-p*0.6;
+        for(let i=1;i<=seg;i++){ const f=i/seg, j=i<seg?(((i*7919+Math.floor(e.t*60))%7)-3):0, qx=e.x0+dx*f+nx*j, qy=e.y0+dy*f+ny*j;
+          const sx=qx-px0, sy=qy-py0, sl=Math.max(1,Math.round(Math.max(Math.abs(sx),Math.abs(sy))));
+          for(let k=0;k<=sl;k++){ const X=Math.round(px0+sx*k/sl), Y=Math.round(py0+sy*k/sl); ctx.fillStyle=PAL.gold; ctx.fillRect(X-1,Y-1,3,3); ctx.fillStyle=PAL.white; ctx.fillRect(X,Y,1,1); }
+          px0=qx; py0=qy; }
+        ctx.globalAlpha=1; break; }
+      case 'tracer': { const dx=e.ex-e.sx, dy=e.ey-e.sy, L=Math.max(1,Math.round(Math.max(Math.abs(dx),Math.abs(dy)))), from=Math.floor(L*Math.max(0,p*1.6-0.6)), to=Math.min(L,Math.ceil(L*p*1.6));
+        ctx.globalAlpha=1-p*0.5; for(let k=from;k<=to;k++){ ctx.fillStyle=k>to-3?PAL.white:PAL.steel; ctx.fillRect(Math.round(e.sx+dx*k/L),Math.round(e.sy+dy*k/L),1,1); } ctx.globalAlpha=1; break; }
       case 'num': { const Y=Math.round(e.y-easeOut(p)*12); ctx.globalAlpha=p>0.7?(1-p)/0.3:1; ctx.font='8px "Press Start 2P", monospace'; ctx.textAlign='center'; ctx.textBaseline='middle'; outlinedText(e.txt,Math.round(e.x),Y,e.col); ctx.globalAlpha=1; break; }
     }
   }
@@ -1250,8 +1571,9 @@ function draw(){
   const anim=Math.floor(S.t*4)%2, alpha=S.running?Math.min(1,S.acc/TICK):1;
   for(let r=0;r<N;r++) for(let c=0;c<N;c++){const dk=(r+c)%2; ctx.fillStyle=dk?PAL.board.d:PAL.board.l; ctx.fillRect(c*CELL,r*CELL,CELL,CELL);}
   // the opponent's half is always the top half of the screen
-  ctx.fillStyle='rgba(179,38,43,.10)';ctx.fillRect(0,0,W,5*CELL);
-  ctx.fillStyle='rgba(207,196,173,.55)'; for(let x=0;x<W;x+=8) ctx.fillRect(x,5*CELL-2,4,2);
+  const hh=Math.floor(N/2);
+  ctx.fillStyle='rgba(179,38,43,.10)';ctx.fillRect(0,0,W,hh*CELL);
+  ctx.fillStyle='rgba(207,196,173,.55)'; for(let x=0;x<W;x+=8){ ctx.fillRect(x,hh*CELL-2,4,2); if(N%2) ctx.fillRect(x,(N-hh)*CELL,4,2); }
   // my orders still on their way (friend match)
   if(MODE==='pvp'&&NET) for(const p of NET.pend){ if(p.tick<=S.tick) continue; const X=vx(p.c)*CELL, Y=vy(p.r)*CELL;
     ctx.strokeStyle=PAL.gold; ctx.lineWidth=1; ctx.setLineDash([3,2]); ctx.strokeRect(X+1.5,Y+1.5,CELL-3,CELL-3); ctx.setLineDash([]);
@@ -1273,7 +1595,7 @@ function draw(){
   // kings
   for(const side of ['you','foe']){const k=S.kings[side],X=vx(k.cell[1])*CELL,Y=vy(k.cell[0])*CELL,fl=S.t-(k.hitAt??-9)<0.1;
     blit(SPR.king,X+2+(fl?jit():0),Y+(side===ME?2:1),pal(side),fl);
-    ctx.fillStyle=PAL.o;ctx.fillRect(X+2,Y+CELL-2,CELL-4,2);ctx.fillStyle=PAL.gold;ctx.fillRect(X+2,Y+CELL-2,px((CELL-4)*Math.max(0,k.hp/KING_HP)),2);}
+    ctx.fillStyle=PAL.o;ctx.fillRect(X+2,Y+CELL-2,CELL-4,2);ctx.fillStyle=PAL.gold;ctx.fillRect(X+2,Y+CELL-2,px((CELL-4)*Math.max(0,k.hp/k.max)),2);}
   // towers
   for(const t of S.towers){const X=vx(t.c)*CELL,Y=vy(t.r)*CELL,fl=S.t-t.hitAt<0.1;
     drawTowerAt(t,X+4+(fl?jit():0),Y+4,anim,fl);
@@ -1298,8 +1620,8 @@ function pendCost(){ if(MODE!=='pvp'||!NET) return 0; let s=0; for(const p of NE
 function availMana(){ return S.mana[ME]-pendCost(); }
 function hud(){
   const mk=S.kings[ME], ok=S.kings[OPP];
-  $('hpYou').style.width=Math.max(0,mk.hp/KING_HP*100)+'%';
-  $('hpFoe').style.width=Math.max(0,ok.hp/KING_HP*100)+'%';
+  $('hpYou').style.width=Math.max(0,mk.hp/mk.max*100)+'%';
+  $('hpFoe').style.width=Math.max(0,ok.hp/ok.max*100)+'%';
   $('hpYouN').textContent=Math.max(0,Math.ceil(mk.hp));
   $('hpFoeN').textContent=Math.max(0,Math.ceil(ok.hp));
   const m=Math.max(0,availMana()), n=Math.floor(m), half=m-n>=0.5;
@@ -1313,14 +1635,15 @@ function hud(){
   $('waveL').textContent= S.wave===0?`첫 웨이브 ${wt}s · 강화 선택`:`웨이브 ${S.wave} · 다음 ${wt}s`;
   const rf=MODE==='pvp'?uiRf:S.reinforce[ME];
   for(const b of document.querySelectorAll('.rb')) b.classList.toggle('sel',rf===b.dataset.t);
-  for(const b of document.querySelectorAll('.card')){b.classList.toggle('poor',m<TOWERS[b.dataset.k].cost);b.classList.toggle('sel',S.sel===b.dataset.k);}
-  const pb=$('pauseBtn'); pb.textContent=S.running||MODE==='pvp'?'II':'>'; pb.disabled=MODE==='pvp';
+  for(const b of cardsEl.querySelectorAll('.card[data-k]')){b.classList.toggle('poor',m<TOWERS[b.dataset.k].cost);b.classList.toggle('sel',S.sel===b.dataset.k);}
+  const pb=$('pauseBtn'), np=MODE==='pvp'||!!(CTX&&CTX.noPause); pb.textContent=S.running||np?'II':'>'; pb.disabled=np;
 }
 
 // ---- toast / flash ----
 let toastT, toastIsPreview=false;
 const toastEl=$('toast');
-function toast(m){toastEl.textContent=m;toastEl.style.left='50%';toastEl.style.top='8px';toastEl.style.transform='translate(-50%,0)';toastEl.classList.add('show');toastIsPreview=false;clearTimeout(toastT);toastT=setTimeout(()=>toastEl.classList.remove('show'),1400);}
+let mtoastT; function mtoast(m){ const e=$('mtoast'); e.textContent=m; e.classList.add('show'); clearTimeout(mtoastT); mtoastT=setTimeout(()=>e.classList.remove('show'),1600); }
+function toast(m){ if(!$('meta').hidden){ mtoast(m); return; } toastEl.textContent=m;toastEl.style.left='50%';toastEl.style.top='8px';toastEl.style.transform='translate(-50%,0)';toastEl.classList.add('show');toastIsPreview=false;clearTimeout(toastT);toastT=setTimeout(()=>toastEl.classList.remove('show'),1400);}
 function showPreviewToast(m,r,c){ if(!m){ if(toastIsPreview) toastEl.classList.remove('show'); return; }
   const rect=cv.getBoundingClientRect(), wrap=$('boardwrap').getBoundingClientRect(), cs=rect.width/N;
   const x=rect.left-wrap.left+(vx(c)+.5)*cs, y=rect.top-wrap.top+vy(r)*cs-30;
@@ -1345,18 +1668,30 @@ function sfx(name){ const now=performance.now(); if(lastSfx[name]&&now-lastSfx[n
     case 'death': tone(300,0.15,'sawtooth',0.05,80); break;
     case 'kinghit': tone(110,0.22,'square',0.1,60); break;
     case 'wave': tone(523,0.08,'square',0.06); tone(784,0.12,'square',0.06,null,0.09); break;
+    case 'zap': tone(1400,0.06,'sawtooth',0.035,500); tone(900,0.05,'square',0.03,300,0.04); break;
+    case 'snipe': tone(1800,0.03,'square',0.05,200); tone(120,0.12,'triangle',0.05,60,0.02); break;
+    case 'chest': [392,523,659].forEach((f,i)=>tone(f,0.1,'square',0.06,null,i*0.08)); break;
+    case 'unlock': [523,659,784,1047,1319].forEach((f,i)=>tone(f,0.12,'square',0.07,null,i*0.09)); break;
+    case 'levelup': tone(660,0.08,'square',0.07); tone(990,0.14,'square',0.07,null,0.08); break;
     case 'win': [523,659,784,1047].forEach((f,i)=>tone(f,0.16,'square',0.08,null,i*0.12)); break;
     case 'lose': [392,330,262,196].forEach((f,i)=>tone(f,0.2,'sawtooth',0.07,null,i*0.15)); break;
   }}
 
-// ---- cards ----
+// ---- cards: the bar shows this match's deck (up to 6) ----
 const cardsEl=$('cards');
-for(const k of TKEYS){const d=TOWERS[k];const b=document.createElement('button');b.className='card frame';b.dataset.k=k;b.id='card-'+k;b.setAttribute('aria-label',`${d.name} ${d.cost}`);
-  const ic=document.createElement('canvas');ic.width=48;ic.height=48;const g=ic.getContext('2d');g.imageSmoothingEnabled=false;g.setTransform(2,0,0,2,0,0);drawSprite(g,frames(SPR[k])[0],0,0,'you');
-  b.appendChild(ic);
-  const cn=document.createElement('span');cn.className='cn';cn.textContent=d.name;b.appendChild(cn);
-  const cc=document.createElement('span');cc.className='cc';cc.textContent=d.cost;b.appendChild(cc);
-  cardsEl.appendChild(b);}
+let DECK_UI=[];
+function buildCards(deck,lvls){
+  DECK_UI=(deck||TKEYS.slice(0,6)).slice(0,6); cardsEl.textContent='';
+  for(let i=0;i<6;i++){ const k=DECK_UI[i];
+    if(!k){ const e=document.createElement('div'); e.className='card frame empty'; cardsEl.appendChild(e); continue; }
+    const d=TOWERS[k], b=document.createElement('button'); b.className='card frame'; b.dataset.k=k; b.id='card-'+k; b.setAttribute('aria-label',`${d.name} ${d.cost}`);
+    const ic=document.createElement('canvas');ic.width=48;ic.height=48;const g=ic.getContext('2d');g.imageSmoothingEnabled=false;g.setTransform(2,0,0,2,0,0);drawSprite(g,frames(SPR[k])[0],0,0,'you');
+    b.appendChild(ic);
+    const cn=document.createElement('span');cn.className='cn';cn.textContent=d.name;b.appendChild(cn);
+    const cc=document.createElement('span');cc.className='cc';cc.textContent=d.cost;b.appendChild(cc);
+    const lv=lvls&&lvls[k]; if(lv>1){ const l=document.createElement('span'); l.className='clv'; l.textContent='L'+lv; b.appendChild(l); }
+    cardsEl.appendChild(b); }
+}
 const ghost=$('ghost'), gctx=ghost.querySelector('canvas').getContext('2d');
 function ghostShow(type,x,y){gctx.setTransform(1,0,0,1,0,0);gctx.clearRect(0,0,48,48);gctx.imageSmoothingEnabled=false;gctx.setTransform(2,0,0,2,0,0);drawSprite(gctx,frames(SPR[type])[0],0,0,'you');ghost.style.display='block';ghost.style.transform=`translate(${x-24}px,${y-24}px)`;}
 function ghostHide(){ghost.style.display='none';}
@@ -1441,11 +1776,11 @@ for(const b of document.querySelectorAll('.rb')) b.addEventListener('click',()=>
 document.addEventListener('keydown',e=>{
   if(e.target&&(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')) return;
   if(e.target&&e.target.tagName==='BUTTON'&&(e.key===' '||e.key==='Enter')) return;
-  const i=parseInt(e.key,10); if(i>=1&&i<=6){S.sel=S.sel===TKEYS[i-1]?null:TKEYS[i-1];}
+  const i=parseInt(e.key,10); if(i>=1&&i<=6&&DECK_UI[i-1]){const k=DECK_UI[i-1]; S.sel=S.sel===k?null:k;}
   if(e.key==='Escape'){ S.sel=null;S.hover=null;closeMenu(); if(!codexEl.hidden) codexClose(); else { const r=$('btnResume'); if(r) r.click(); } }
   if(e.key===' '){e.preventDefault();togglePause();}
 });
-function togglePause(){ if(MODE==='pvp'||S.over||!$('overlay').hidden||!codexEl.hidden) return; S.running=!S.running; if(S.running) audioInit(); }
+function togglePause(){ if(MODE==='pvp'||(CTX&&CTX.noPause)||S.over||!$('overlay').hidden||!codexEl.hidden) return; S.running=!S.running; if(S.running) audioInit(); }
 $('pauseBtn').addEventListener('click',togglePause);
 $('muteBtn').addEventListener('click',e=>{muted=!muted;e.currentTarget.textContent=muted?'MUTED':'SFX';});
 
@@ -1464,30 +1799,6 @@ function panel(o){
 function hidePanel(){ PANELSEQ++; $('overlay').hidden=true; }
 function panelMsg(title,text,back){ panel({title,text,buttons:[{id:'btnBack',label:'뒤로',onClick:back||showMenu}]}); }
 function setSides(me){ ME=me; OPP=other(me); FLIP=me==='foe'; $('foeLbl').textContent=MODE==='pvp'?'RIVAL':'ENEMY · AI'; }
-
-function showMenu(){
-  leaveNet(); MODE='ai'; AI_SIDE='foe'; setSides('you'); uiRf=null;
-  S=newState(); refreshDist(); VFX.length=0; closeMenu();
-  panel({title:'TOWERCHESS',text:'병사는 자동으로 출격합니다. 타워로 길을 열어 상대 킹을 부수세요. 3분마다 마나 재생'+(SOLDIER_BOOST?'과 병사 능력치가 올라갑니다.':'이 빨라집니다.'),
-    buttons:[{id:'btnFriend',label:'친구 대전',onClick:showFriend},{id:'btnAI',label:'AI 대전',primary:true,onClick:startAI}]});
-}
-function startAI(){
-  audioInit(); leaveNet(); MODE='ai'; AI_SIDE='foe'; setSides('you'); uiRf=null;
-  S=newState(); refreshDist(); VFX.length=0; S.running=true; hidePanel(); closeMenu();
-}
-function showOver(){
-  const res=S.result, title=res==='win'?'VICTORY':res==='lose'?'DEFEAT':'DRAW';
-  const why=res==='draw'?'시간 종료, 킹 HP가 같습니다.':S.byKo?(res==='win'?'상대 킹을 무너뜨렸습니다.':'킹이 무너졌습니다.'):(res==='win'?'시간 종료, 킹 HP가 더 높습니다.':'시간 종료, 킹 HP가 더 낮습니다.');
-  const text=`${why} 웨이브 ${S.wave}, ${Math.floor(S.t/60)}분 ${Math.floor(S.t%60)}초.`;
-  if(MODE==='pvp'&&NET){
-    const gone=!!NET.goneAt, mine=NET.myRm===NET.match+1, theirs=NET.oppRm===NET.match+1;
-    panel({title,text,buttons:[{id:'btnMenu',label:'메인으로',onClick:showMenu},
-      {id:'btnRematch',label:mine?'상대 기다리는 중…':'재대결',primary:true,disabled:mine||gone,onClick:()=>{ if(!NET) return; NET.myRm=NET.match+1; setPres({rm:NET.myRm}); showOver(); pollOpp(); }}],
-      note:gone?'상대가 방을 나갔습니다.':theirs&&!mine?'상대가 재대결을 원합니다.':''});
-  } else {
-    panel({title,text,buttons:[{id:'btnMenu',label:'메인으로',onClick:showMenu},{id:'btnRestart',label:'다시 하기',primary:true,onClick:startAI}]});
-  }
-}
 
 // ---- friend match over the artifact's room (presence only: whole-object, re-sent, so a dropped update is never lost) ----
 // Lockstep: both screens run the same seeded simulation. An order made at tick k runs at tick k+D on both.
@@ -1520,14 +1831,14 @@ let NET=null, uiRf=null;
 const NET_D=8, NET_SEND_MS=window.TC_NET_SEND_MS||45;
 const CODE_CH='abcdefghjkmnpqrstuvwxyz23456789';
 const genCode=()=>Array.from({length:4},()=>CODE_CH[Math.floor(Math.random()*CODE_CH.length)]).join('');
-function newNet(role,room,code){ return {role,room,code,state:'init',match:0,seed:0,D:NET_D,myPeer:null,oppPeer:null,goneAt:0,joinedAt:performance.now(),unsubs:[],
+function newNet(role,room,code){ return {role,room,code,kind:'friend',n:10,myDk:null,myLv:null,oppDk:null,oppLv:null,oppName:'',state:'init',match:0,seed:0,D:NET_D,myPeer:null,oppPeer:null,goneAt:0,joinedAt:performance.now(),unsubs:[],
   seq:0,mine:[],peerAck:0,oppAckOfMine:0,peerF:-1,q:new Map(),pend:[],hashes:new Map(),peerHashes:new Map(),lastHash:null,desync:false,dirty:false,lastSend:0,stallSince:0,myRm:0,oppRm:0}; }
 function resetSync(){ Object.assign(NET,{seq:0,mine:[],peerAck:0,oppAckOfMine:0,peerF:-1,q:new Map(),pend:[],hashes:new Map(),peerHashes:new Map(),lastHash:null,desync:false,dirty:true,stallSince:0}); }
 function setPres(p){ if(!NET||!NET.room) return Promise.resolve(); try{ return NET.room.presence(p).catch(()=>{}); }catch(e){ return Promise.resolve(); } }
 function leaveNet(){ if(!NET) return; const n=NET; NET=null; for(const u of n.unsubs){ try{u();}catch(e){} } try{ n.room.leave().catch(()=>{}); }catch(e){} }
 
 async function showFriend(fromLink){
-  if(fromLink!==true) audioInit(); leaveNet();
+  if(fromLink!==true) audioInit(); leaveNet(); CTX={kind:'friend'}; RUN=null; hideMeta();
   if(ROOM===undefined){ panel({title:'연결 확인 중…',buttons:[{id:'btnBack',label:'뒤로',onClick:showMenu}]}); const seq=PANELSEQ; await roomP; if(seq!==PANELSEQ) return; }
   if(!ROOM){ showUnavailable(); return; }
   const body=document.createElement('div'); body.className='join';
@@ -1544,16 +1855,16 @@ async function connErr(e){
   const c=(e&&e.code)||'error'; DIAG.join=c;
   panel({title:'친구 대전에 연결할 수 없습니다',text:c==='not_permitted'||c==='not_granted'||/^auth\//.test(c)?TXT.connPerm:'잠시 후 다시 시도해 주세요.',buttons:[{id:'btnBack',label:'뒤로',onClick:showFriend}],note:await diagLine()});
 }
-function onRoomErr(){ if(!NET) return; if(NET.state==='play') oppGone('연결이 끊겼습니다'); else { leaveNet(); panelMsg('연결이 끊겼습니다','다시 시도해 주세요.',showFriend); } }
+function onRoomErr(){ if(!NET) return; if(NET.state==='play') oppGone('연결이 끊겼습니다'); else if(NET.kind!=='friend') rankedNoShow(); else { leaveNet(); panelMsg('연결이 끊겼습니다','다시 시도해 주세요.',showFriend); } }
 async function createRoom(){
   const code=genCode();
   panel({title:'방 만드는 중…',buttons:[{id:'btnBack',label:'취소',onClick:showFriend}]});
   const seq=PANELSEQ; let room;
   try{ room=await ROOM.join('tc-'+code); }catch(e){ if(seq===PANELSEQ) connErr(e); return; }
   if(seq!==PANELSEQ){ room.leave().catch(()=>{}); return; }
-  NET=newNet('h',room,code); NET.match=1; NET.seed=newSeed(); NET.state='wait';
+  NET=newNet('h',room,code); NET.match=1; NET.seed=newSeed(); NET.state='wait'; netLoadout(NET,'friend');
   NET.unsubs.push(room.onPeers(onPeersChange,onRoomErr));
-  setPres({v:1,r:'h',m:1,sd:NET.seed,st:'wait'});
+  setPres({v:1,r:'h',m:1,sd:NET.seed,st:'wait',...netCard(NET)});
   showHostWait();
 }
 function showHostWait(){
@@ -1574,9 +1885,9 @@ async function joinRoom(raw){
   const seq=PANELSEQ; let room;
   try{ room=await ROOM.join('tc-'+code); }catch(e){ if(seq===PANELSEQ) connErr(e); return; }
   if(seq!==PANELSEQ){ room.leave().catch(()=>{}); return; }
-  NET=newNet('g',room,code); NET.state='join';
+  NET=newNet('g',room,code); NET.state='join'; netLoadout(NET,'friend');
   NET.unsubs.push(room.onPeers(onPeersChange,onRoomErr));
-  setPres({v:1,r:'g',st:'join',m:0});
+  setPres({v:1,r:'g',st:'join',m:0,...netCard(NET)});
 }
 function onPeersChange(){
   if(!NET) return;
@@ -1599,14 +1910,14 @@ function handleOpp(pr){
     if(pr.r!=='h') return;
     if(pr.op&&NET.myPeer&&pr.op!==NET.myPeer){ if(NET.state==='join'||NET.state==='ready'){ leaveNet(); panelMsg('이미 대전 중인 방입니다','다른 코드로 입장하거나 방을 새로 만드세요.',showFriend); } return; }
     if(Number.isInteger(pr.m)&&Number.isInteger(pr.sd)&&pr.m>NET.match&&(NET.state==='join'||(NET.state==='over'&&NET.myRm===pr.m))){
-      NET.match=pr.m; NET.seed=pr.sd>>>0; resetSync(); NET.state='ready'; NET.myRm=0; NET.oppRm=0;
+      NET.match=pr.m; NET.seed=pr.sd>>>0; netReadOpp(pr); resetSync(); NET.state='ready'; NET.myRm=0; NET.oppRm=0;
       setPres({m:NET.match,st:'rdy',rm:null,f:null,a:null,c:null,h:null});
       readyPanel('상대와 연결됐습니다.');
     }
     if(NET.state==='ready'&&pr.st==='go'&&pr.m===NET.match) startNetMatch();
   } else {
     if(pr.r!=='g') return;
-    if(NET.state==='wait'&&pr.st==='rdy'&&pr.m===NET.match){ startNetMatch(); setPres({st:'go'}); }
+    if(NET.state==='wait'&&pr.st==='rdy'&&pr.m===NET.match){ netReadOpp(pr); startNetMatch(); setPres({st:'go'}); }
   }
   if(!NET) return;
   if(NET.state==='play'&&pr.m===NET.match) ingest(pr);
@@ -1620,14 +1931,28 @@ function handleOpp(pr){
     }
   }
 }
+// my deck/levels for a match kind (friend: my deck; outlaw: today's common deck); sent in presence as tower/level indices
+function netLoadout(net,kind){ const lo=metaLoadout(kind); net.kind=kind; net.n=lo.n; net.myDk=lo.deck; net.myLv=lo.lv; net.myName=lo.name; }
+function netCard(net){ return {n:net.n, dk:net.myDk.map(k=>TKEYS.indexOf(k)), lv:net.myDk.map(k=>net.myLv[k]||1), nm:net.myName}; }
+function netReadOpp(pr){
+  const dk=Array.isArray(pr.dk)?pr.dk.filter(i=>Number.isInteger(i)&&TKEYS[i]).slice(0,6).map(i=>TKEYS[i]):[];
+  NET.oppDk=dk.length?[...new Set(dk)]:BASIC.slice();
+  NET.oppLv={}; NET.oppDk.forEach((k,i)=>{ const v=Array.isArray(pr.lv)?pr.lv[i]:1; NET.oppLv[k]=Number.isInteger(v)?Math.max(1,Math.min(10,v)):1; });
+  NET.oppName=typeof pr.nm==='string'?pr.nm.slice(0,16):'';
+  if(NET.role==='g'&&Number.isInteger(pr.n)&&pr.n>=6&&pr.n<=10) NET.n=pr.n;
+}
 function startNetMatch(){
   MODE='pvp'; AI_SIDE=null; setSides(NET.role==='h'?'you':'foe');
-  S=newState(NET.seed); refreshDist(); VFX.length=0; resetSync(); NET.state='play'; uiRf=null;
-  S.running=true; hidePanel(); closeMenu(); S.sel=null; S.hover=null; sfx('wave');
+  const host=NET.role==='h', dkH=host?NET.myDk:NET.oppDk, dkG=host?NET.oppDk:NET.myDk, lvH=host?NET.myLv:NET.oppLv, lvG=host?NET.oppLv:NET.myLv;
+  S=newState(NET.seed,{n:NET.n,decks:{you:dkH,foe:dkG},lv:{you:lvH,foe:lvG}}); refreshDist(); VFX.length=0; resetSync(); NET.state='play'; uiRf=null;
+  buildCards(NET.myDk,NET.myLv); resize(); matchLabels();
+  S.running=true; hidePanel(); hideMeta(); closeMenu(); S.sel=null; S.hover=null; sfx('wave');
   pollOpp();
 }
 function oppGone(title){
-  if(!NET) return; NET.state='gone';
+  if(!NET) return;
+  if(NET.kind!=='friend'){ rankedOppGone(); return; }   // ranked/outlaw: the player who stays wins
+  NET.state='gone';
   panel({title:title||'상대 연결이 끊겼습니다',text:'AI가 상대 자리를 이어받아 계속하거나 메인으로 나갈 수 있습니다.',
     buttons:[{id:'btnMenu',label:'메인으로',onClick:showMenu},{id:'btnAIcont',label:'AI로 계속',primary:true,onClick:continueVsAI}]});
 }
@@ -1682,14 +2007,17 @@ function netPump(now){
 }
 function netWatch(now){
   if(!NET) return;
+  // ranked/outlaw: the paired player never showed up in the room -> play a bot instead
+  if(NET.kind!=='friend'&&(NET.state==='wait'||NET.state==='join'||NET.state==='ready')&&now-NET.joinedAt>12000){ rankedNoShow(); return; }
   if(NET.goneAt){
     const gone=now-NET.goneAt;
+    if(NET.kind!=='friend'&&NET.state!=='play'&&gone>3000){ rankedNoShow(); return; }
     if(NET.role==='h'&&NET.state==='wait'&&gone>3000){ NET.oppPeer=null; NET.goneAt=0; setPres({op:null}); showHostWait(); }
     else if(NET.role==='g'&&(NET.state==='join'||NET.state==='ready')&&gone>4000){ leaveNet(); panelMsg('호스트가 나갔습니다','방이 닫혔습니다.',showFriend); return; }
     else if(NET.state==='play'&&gone>8000){ oppGone(); return; }
   }
   if(NET.state==='play'&&NET.stallSince&&now-NET.stallSince>15000){ oppGone('상대가 응답하지 않습니다'); return; }
-  if(NET.role==='g'&&NET.state==='join'&&!NET.oppPeer&&now-NET.joinedAt>8000){ leaveNet(); panelMsg('방을 찾지 못했습니다','코드를 다시 확인해 주세요.',showFriend); }
+  if(NET.kind==='friend'&&NET.role==='g'&&NET.state==='join'&&!NET.oppPeer&&now-NET.joinedAt>8000){ leaveNet(); panelMsg('방을 찾지 못했습니다','코드를 다시 확인해 주세요.',showFriend); }
 }
 
 $('newBtn').addEventListener('click',()=>{ audioInit();
@@ -1698,8 +2026,8 @@ $('newBtn').addEventListener('click',()=>{ audioInit();
   const wasRunning=S.running; if(MODE!=='pvp') S.running=false; closeMenu(); S.sel=null; S.hover=null;
   const resume=()=>{ hidePanel(); if(MODE!=='pvp'&&wasRunning&&!S.over) S.running=true; };
   panel(MODE==='pvp'
-    ? {title:'대전 나가기',text:'대전을 그만두고 메인 화면으로 나갑니다.',buttons:[{id:'btnResume',label:'계속하기',onClick:resume},{id:'btnQuit',label:'나가기',primary:true,onClick:showMenu}]}
-    : {title:'NEW GAME?',text:'지금 판을 버리고 메인 화면으로 갑니다.',buttons:[{id:'btnResume',label:'계속하기',onClick:resume},{id:'btnQuit',label:'메인으로',primary:true,onClick:showMenu}]});
+    ? {title:'대전 나가기',text:CTX&&(CTX.kind==='ranked'||CTX.kind==='outlaw')?'지금 나가면 이 판은 진 것으로 처리됩니다.':'대전을 그만두고 로비로 나갑니다.',buttons:[{id:'btnResume',label:'계속하기',onClick:resume},{id:'btnQuit',label:'나가기',primary:true,onClick:quitMatch}]}
+    : {title:'나가기',text:CTX&&CTX.kind==='ranked'||CTX&&CTX.kind==='outlaw'?'지금 나가면 이 판은 진 것으로 처리됩니다.':'지금 판을 그만두고 로비로 갑니다.',buttons:[{id:'btnResume',label:'계속하기',onClick:resume},{id:'btnQuit',label:'나가기',primary:true,onClick:quitMatch}]});
 });
 
 // ---- portraits ----
@@ -1714,9 +2042,9 @@ function cxRender(){
   if(cxTab==='towers'){
     for(const k of TKEYS){const d=TOWERS[k];const it=document.createElement('div');it.className='cx-item';
       it.appendChild(spriteCanvas(frames(SPR[k])[0],'you',24));
-      const stat=[`HP ${d.hp}`, d.range?`사거리 ${d.range}`:null, d.dmg&&!d.slow?`피해 ${d.dmg} / ${d.cd}초`:null, d.splash?`범위 ${d.splash}칸`:null, d.slow?`둔화 ${Math.round(d.slow*100)}% · ${d.cd}초마다 피해 ${d.dmg}`:null, d.buff?`아군 +${Math.round(d.buff*100)}%`:null, d.heal?`초당 회복 ${d.heal}`:null, d.max?`동시 ${d.max}개`:null].filter(Boolean).join(' · ');
-      const up= k==='wall'||k==='banner'?'강화: HP +50%씩': k==='shrine'?'강화: 회복 +50%씩, 사거리 +0.25':'강화: 피해·HP +50%씩, 사거리 +0.25';
-      const t=document.createElement('div');t.innerHTML=`<div class="cx-title"><span class="cx-name">${d.name}</span><span class="cx-cost">${d.cost} MANA</span></div><div class="cx-stat">${stat}</div><div class="cx-desc">${d.desc} <span class="up">${up} (최대 3)</span></div>`;
+      const stat=[`HP ${d.hp}`, d.range?`사거리 ${d.range}`:null, d.dmg&&!d.slow?`피해 ${d.dmg} / ${d.cd}초`:null, d.splash?`범위 ${d.splash}칸`:null, d.chain?`최대 ${d.chain}명`:null, d.slow?`둔화 ${Math.round(d.slow*100)}% · ${d.cd}초마다 피해 ${d.dmg}`:null, d.heal?`초당 회복 ${d.heal}`:null, d.mana?`마나 +${d.mana}/초`:null, d.spawn?`${d.spawn}초마다 보병`:null, d.max?`동시 ${d.max}개`:null].filter(Boolean).join(' · ');
+      const src=BASIC.includes(k)?'기본 타워':`스테이지 ${UNLOCK_AT[k]} 해금`;
+      const t=document.createElement('div');t.innerHTML=`<div class="cx-title"><span class="cx-name">${d.name}</span><span class="cx-cost">${d.cost} MANA</span><span class="cx-src">${src}</span></div><div class="cx-stat">${stat}</div><div class="cx-desc">${d.desc} <span class="up">강화: ${d.up} (최대 3)</span></div>`;
       it.appendChild(t); cxBody.appendChild(it);}
   } else if(cxTab==='units'){
     for(const k of UKEYS){const d=SOLDIERS[k];const it=document.createElement('div');it.className='cx-item';
@@ -1727,7 +2055,7 @@ function cxRender(){
     const n=document.createElement('div');n.className='cx-rules';n.style.marginTop='8px';n.innerHTML='<p>웨이브는 14초마다 양쪽 킹 옆에서 자동 출격한다. 병사 종류 하나를 골라 두면 바꾸거나 끌 때까지 첫 웨이브부터 매 웨이브에 한 명씩 더 나간다. 기본 병력에도 첫 웨이브부터 네 종류가 섞여 나온다.'+(SOLDIER_BOOST?' 3분마다 새로 나오는 병사의 체력·공격이 마나 재생과 같은 배수(x2, x3 …)로 오른다.':'')+'</p>';cxBody.appendChild(n);
   } else {
     const r=document.createElement('div');r.className='cx-rules';
-    r.innerHTML='<p><b>승리</b> 상대 킹(HP 1000)을 부수면 승리. 시간 제한은 없다.</p><p><b>가속</b> 3분마다 마나 재생이 빨라진다(3분 x2, 6분 x3 …).'+(SOLDIER_BOOST?' 그때부터 나오는 병사의 체력·공격도 같은 배수로 오른다.':'')+'</p><p><b>마나</b> 최대 10, 초당 0.2 회복. 시작 마나 5.</p><p><b>설치</b> 내 진영 5줄과 아군 병사 주변 1칸의 빈 칸. 양쪽 킹 사이 길이 완전히 막히는 자리는 설치 불가.</p><p><b>강화</b> 같은 타워를 같은 칸에 다시 놓거나 타워 메뉴에서 강화. 최대 3레벨, 비용은 설치 비용과 같다.</p><p><b>판매</b> 쓴 마나의 25%를 돌려받는다.</p><p><b>친구 대전</b> 방을 만들어 4자리 코드를 알려 주면 친구가 같은 페이지에서 입장한다. 내 조작은 0.4초 뒤에 양쪽 화면에 함께 반영되고, 일시정지는 없다. 각자 화면에서는 자기 킹이 아래에 보인다.</p><p><b>조작</b> 카드 드래그 또는 카드 탭 → 칸 탭. 내 타워를 누르면 강화·판매 메뉴. 키보드 1~6 선택, 스페이스 일시정지.</p>';
+    r.innerHTML='<p><b>승리</b> 상대 킹(HP 1000)을 부수면 승리. 시간 제한은 없다.</p><p><b>가속</b> 3분마다 마나 재생이 빨라진다(3분 x2, 6분 x3 …).'+(SOLDIER_BOOST?' 그때부터 나오는 병사의 체력·공격도 같은 배수로 오른다.':'')+'</p><p><b>마나</b> 최대 10, 초당 0.2 회복. 시작 마나 5.</p><p><b>설치</b> 내 진영 절반과 아군 병사 주변 1칸의 빈 칸. 양쪽 킹 사이 길이 완전히 막히는 자리는 설치 불가.</p><p><b>강화</b> 같은 타워를 같은 칸에 다시 놓거나 타워 메뉴에서 강화. 최대 3레벨, 비용은 설치 비용과 같다.</p><p><b>카드 레벨</b> 로비의 덱 화면에서 카드와 골드로 올린다. 레벨이 1 오를 때마다 HP·피해·회복량·마나 증가량 +8%. 대전에도 각자의 레벨이 적용된다.</p><p><b>판매</b> 쓴 마나의 25%를 돌려받는다.</p><p><b>친구 대전</b> 방을 만들어 4자리 코드를 알려 주면 친구가 같은 페이지에서 입장한다. 내 조작은 0.4초 뒤에 양쪽 화면에 함께 반영되고, 일시정지는 없다. 각자 화면에서는 자기 킹이 아래에 보인다.</p><p><b>조작</b> 카드 드래그 또는 카드 탭 → 칸 탭. 내 타워를 누르면 강화·판매 메뉴. 키보드 1~6 선택, 스페이스 일시정지.</p>';
     cxBody.appendChild(r);
   }
 }
@@ -1763,12 +2091,357 @@ function frame(now){ let dt=(now-last)/1000; last=now; if(dt>0.25) dt=0.25;
   }
   netWatch(now); netPump(now);
   draw(); requestAnimationFrame(frame); }
+// ---- meta: profile, stages, deck, card levels, chests, shop, ranked, outlaw ----
+// Profile lives in this browser (localStorage) for now; ranked boards and matchmaking go through window.TC_FB when present.
+const PKEY='tc_profile_v1';
+const UNLOCK_AT={banner:2, shrine:4, lightning:7, sniper:11, well:16, barracks:22};
+const UNLOCK_BY={}; for(const k in UNLOCK_AT) UNLOCK_BY[UNLOCK_AT[k]]=k;
+const STAGE_COUNT=30, MAX_LV=10, OUTLAW_LV=5;
+const LV_CARDS=[0,2,4,10,20,50,100,200,400,800], LV_GOLD=[0,20,50,150,400,1000,2000,4000,8000,20000];
+const CHESTS={wood:{name:'나무 상자',cards:8,kinds:2,gold:20,gem:10}, silver:{name:'은 상자',cards:20,kinds:3,gold:60,gem:30}, gold:{name:'금 상자',cards:50,kinds:4,gold:200,gem:80}};
+const TIX={normal:{name:'일반',gem:5}, gold:{name:'골드',gem:15}, dia:{name:'다이아',gem:40}, outlaw:{name:'무법전',gem:80}};
+const TIERS={normal:{name:'일반 경쟁전',n:7,next:'gold'}, gold:{name:'골드 경쟁전',n:8,next:'dia'}, dia:{name:'다이아 경쟁전',n:10,next:'outlaw'}};
+const stageSize=n=>n<=3?6:n<=6?7:n<=9?8:n<=12?9:10;
+const isAtk=k=>!!TOWERS[k].dmg&&!TOWERS[k].slow;
+
+// stage n: board size, AI deck (basic towers + what is unlocked by then, at most 6), AI card level and thinking speed
+function stageDef(n){
+  let deck=TKEYS.filter(k=>BASIC.includes(k)||UNLOCK_AT[k]<=n);
+  if(deck.length>6){ const r=mulberry32(n*7919), extra=deck.filter(k=>k!=='arrow'&&k!=='cannon'); for(let i=extra.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[extra[i],extra[j]]=[extra[j],extra[i]];} deck=['arrow','cannon',...extra.slice(0,4)]; }
+  const aiLv=1+Math.floor((n-1)/4), lv={}; for(const k of deck) lv[k]=aiLv;
+  return {n,size:stageSize(n),deck,lv,aiLv,aiSlow:Math.round((1.8-(n-1)/29)*1000)/1000,kingHp:Math.min(KING_HP,300+25*n),aiCap:n<20?2+n:0,unlock:UNLOCK_BY[n]||null};
+}
+
+// ---- profile ----
+const NAME_A=['붉은','푸른','황금','은빛','검은','하얀','작은','거친'], NAME_B=['궁수','기사','성주','포병','마법사','창병','척후','방패'];
+const randName=()=>NAME_A[Math.floor(Math.random()*NAME_A.length)]+NAME_B[Math.floor(Math.random()*NAME_B.length)]+Math.floor(10+Math.random()*90);
+function defaultProfile(){ const cards={}; for(const k of BASIC) cards[k]={l:1,n:0}; return {v:1,name:randName(),gold:100,gems:50,stage:0,cards,deck:BASIC.slice(),tix:{normal:0,gold:0,dia:0,outlaw:0},best:{},claimed:{}}; }
+function sanitizeProfile(p){
+  const o=Object.assign(defaultProfile(),p);
+  o.cards=Object.assign({},o.cards); for(const k of BASIC) if(!o.cards[k]) o.cards[k]={l:1,n:0};
+  for(const k of Object.keys(o.cards)){ if(!TOWERS[k]){ delete o.cards[k]; continue; } const c=o.cards[k]; o.cards[k]={l:Math.max(1,Math.min(MAX_LV,c.l|0||1)),n:Math.max(0,c.n|0)}; }
+  o.deck=[...new Set((o.deck||[]).filter(k=>o.cards[k]))].slice(0,6); if(!o.deck.length) o.deck=BASIC.slice();
+  o.tix=Object.assign({normal:0,gold:0,dia:0,outlaw:0},o.tix||{}); for(const k in o.tix) o.tix[k]=Math.max(0,o.tix[k]|0);
+  o.gold=Math.max(0,o.gold|0); o.gems=Math.max(0,o.gems|0); o.stage=Math.max(0,Math.min(STAGE_COUNT,o.stage|0));
+  o.name=String(o.name||randName()).slice(0,12); o.best=o.best||{}; o.claimed=o.claimed||{};
+  return o;
+}
+function loadProfile(){ try{ const raw=localStorage.getItem(PKEY); if(raw){ const p=JSON.parse(raw); if(p&&p.v===1) return sanitizeProfile(p); } }catch(e){} return defaultProfile(); }
+let P=loadProfile();
+function saveP(){ try{ localStorage.setItem(PKEY,JSON.stringify(P)); }catch(e){} }
+const myLv=()=>{ const o={}; for(const k in P.cards) o[k]=P.cards[k].l; return o; };
+const avgLv=()=>{ const d=P.deck; return Math.max(1,Math.round(d.reduce((a,k)=>a+(P.cards[k]?P.cards[k].l:1),0)/Math.max(1,d.length))); };
+function randomDeck(){ const pool=TKEYS.slice(); for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];} let d=pool.slice(0,6); return fixAtk(d); }
+function fixAtk(d){ d=[...new Set(d)].slice(0,6); for(const k of ['arrow','cannon']){ if(d.filter(isAtk).length>=2) break; if(!d.includes(k)){ const i=d.findIndex(x=>!isAtk(x)); if(i>=0) d[i]=k; else if(d.length<6) d.push(k); } } return [...new Set(d)]; }
+
+// ---- periods (Korean time): week = ISO week starting Monday 00:00, day = date ----
+const KST=9*3600e3;
+function dayId(off=0){ return new Date(Date.now()+KST+off*864e5).toISOString().slice(0,10); }
+function weekId(off=0){ const k=new Date(Date.now()+KST+off*7*864e5), d=new Date(Date.UTC(k.getUTCFullYear(),k.getUTCMonth(),k.getUTCDate())); const dn=d.getUTCDay()||7; d.setUTCDate(d.getUTCDate()+4-dn);
+  const y0=new Date(Date.UTC(d.getUTCFullYear(),0,1)); return d.getUTCFullYear()+'-W'+String(Math.ceil(((d-y0)/864e5+1)/7)).padStart(2,'0'); }
+// today's outlaw deck: the same six for everyone, picked from the date
+function outlawDeck(day){ day=day||dayId(); let hh=2166136261>>>0; for(const ch of day) hh=Math.imul(hh^ch.charCodeAt(0),16777619)>>>0;
+  const r=mulberry32(hh), pool=TKEYS.slice(); for(let i=pool.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];} return fixAtk(pool.slice(0,6)); }
+// what I bring to a match of this kind (friend / normal / gold / dia / outlaw)
+function metaLoadout(kind){
+  if(kind==='outlaw'){ const deck=outlawDeck(), lv={}; for(const k of deck) lv[k]=OUTLAW_LV; return {n:10,deck,lv,name:P.name}; }
+  const deck=P.deck.slice(), all=myLv(), lv={}; for(const k of deck) lv[k]=all[k]||1;
+  return {n:TIERS[kind]?TIERS[kind].n:10,deck,lv,name:P.name};
+}
+
+// ---- rewards ----
+const newOut=()=>({gold:0,gems:0,cards:{},chests:[],tix:{},unlock:null});
+function openChest(type,out){
+  const c=CHESTS[type], pool=Object.keys(P.cards); for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
+  const kinds=pool.slice(0,Math.min(c.kinds,pool.length)); let left=c.cards;
+  kinds.forEach((k,i)=>{ const n=i===kinds.length-1?left:Math.min(left-(kinds.length-1-i),Math.max(1,Math.round(left*(0.25+Math.random()*0.3)))); left-=n; P.cards[k].n+=n; out.cards[k]=(out.cards[k]||0)+n; });
+  out.gold+=c.gold; out.chests.push(type);
+}
+function gain(out){ P.gold+=out.gold; P.gems+=out.gems; for(const k in out.tix) P.tix[k]=(P.tix[k]|0)+out.tix[k]; saveP(); }
+function stageReward(n,win){
+  const out=newOut(); out.tix.normal=1;
+  if(win){
+    if(n>P.stage){
+      P.stage=n; out.first=true;
+      const u=UNLOCK_BY[n]; if(u&&!P.cards[u]){ P.cards[u]={l:1,n:0}; out.unlock=u; if(P.deck.length<6) P.deck.push(u); }
+      out.gold+=30+10*n; let tier=n<=10?0:n<=20?1:2; if(n%5===0) tier=Math.min(2,tier+1); openChest(['wood','silver','gold'][tier],out);
+    } else out.gold+=5+2*n;
+  }
+  gain(out); return out;
+}
+const canLevel=k=>{ const c=P.cards[k]; return !!c&&c.l<MAX_LV&&c.n>=LV_CARDS[c.l]&&P.gold>=LV_GOLD[c.l]; };
+function levelUp(k){ if(!canLevel(k)) return false; const c=P.cards[k]; c.n-=LV_CARDS[c.l]; P.gold-=LV_GOLD[c.l]; c.l++; saveP(); sfx('levelup'); return true; }
+const RANK_REW={week:[[1,100,'gold'],[3,60,'gold'],[10,30,'silver'],[50,10,'wood'],[1e9,0,'wood']], day:[[1,50,'gold'],[3,30,'silver'],[10,15,'silver'],[50,5,'wood'],[1e9,0,'wood']]};
+function grantRank(kind,rank,per){
+  const row=RANK_REW[per].find(r=>rank<=r[0]), mul=kind==='gold'?2:kind==='dia'?3:1, out=newOut();
+  out.gems=row[1]*(per==='week'?mul:1); openChest(row[2],out); gain(out); return {kind,rank,out};
+}
+// last week's ranked boards and yesterday's outlaw board pay out once, the first time the lobby can reach the server
+async function claimPeriodRewards(){
+  const fb=window.TC_FB; if(!fb) return [];
+  const got=[], jobs=[...['normal','gold','dia'].map(k=>[k,weekId(-1),'week']),['outlaw',dayId(-1),'day']];
+  for(const [kind,period,per] of jobs){ const key=kind+'@'+period; if(P.best[key]==null||P.claimed[key]) continue;
+    let rank=null; try{ rank=await fb.lbRank(kind,period); }catch(e){ continue; }
+    if(rank==null) continue; P.claimed[key]=1; saveP(); got.push(grantRank(kind,rank,per)); }
+  return got;
+}
+
+// ---- context of the current match ----
+let CTX={kind:'free'}, RUN=null;
+function hideMeta(){ $('meta').hidden=true; }
+function matchLabels(){
+  const pvpName=MODE==='pvp'&&NET&&NET.oppName;
+  $('foeLbl').textContent= CTX.kind==='stage'?`STAGE ${CTX.stage}`
+    : CTX.kind==='ranked'||CTX.kind==='outlaw'?(pvpName||(CTX.oppName?CTX.oppName:'RIVAL'))
+    : MODE==='pvp'?(pvpName||'RIVAL'):'ENEMY · AI';
+}
+function beginAI(cfg){
+  audioInit(); leaveNet(); MODE='ai'; AI_SIDE='foe'; setSides('you'); uiRf=null;
+  S=newState(null,cfg); refreshDist(); VFX.length=0; buildCards(cfg.decks.you,cfg.lv.you); resize(); matchLabels();
+  S.running=true; hidePanel(); hideMeta(); closeMenu(); S.sel=null; S.hover=null;
+}
+function startStage(n){ n=Math.max(1,Math.min(STAGE_COUNT,n)); const sd=stageDef(n); CTX={kind:'stage',stage:n};
+  beginAI({n:sd.size,decks:{you:P.deck.slice(),foe:sd.deck},lv:{you:myLv(),foe:sd.lv},aiSlow:sd.aiSlow,aiCap:sd.aiCap,kingHp:{foe:sd.kingHp}}); }
+function startAI(){ CTX={kind:'free'}; const deck=randomDeck(), a=avgLv(), lv={}; for(const k of deck) lv[k]=a;
+  beginAI({n:10,decks:{you:P.deck.slice(),foe:deck},lv:{you:myLv(),foe:lv},aiSlow:1}); }
+function showMenu(){
+  leaveNet(); MODE='ai'; AI_SIDE='foe'; setSides('you'); uiRf=null; CTX={kind:'free'}; if(RUN) RUN.cancelled=true; RUN=null;
+  S=newState(null,{n:10}); refreshDist(); VFX.length=0; closeMenu(); buildCards(P.deck,myLv()); resize();
+  hidePanel(); metaHome();
+}
+function quitMatch(){
+  if(CTX.kind==='ranked'||CTX.kind==='outlaw'){ if(MODE==='pvp') leaveNet(); if(S){S.over=true;S.running=false;} runMatchOver(false,{quit:true}); return; }
+  showMenu();
+}
+function showOver(){
+  if(CTX.kind==='stage') return stageOver();
+  if(CTX.kind==='ranked'||CTX.kind==='outlaw') return runMatchOver(S.result==='win',{});
+  const res=S.result, title=res==='win'?'VICTORY':res==='lose'?'DEFEAT':'DRAW';
+  const text=`${res==='draw'?'두 킹이 함께 무너졌습니다.':res==='win'?'상대 킹을 무너뜨렸습니다.':'킹이 무너졌습니다.'} 웨이브 ${S.wave}, ${Math.floor(S.t/60)}분 ${Math.floor(S.t%60)}초.`;
+  if(MODE==='pvp'&&NET){
+    const gone=!!NET.goneAt, mine=NET.myRm===NET.match+1, theirs=NET.oppRm===NET.match+1;
+    panel({title,text,buttons:[{id:'btnMenu',label:'로비',onClick:showMenu},
+      {id:'btnRematch',label:mine?'상대 기다리는 중…':'재대결',primary:true,disabled:mine||gone,onClick:()=>{ if(!NET) return; NET.myRm=NET.match+1; setPres({rm:NET.myRm}); showOver(); pollOpp(); }}],
+      note:gone?'상대가 방을 나갔습니다.':theirs&&!mine?'상대가 재대결을 원합니다.':''});
+  } else panel({title,text,buttons:[{id:'btnMenu',label:'로비',onClick:showMenu},{id:'btnRestart',label:'다시 하기',primary:true,onClick:startAI}]});
+}
+function stageOver(){
+  const n=CTX.stage, win=S.result==='win', out=stageReward(n,win), btns=[];
+  if(win&&n<STAGE_COUNT) btns.push({id:'btnNextStage',label:`스테이지 ${n+1}`,primary:true,on:()=>startStage(n+1)});
+  btns.push({id:'btnRetry',label:win?'다시 하기':'다시 도전',primary:!win,on:()=>startStage(n)});
+  btns.push({id:'btnLobby',label:'로비',on:showMenu});
+  metaResult({title:win?'VICTORY':'DEFEAT',sub:`스테이지 ${n} · ${S.n}×${S.n}`+(win&&out.first?' · 첫 클리어':''),out,btns});
+}
+
+// ---- ranked & outlaw: one ticket = a win streak that ends at the first loss ----
+function startRun(kind){
+  if((P.tix[kind]|0)<1){ toast('티켓이 없습니다'); sfx('error'); return; }
+  P.tix[kind]--; const period=kind==='outlaw'?dayId():weekId(), key=kind+'@'+period;
+  if(P.best[key]==null){ P.best[key]=0; if(window.TC_FB) window.TC_FB.lbSubmit(kind,period,0,P.name).catch(()=>{}); }
+  saveP(); RUN={kind,period,wins:0,played:0,cancelled:false}; nextRunMatch();
+}
+const runCtx=bot=>({kind:RUN.kind==='outlaw'?'outlaw':'ranked',noPause:true,bot:!!bot});
+async function nextRunMatch(){
+  const run=RUN; if(!run) return;
+  CTX=runCtx(false); const lo=metaLoadout(run.kind);
+  metaSearching(run);
+  let res={bot:true};
+  if(window.TC_FB&&PROVIDER){
+    try{ await roomP; if(ROOM){ window.TC_FB.pushDeck(run.kind,{d:lo.deck.map(k=>TKEYS.indexOf(k)),l:lo.deck.map(k=>lo.lv[k]||1),n:P.name}).catch(()=>{});
+      res=await window.TC_FB.findMatch(run.kind,{name:P.name},10000,run); } }catch(e){ res={bot:true}; }
+  }
+  if(RUN!==run||run.cancelled) return;
+  if(res.role) return netStartRanked(res.role,res.code);
+  startBotMatch();
+}
+async function netStartRanked(role,code){
+  const run=RUN; let room;
+  try{ room=await ROOM.join('tc-'+code); }catch(e){ if(RUN===run) startBotMatch(); return; }
+  if(RUN!==run||run.cancelled){ room.leave().catch(()=>{}); return; }
+  leaveNet(); NET=newNet(role,room,code); netLoadout(NET,run.kind); NET.unsubs.push(room.onPeers(onPeersChange,onRoomErr));
+  if(role==='h'){ NET.match=1; NET.seed=newSeed(); NET.state='wait'; setPres({v:1,r:'h',m:1,sd:NET.seed,st:'wait',...netCard(NET)}); }
+  else { NET.state='join'; setPres({v:1,r:'g',st:'join',m:0,...netCard(NET)}); }
+}
+function rankedNoShow(){ if(!RUN) { leaveNet(); showMenu(); return; } leaveNet(); startBotMatch(); }
+function rankedOppGone(){ leaveNet(); if(S&&!S.over){ S.over=true; S.running=false; } toast('상대가 나가서 승리했습니다'); runMatchOver(true,{forfeit:true}); }
+async function startBotMatch(){
+  const run=RUN; if(!run) return; const lo=metaLoadout(run.kind);
+  let deck=null, lv=null, name='';
+  if(run.kind==='outlaw'){ deck=outlawDeck(); lv={}; for(const k of deck) lv[k]=OUTLAW_LV; }
+  else { let o=null; if(window.TC_FB&&ROOM){ try{ o=await window.TC_FB.pickDeck(run.kind); }catch(e){} }
+    if(o&&Array.isArray(o.d)){ deck=[...new Set(o.d.filter(i=>Number.isInteger(i)&&TKEYS[i]).map(i=>TKEYS[i]))].slice(0,6); lv={}; deck.forEach((k,i)=>{ lv[k]=Math.max(1,Math.min(MAX_LV,(Array.isArray(o.l)?o.l[i]:1)|0||1)); }); name=String(o.n||'').slice(0,12); }
+    if(!deck||!deck.length){ deck=randomDeck(); const a=avgLv(); lv={}; for(const k of deck) lv[k]=a; } }
+  if(RUN!==run||run.cancelled) return;
+  CTX=runCtx(true); CTX.oppName=name||'RIVAL';
+  beginAI({n:lo.n,decks:{you:lo.deck,foe:deck},lv:{you:lo.lv,foe:lv},aiSlow:Math.max(0.6,1-run.wins*0.04)});
+}
+function recordBest(run){ const key=run.kind+'@'+run.period; if(run.wins>(P.best[key]|0)){ P.best[key]=run.wins; saveP(); if(window.TC_FB) window.TC_FB.lbSubmit(run.kind,run.period,run.wins,P.name).catch(()=>{}); } }
+function runMatchOver(win,opts){
+  const run=RUN; if(MODE==='pvp') leaveNet(); if(!run){ showMenu(); return; }
+  run.played++; const out=newOut(); const next=run.kind==='outlaw'?null:TIERS[run.kind].next; if(next) out.tix[next]=1;
+  if(win){ run.wins++; recordBest(run); }
+  gain(out);
+  const tname=run.kind==='outlaw'?'무법전':TIERS[run.kind].name, best=P.best[run.kind+'@'+run.period]|0;
+  const why=opts.forfeit?'상대가 나갔습니다.':opts.quit?'도전을 그만뒀습니다.':'';
+  if(win) metaResult({title:`${run.wins}연승`,sub:`${tname} · ${why||'승리'} · ${run.kind==='outlaw'?'오늘':'이번 주'} 최고 ${best}연승`,out,
+    btns:[{id:'btnNextMatch',label:'다음 판',primary:true,on:()=>nextRunMatch()},{id:'btnEndRun',label:'그만하기',on:()=>{ RUN=null; showMenu(); }}]});
+  else { RUN=null; metaResult({title:'도전 종료',sub:`${tname} · ${why||'패배'} · 기록 ${run.wins}연승 · ${run.kind==='outlaw'?'오늘':'이번 주'} 최고 ${best}연승`,out,
+    btns:[{id:'btnRunAgain',label:'다시 도전',primary:(P.tix[run.kind]|0)>0,disabled:(P.tix[run.kind]|0)<1,on:()=>startRun(run.kind)},{id:'btnLobby',label:'로비',on:showMenu}]}); }
+}
+
+// ---- screens ----
+function el(tag,attrs,...kids){
+  const e=document.createElement(tag);
+  if(attrs) for(const k in attrs){ const v=attrs[k]; if(v==null||v===false) continue;
+    if(k==='class') e.className=v; else if(k==='text') e.textContent=v; else if(k==='on') for(const ev in v) e.addEventListener(ev,v[ev]); else e.setAttribute(k,v===true?'':v); }
+  for(const c of kids.flat()) if(c!=null&&c!==false) e.appendChild(typeof c==='object'?c:document.createTextNode(String(c)));
+  return e;
+}
+function towerIcon(k,cls){ const c=document.createElement('canvas'); c.width=48; c.height=48; c.className=cls||'ti'; const g=c.getContext('2d'); g.imageSmoothingEnabled=false; g.setTransform(2,0,0,2,0,0); drawSprite(g,frames(SPR[k])[0],0,0,'you'); return c; }
+function mbtn(label,on,o){ o=o||{}; return el('button',{class:'btn'+(o.primary?' primary':'')+(o.sm?' sm':''),id:o.id,disabled:o.disabled,on:{click:()=>{ audioInit(); on(); }}},label); }
+function resBar(){
+  return el('div',{class:'res frame'},
+    el('div',{class:'cur'},el('span',{class:'coin'}),el('b',{id:'resGold'},P.gold)),
+    el('div',{class:'cur'},el('span',{class:'gem'}),el('b',{id:'resGems'},P.gems)),
+    el('div',{class:'tixs'},...Object.keys(TIX).map(k=>el('span',{class:'tx t-'+k,title:TIX[k].name+' 티켓'},TIX[k].name,' ',el('b',null,P.tix[k]|0)))));
+}
+function metaRender(...kids){ const m=$('meta'); m.textContent=''; m.appendChild(el('div',{class:'mw'},...kids)); hidePanel(); m.hidden=false; m.scrollTop=0; }
+const backBtn=()=>el('div',{class:'mback'},mbtn('뒤로',metaHome,{id:'btnMetaBack'}));
+
+function metaHome(){
+  const next=Math.min(STAGE_COUNT,P.stage+1), sd=stageDef(next), done=P.stage>=STAGE_COUNT;
+  metaRender(resBar(),
+    el('h1',{class:'mtitle'},'TOWERCHESS'),
+    el('div',{class:'hero frame'},
+      el('div',{class:'lbl'},done?'모든 스테이지 클리어':'다음 스테이지'),
+      el('div',{class:'big'},`STAGE ${next}`),
+      el('div',{class:'sub'},`${sd.size}×${sd.size} 필드`+(sd.unlock&&!P.cards[sd.unlock]?` · 깨면 ${TOWERS[sd.unlock].name} 해금`:'')),
+      el('div',{class:'row'},mbtn('스테이지 목록',metaStages,{id:'btnStages'}),mbtn(done?'다시 하기':'시작',()=>startStage(next),{primary:true,id:'btnStage'}))),
+    el('div',{class:'grid2'},
+      mbtn('덱 · 타워',()=>metaDeck(),{id:'btnDeck'}),
+      mbtn('경쟁전',metaRanked,{id:'btnRanked'}),
+      mbtn('무법전',metaOutlaw,{id:'btnOutlaw'}),
+      mbtn('상점',metaShop,{id:'btnShop'}),
+      mbtn('친구 대전',()=>{ CTX={kind:'friend'}; hideMeta(); showFriend(); },{id:'btnFriend'}),
+      mbtn('AI 연습',startAI,{id:'btnAI'})),
+    el('div',{class:'mfoot'},el('span',null,P.name),mbtn('도감',()=>codexOpen(),{sm:true,id:'btnCodex'})));
+  claimPeriodRewards().then(got=>{ if(!got.length) return; const g=got[0]; const tn=g.kind==='outlaw'?'무법전 (어제)':TIERS[g.kind].name+' (지난주)';
+    metaResult({title:'랭킹 보상',sub:`${tn} ${g.rank}위`,out:g.out,btns:[{id:'btnRewardOk',label:'확인',primary:true,on:metaHome}]}); }).catch(()=>{});
+}
+function metaStages(){
+  const next=Math.min(STAGE_COUNT,P.stage+1);
+  const grid=el('div',{class:'stg'});
+  for(let n=1;n<=STAGE_COUNT;n++){ const lock=n>next, clr=n<=P.stage, u=UNLOCK_BY[n];
+    grid.appendChild(el('button',{class:'sbtn'+(clr?' clr':'')+(n===next&&!clr?' cur':'')+(lock?' lock':''),id:'stage-'+n,disabled:lock,on:{click:()=>startStage(n)}},
+      el('span',{class:'sn'},n),el('span',{class:'ss'},stageSize(n)+'×'+stageSize(n)),u?el('span',{class:'su'},TOWERS[u].name):null)); }
+  metaRender(resBar(),el('h2',{class:'mh'},'스테이지'),el('p',{class:'mnote'},'깬 스테이지는 다시 할 수 있고, 한 판마다 일반 경쟁전 티켓 1장을 받습니다.'),grid,backBtn());
+}
+function metaDeck(sel){
+  const deckRow=el('div',{class:'deck6'});
+  for(let i=0;i<6;i++){ const k=P.deck[i];
+    deckRow.appendChild(k?el('button',{class:'slot frame'+(sel===k?' sel':''),id:'slot-'+i,on:{click:()=>metaDeck(k)}},towerIcon(k),el('span',{class:'lv'},'L'+P.cards[k].l))
+                         :el('div',{class:'slot frame empty'},'+')); }
+  const coll=el('div',{class:'coll'});
+  for(const k of TKEYS){ const c=P.cards[k];
+    if(!c){ coll.appendChild(el('div',{class:'tcard frame locked'},towerIcon(k),el('span',{class:'tn'},TOWERS[k].name),el('span',{class:'tl'},`스테이지 ${UNLOCK_AT[k]}`))); continue; }
+    const need=LV_CARDS[c.l]||0, pct=c.l>=MAX_LV?100:Math.min(100,Math.round(c.n/Math.max(1,need)*100));
+    coll.appendChild(el('button',{class:'tcard frame'+(P.deck.includes(k)?' indeck':'')+(sel===k?' sel':'')+(canLevel(k)?' canup':''),id:'tc-'+k,on:{click:()=>metaDeck(k)}},
+      towerIcon(k),el('span',{class:'tn'},TOWERS[k].name),el('span',{class:'lv'},'L'+c.l),
+      el('span',{class:'prog'},el('i',{style:`width:${pct}%`})),el('span',{class:'tl'},c.l>=MAX_LV?'MAX':`${c.n}/${need}`))); }
+  let detail=null;
+  if(sel&&P.cards[sel]){
+    const k=sel, c=P.cards[k], d=TOWERS[k], inD=P.deck.includes(k), mul=cardMul(c.l), nmul=cardMul(c.l+1);
+    const stats=[`HP ${Math.round(d.hp*mul)}`, d.dmg?`피해 ${Math.round(d.dmg*mul)}`:null, d.heal?`회복 ${Math.round(d.heal*mul*10)/10}`:null, d.mana?`마나 +${Math.round(d.mana*mul*1000)/1000}/초`:null, d.range?`사거리 ${d.range}`:null, `비용 ${d.cost}`].filter(Boolean).join(' · ');
+    const lvTxt=c.l>=MAX_LV?'최대 레벨':`레벨업: 카드 ${c.n}/${LV_CARDS[c.l]} · 골드 ${LV_GOLD[c.l]} → HP·피해 ${Math.round((nmul/mul-1)*1000)/10}% 증가`;
+    detail=el('div',{class:'detail frame'},
+      el('div',{class:'dh'},towerIcon(k),el('div',null,el('div',{class:'dn'},`${d.name} L${c.l}`),el('div',{class:'ds'},stats))),
+      el('p',{class:'dd'},d.desc),el('p',{class:'dl'},lvTxt),
+      el('div',{class:'row'},
+        inD?mbtn('덱에서 빼기',()=>{ if(P.deck.length<=1){ toast('덱에 한 개는 있어야 합니다'); return; } P.deck=P.deck.filter(x=>x!==k); saveP(); metaDeck(k); },{id:'btnDeckOut'})
+           :mbtn(P.deck.length>=6?'덱이 가득 찼습니다':'덱에 넣기',()=>{ P.deck.push(k); saveP(); metaDeck(k); },{id:'btnDeckIn',disabled:P.deck.length>=6}),
+        mbtn(c.l>=MAX_LV?'MAX':'레벨업',()=>{ if(levelUp(k)) metaDeck(k); },{id:'btnLevelUp',primary:canLevel(k),disabled:!canLevel(k)})));
+  }
+  metaRender(resBar(),el('h2',{class:'mh'},`덱 ${P.deck.length}/6`),deckRow,detail,el('h2',{class:'mh'},'타워'),coll,
+    el('p',{class:'mnote'},'타워를 누르면 덱에 넣고 빼거나 레벨을 올릴 수 있습니다. 카드는 상자에서 나옵니다.'),backBtn());
+}
+function lbBox(kind,period){
+  const box=el('ol',{class:'lb'},el('li',{class:'muted'},'순위 불러오는 중…'));
+  if(!window.TC_FB){ box.textContent=''; box.appendChild(el('li',{class:'muted'},'이 화면에서는 순위를 볼 수 없습니다.')); return box; }
+  window.TC_FB.lbTop(kind,period,10).then(rows=>{ box.textContent='';
+    if(!rows.length) box.appendChild(el('li',{class:'muted'},'아직 기록이 없습니다.'));
+    rows.forEach((r,i)=>box.appendChild(el('li',{class:r.me?'me':null},el('span',null,`${i+1}. ${r.n}`),el('b',null,`${r.b}연승`)))); })
+   .catch(()=>{ box.textContent=''; box.appendChild(el('li',{class:'muted'},'순위를 불러오지 못했습니다.')); });
+  return box;
+}
+function nameRow(back){
+  const inp=el('input',{class:'nm',id:'nameIn',maxlength:'12',value:P.name,'aria-label':'내 이름'});
+  return el('div',{class:'namerow'},el('span',{class:'lbl'},'내 이름'),inp,mbtn('저장',()=>{ const v=inp.value.trim().slice(0,12); if(v){ P.name=v; saveP(); toast('이름을 바꿨습니다'); back(); } },{sm:true,id:'btnName'}));
+}
+function metaRanked(){
+  const wk=weekId(), rows=[];
+  for(const k of Object.keys(TIERS)){ const t=TIERS[k], tix=P.tix[k]|0, best=P.best[k+'@'+wk];
+    rows.push(el('div',{class:'tier frame t-'+k},
+      el('div',{class:'th'},el('b',null,t.name),el('span',null,`${t.n}×${t.n}`)),
+      el('div',{class:'tm'},`티켓 ${tix}장 · 이번 주 최고 ${best==null?'-':best+'연승'} · 판마다 ${TIX[t.next].name} 티켓`),
+      el('div',{class:'row'},mbtn('도전',()=>startRun(k),{primary:tix>0,disabled:tix<1,id:'btnRun-'+k})),
+      lbBox(k,wk))); }
+  metaRender(resBar(),el('h2',{class:'mh'},'경쟁전'),el('p',{class:'mnote'},'티켓 1장으로 연승 도전을 시작해 질 때까지 이어 갑니다. 상대는 실시간으로 찾고, 10초 안에 없으면 다른 플레이어의 덱을 쓰는 AI와 붙습니다. 주간 최고 연승으로 순위를 매깁니다.'),
+    ...rows,nameRow(metaRanked),backBtn());
+}
+function metaOutlaw(){
+  const day=dayId(), deck=outlawDeck(day), tix=P.tix.outlaw|0, best=P.best['outlaw@'+day];
+  metaRender(resBar(),el('h2',{class:'mh'},'무법전'),
+    el('p',{class:'mnote'},'오늘의 공통 덱 6개를 모두 레벨 5로 씁니다. 10×10 필드, 실시간 연승 도전, 오늘 최고 연승으로 순위를 매기고 매일 초기화됩니다.'),
+    el('div',{class:'deck6'},...deck.map(k=>el('div',{class:'slot frame'},towerIcon(k),el('span',{class:'lv'},'L'+OUTLAW_LV)))),
+    el('div',{class:'tier frame t-outlaw'},
+      el('div',{class:'tm'},`무법전 티켓 ${tix}장 · 오늘 최고 ${best==null?'-':best+'연승'}`),
+      el('div',{class:'row'},mbtn('도전',()=>startRun('outlaw'),{primary:tix>0,disabled:tix<1,id:'btnRun-outlaw'})),
+      lbBox('outlaw',day)),
+    nameRow(metaOutlaw),backBtn());
+}
+function metaShop(){
+  const buy=(cost,fn)=>{ if(P.gems<cost){ toast('보석이 부족합니다'); sfx('error'); return; } P.gems-=cost; fn(); };
+  const chests=el('div',{class:'shop'},...Object.keys(CHESTS).map(k=>{ const c=CHESTS[k];
+    return el('button',{class:'item frame',id:'buy-'+k,on:{click:()=>buy(c.gem,()=>{ const out=newOut(); openChest(k,out); gain(out); sfx('chest'); metaResult({title:c.name,sub:'상자를 열었습니다',out,btns:[{id:'btnShopAgain',label:'상점',primary:true,on:metaShop},{id:'btnLobby',label:'로비',on:metaHome}]}); })}},
+      el('span',{class:'chest c-'+k}),el('b',null,c.name),el('span',{class:'muted'},`카드 ${c.cards}장 · 골드 ${c.gold}`),el('span',{class:'price'},el('span',{class:'gem'}),c.gem)); }));
+  const tix=el('div',{class:'shop shop4'},...Object.keys(TIX).map(k=>el('button',{class:'item frame',id:'buyt-'+k,on:{click:()=>buy(TIX[k].gem,()=>{ P.tix[k]=(P.tix[k]|0)+1; saveP(); sfx('place'); toast(`${TIX[k].name} 티켓 +1`); metaShop(); })}},
+      el('b',null,`${TIX[k].name} 티켓`),el('span',{class:'price'},el('span',{class:'gem'}),TIX[k].gem))));
+  metaRender(resBar(),el('h2',{class:'mh'},'상점'),el('h3',{class:'mh3'},'카드 상자'),chests,el('h3',{class:'mh3'},'티켓'),tix,
+    el('div',{class:'row'},mbtn('테스트: 보석 +100',()=>{ P.gems+=100; saveP(); metaShop(); },{sm:true,id:'btnGemTest'})),backBtn());
+}
+function rewardList(out){
+  const box=el('div',{class:'reward'});
+  if(out.unlock) box.appendChild(el('div',{class:'unlock frame'},towerIcon(out.unlock,'big'),el('b',null,`새 타워 해금: ${TOWERS[out.unlock].name}`),el('span',{class:'muted'},P.deck.includes(out.unlock)?'덱에 들어갔습니다':'덱 화면에서 넣을 수 있습니다')));
+  const items=el('div',{class:'items'});
+  if(out.gold) items.appendChild(el('div',{class:'it'},el('span',{class:'coin'}),`+${out.gold}`));
+  if(out.gems) items.appendChild(el('div',{class:'it'},el('span',{class:'gem'}),`+${out.gems}`));
+  for(const k in out.tix) if(out.tix[k]) items.appendChild(el('div',{class:'it tk'},`${TIX[k].name} 티켓 +${out.tix[k]}`));
+  for(const c of out.chests) items.appendChild(el('div',{class:'it'},el('span',{class:'chest c-'+c}),CHESTS[c].name));
+  for(const k in out.cards) items.appendChild(el('div',{class:'it card1'},towerIcon(k),`+${out.cards[k]}`));
+  if(items.childNodes.length) box.appendChild(items);
+  return box;
+}
+function metaResult(o){
+  if(o.out&&(o.out.unlock)) sfx('unlock'); else if(o.out&&o.out.chests.length) sfx('chest');
+  metaRender(resBar(),el('div',{class:'result frame'},el('h2',{class:'rt'},o.title),el('p',{class:'rs'},o.sub||''),o.out?rewardList(o.out):null,
+    el('div',{class:'row wrap'},...(o.btns||[]).map(b=>mbtn(b.label,b.on,{primary:b.primary,id:b.id,disabled:b.disabled})))));
+}
+function metaSearching(run){
+  const t0=performance.now(), cnt=el('b',{id:'searchSec'},'10');
+  const tname=run.kind==='outlaw'?'무법전':TIERS[run.kind].name;
+  metaRender(resBar(),el('div',{class:'result frame'},el('h2',{class:'rt'},'상대 찾는 중'),el('p',{class:'rs'},`${tname} · ${run.wins}연승 중`),el('p',{class:'big'},cnt),
+    el('div',{class:'row'},mbtn('취소',()=>{ run.cancelled=true; if(run.abort) try{ run.abort(); }catch(e){} if(run.played===0){ P.tix[run.kind]=(P.tix[run.kind]|0)+1; saveP(); } RUN=null; showMenu(); },{id:'btnCancelSearch'}))));
+  const tick=()=>{ if(RUN!==run||run.cancelled||!$('searchSec')) return; const left=Math.max(0,10-Math.floor((performance.now()-t0)/1000)); $('searchSec').textContent=left; if(left>0) setTimeout(tick,250); };
+  tick();
+}
+// ---- boot ----
 showMenu();
 // standalone build: an invite link (?room=CODE) opens straight into that room
 (()=>{ let q=null; try{ q=new URLSearchParams(location.search).get('room'); }catch(e){} if(q&&/^[a-z0-9]{4}$/i.test(q)) roomP.then(async()=>{ await showFriend(true); if(ROOM) joinRoom(q); }); })();
-if(TEST) window.__TC={ get S(){return S;}, get NET(){return NET;}, get MODE(){return MODE;}, get ME(){return ME;}, hash:()=>stateHash(),
+if(TEST) window.__TC={ get S(){return S;}, get NET(){return NET;}, get MODE(){return MODE;}, get ME(){return ME;}, get P(){return P;}, get CTX(){return CTX;}, get RUN(){return RUN;}, hash:()=>stateHash(),
   doPlace, doRf, doSell:(r,c)=>{const t=towerAt(r,c); if(t&&t.side===ME) doSell(t);}, doUpgrade:(r,c)=>{const t=towerAt(r,c); if(t&&t.side===ME) doUpgrade(t);},
-  ownCells:()=>{ const out=[]; for(let r=0;r<N;r++) for(let c=0;c<N;c++) if(ownHalf(ME,r)&&!blocked(r,c)) out.push([r,c]); return out; }, vfxCount:()=>VFX.length };
+  ownCells:()=>{ const out=[]; for(let r=0;r<N;r++) for(let c=0;c<N;c++) if(ownHalf(ME,r)&&!blocked(r,c)) out.push([r,c]); return out; }, vfxCount:()=>VFX.length,
+  startStage, startRun, stageDef, metaHome, setProfile:p=>{ P=sanitizeProfile(p); saveP(); }, endNow:w=>{ if(S&&!S.over) endGame(w?ME:OPP); } };
 requestAnimationFrame(frame);
 })();
 </script>

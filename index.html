@@ -52,8 +52,9 @@ canvas#c{display:block;box-sizing:content-box;image-rendering:pixelated;image-re
 .bottom{display:flex;flex-direction:column;gap:8px}
 .mana{display:flex;align-items:center;gap:8px;padding:4px 8px}
 .segs{flex:1;display:grid;grid-template-columns:repeat(10,1fr);gap:3px}
-.seg{height:14px;border:2px solid var(--muted);background:#0c0a0c}
-.seg.on{background:var(--mana);border-color:var(--fg)} .seg.half{background:linear-gradient(90deg,var(--mana) 50%,#0c0a0c 50%);border-color:var(--fg)}
+.seg{height:14px;border:2px solid var(--muted);background:#0c0a0c;position:relative;overflow:hidden}
+.seg i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--mana)}
+.seg.on{border-color:var(--fg)}
 .manaN{font-family:var(--display);font-size:13px;color:var(--gold);min-width:2ch;text-align:right}
 .cards{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
 .card{padding:4px 0 3px;display:flex;flex-direction:column;align-items:center;gap:3px;touch-action:none;cursor:grab;min-width:0;font-family:var(--body);min-height:66px}
@@ -319,7 +320,7 @@ canvas:not(.uic){image-rendering:auto!important}
 /* surfaces that were hard-coded dark */
 .bar,.seg,.prog,.ltop .sp,.ltop .cur,.hero .prize,.deckbar .mini{background:var(--panel)}
 .bar{border-radius:7px;border-color:var(--fg)} .bar::after{background:repeating-linear-gradient(90deg,transparent 0 calc(10% - 2px),rgba(58,38,28,.14) calc(10% - 2px) 10%)}
-.seg{border-radius:7px;border-color:var(--plum)} .seg.on{border-color:var(--fg)} .seg.half{background:linear-gradient(90deg,var(--mana) 50%,var(--panel) 50%)}
+.seg{border-radius:7px;border-color:var(--plum)} .seg.on{border-color:var(--fg)}
 .ib:hover,.btn:hover,.rb:hover{background:#f3ecdc}
 .ib:active,.btn:active,.rb:active,.menu button:active{background:var(--fg);color:var(--ink)}
 .btn,.rb,.ib,.sbtn,.menu button,.side-ic,.chip,.cx-tab,.slot,.tcard,.item,.mode,.toast,#mtoast,.tx,.it,.join input,.namerow .nm{border-radius:10px}
@@ -2973,7 +2974,8 @@ function draw(){
 
 // ---- HUD ----
 const $=id=>document.getElementById(id);
-const segs=[]; for(let i=0;i<10;i++){const d=document.createElement('div');d.className='seg';$('segs').appendChild(d);segs.push(d);}
+const segs=[]; for(let i=0;i<10;i++){const d=document.createElement('div');d.className='seg';d.appendChild(document.createElement('i'));$('segs').appendChild(d);segs.push(d);}
+const segF=new Array(10).fill(-1);
 function pendCost(){ if(MODE!=='pvp'||!NET) return 0; let s=0; for(const p of NET.pend) if(p.tick>S.tick) s+=p.cost; return s; }
 function availMana(){ return S.mana[ME]-pendCost(); }
 function hud(){
@@ -2982,8 +2984,9 @@ function hud(){
   $('hpFoe').style.width=Math.max(0,ok.hp/ok.max*100)+'%';
   $('hpYouN').textContent=Math.max(0,Math.ceil(mk.hp));
   $('hpFoeN').textContent=Math.max(0,Math.ceil(ok.hp));
-  const m=Math.max(0,availMana()), n=Math.floor(m), half=m-n>=0.5;
-  segs.forEach((d,i)=>{d.className='seg'+(i<n?' on':i===n&&half?' half':'');});
+  const m=Math.max(0,availMana()), n=Math.floor(m);
+  // each segment fills smoothly with the fractional mana (mana regenerates every tick)
+  segs.forEach((d,i)=>{ const f=Math.round(Math.max(0,Math.min(1,m-i))*1000)/10; if(f===segF[i]) return; segF[i]=f; d.firstChild.style.width=f+'%'; d.classList.toggle('on',f>=100); });
   $('manaN').textContent=n;
   const el=Math.floor(S.t), mm=Math.floor(el/60), ss=el%60;
   const tm=$('timer'); tm.firstChild.textContent=`${mm}:${String(ss).padStart(2,'0')}`; tm.classList.toggle('sd',S.boost>1);

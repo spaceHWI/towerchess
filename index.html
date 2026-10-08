@@ -125,7 +125,7 @@ canvas#c{display:block;box-sizing:content-box;image-rendering:pixelated;image-re
 .ib:disabled{opacity:.35;cursor:default}
 
 /* lobby / meta screens */
-#meta{position:fixed;inset:0;z-index:15;overflow-y:auto;-webkit-overflow-scrolling:touch;background:var(--bg) repeating-conic-gradient(var(--bg2) 0 25%,var(--bg) 0 50%) 0 0/8px 8px;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+#meta{position:fixed;inset:0;z-index:15;display:flex;flex-direction:column;overflow:hidden;background:var(--bg) repeating-conic-gradient(var(--bg2) 0 25%,var(--bg) 0 50%) 0 0/8px 8px;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 #meta[hidden]{display:none}
 #mtoast{position:fixed;left:50%;top:calc(10px + env(safe-area-inset-top,0px));transform:translate(-50%,0);background:var(--panel);color:var(--fg-hi);border:2px solid var(--fg);padding:6px 12px;font-size:13px;font-weight:500;pointer-events:none;opacity:0;transition:opacity .15s;white-space:nowrap;z-index:30}
 #mtoast.show{opacity:1}
@@ -215,6 +215,78 @@ canvas#c{display:block;box-sizing:content-box;image-rendering:pixelated;image-re
 .card.empty{opacity:.3;min-height:66px}
 .card .clv{position:absolute;top:3px;left:5px;font-family:var(--display);font-size:7px;color:var(--gold)}
 .cx-src{font-size:11px;color:var(--muted)}
+
+/* ---- lobby shell: top bar, scrolling body, bottom tabs (mobile game layout) ---- */
+:root{--r-c:#cfc4ad;--r-r:#7fb2ff;--r-e:#c58cff;--r-l:#ffd23f}
+.lbody{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.ltop{flex:none;display:flex;align-items:center;gap:8px;padding:8px 10px;background:#100d13;border-bottom:2px solid var(--plum);max-width:680px;width:100%;margin:0 auto}
+.ltop .who{display:flex;align-items:center;gap:8px;flex:1;min-width:0}
+.ltop .av{width:36px;height:36px;flex:none;display:flex;align-items:center;justify-content:center;background:var(--foe);border:2px solid var(--foe-hi)}
+.ltop .av canvas{width:24px;height:24px}
+.ltop .wn{display:flex;flex-direction:column;gap:3px;min-width:0}
+.ltop .wn b{font-size:13px;color:var(--fg-hi);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ltop .sp{position:relative;display:block;width:96px;height:12px;border:2px solid var(--fg);background:#0c0a0c}
+.ltop .sp i{display:block;height:100%;background:var(--mana)}
+.ltop .sp em{position:absolute;inset:0;font-style:normal;font-family:var(--display);font-size:6px;line-height:8px;text-align:center;color:var(--fg-hi);text-shadow:1px 1px 0 #000}
+.ltop .cur{display:flex;align-items:center;gap:0;font-family:var(--display);font-size:10px;color:var(--fg-hi);background:#0c0a0c;border:2px solid var(--plum);padding:4px 6px;min-height:30px}
+.ltop .gemb{cursor:pointer;font:inherit;font-family:var(--display);font-size:10px;color:var(--fg-hi)}
+.ltop .plus{margin-left:6px;width:14px;height:14px;line-height:12px;text-align:center;background:var(--ok);color:#0c0a0c;font-family:var(--display);font-size:9px;border:1px solid #0c0a0c}
+.ltabs{flex:none;display:grid;grid-template-columns:repeat(5,1fr);align-items:end;background:#100d13;border-top:2px solid var(--plum);max-width:680px;width:100%;margin:0 auto;padding:4px 4px calc(4px + env(safe-area-inset-bottom,0px))}
+.ltab{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 0 4px;background:none;border:0;color:var(--muted);font:inherit;font-size:11px;font-weight:600;cursor:pointer;min-width:0}
+.ltab canvas{width:28px;height:28px;image-rendering:pixelated;opacity:.6}
+.ltab.on{color:var(--gold)} .ltab.on canvas{opacity:1}
+.ltab.mid{margin-top:-18px}
+.ltab.mid canvas{width:44px;height:44px;padding:6px;box-sizing:content-box;background:var(--foe);border:3px solid var(--foe-hi);opacity:1}
+.ltab.mid.on canvas{background:#d03a3f;border-color:var(--gold)}
+.ltab .dot{position:absolute;top:3px;right:calc(50% - 20px);width:9px;height:9px;background:#ff4b4b;border:2px solid #100d13}
+.ltab.mid .dot{top:-14px}
+.uic{image-rendering:pixelated;display:block}
+.logo{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.logo .mtitle{margin:4px 0 0;font-size:16px;text-align:left}
+.side-ic{display:flex;flex-direction:column;align-items:center;gap:1px;background:var(--panel);border:2px solid var(--fg);color:var(--fg);font:inherit;font-size:10px;font-weight:600;padding:4px 6px;cursor:pointer}
+.side-ic canvas{width:24px;height:24px}
+.hero .prize{display:flex;align-items:center;gap:8px;background:#0c0a0c;border:2px solid var(--plum);padding:4px 10px 4px 6px}
+.hero .prize canvas{width:36px;height:36px}
+.hero .prize div{display:flex;flex-direction:column;font-size:11px;text-align:left}
+.hero .prize b{font-size:13px;color:var(--fg-hi)}
+.btn.go{font-size:17px;min-height:54px;width:100%;max-width:300px;margin-top:4px;letter-spacing:.04em;box-shadow:0 4px 0 #5e1114}
+.btn.go:active{box-shadow:none;transform:translateY(3px)}
+.deckbar{display:flex;align-items:center;gap:8px;padding:6px 8px;cursor:pointer;font:inherit;width:100%}
+.deckbar .dk{display:flex;gap:3px;flex:1;justify-content:center}
+.deckbar .mini{display:block;border:2px solid var(--plum);background:#0c0a0c;padding:1px}
+.deckbar .mini canvas{width:28px;height:28px}
+.deckbar .edit{font-size:12px;font-weight:700;color:var(--gold);white-space:nowrap}
+@media (max-width:380px){.deckbar>.lbl{display:none}.deckbar .mini canvas{width:26px;height:26px}}
+.modes{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.mode{display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;cursor:pointer;font:inherit;color:var(--fg);min-width:0}
+.mode canvas{width:32px;height:32px}
+.mode b{font-size:13px;color:var(--fg-hi)}
+.mode span{font-size:10px;color:var(--muted);white-space:nowrap}
+.collhead{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.chips{display:flex;gap:4px;flex-wrap:wrap}
+.chip{font:inherit;font-size:11px;font-weight:700;padding:4px 8px;border:2px solid var(--muted);background:var(--panel);color:var(--muted);cursor:pointer}
+.chip.on{border-color:var(--fg);background:var(--fg);color:var(--o)}
+.chip.r-r{color:var(--r-r)} .chip.r-e{color:var(--r-e)} .chip.r-l{color:var(--r-l)}
+.chip.on.r-r{background:var(--r-r);border-color:var(--r-r);color:var(--o)} .chip.on.r-e{background:var(--r-e);border-color:var(--r-e);color:var(--o)} .chip.on.r-l{background:var(--r-l);border-color:var(--r-l);color:var(--o)}
+.rt-tag{display:inline-block;font-size:10px;font-weight:700;padding:0 4px;border:1px solid currentColor;vertical-align:1px}
+.rt-tag.r-c{color:var(--r-c)} .rt-tag.r-r{color:var(--r-r)} .rt-tag.r-e{color:var(--r-e)} .rt-tag.r-l{color:var(--r-l)}
+.tcard.r-r .tn,.slot.r-r .lv{color:var(--r-r)} .tcard.r-e .tn,.slot.r-e .lv{color:var(--r-e)} .tcard.r-l .tn,.slot.r-l .lv{color:var(--r-l)}
+.tcard.r-r,.slot.r-r{box-shadow:inset 0 -3px 0 var(--r-r)} .tcard.r-e,.slot.r-e{box-shadow:inset 0 -3px 0 var(--r-e)} .tcard.r-l,.slot.r-l{box-shadow:inset 0 -3px 0 var(--r-l)}
+.tcard.locked{opacity:.4;cursor:pointer}
+.tcard.locked canvas{filter:grayscale(1) brightness(.6)}
+.tcard.indeck .tn{text-decoration:underline;text-underline-offset:3px}
+.deckbar .mini.r-r{border-color:var(--r-r)} .deckbar .mini.r-e{border-color:var(--r-e)} .deckbar .mini.r-l{border-color:var(--r-l)}
+.it.card1.r-r{border-color:var(--r-r)} .it.card1.r-e{border-color:var(--r-e)} .it.card1.r-l{border-color:var(--r-l)}
+.unlock.r-l b{color:var(--r-l)} .unlock.r-e b{color:var(--r-e)} .unlock.r-r b{color:var(--r-r)}
+.sbtn .su.r-r{color:var(--r-r)} .sbtn .su.r-e{color:var(--r-e)}
+.item .leg{font-size:11px;color:var(--r-l);font-weight:700}
+.cx-rar{font-family:var(--display);font-size:9px;margin:10px 0 2px;padding-bottom:4px;border-bottom:2px solid currentColor}
+.cx-rar.r-c{color:var(--r-c)} .cx-rar.r-r{color:var(--r-r)} .cx-rar.r-e{color:var(--r-e)} .cx-rar.r-l{color:var(--r-l)}
+.cx-name.r-r{color:var(--r-r)} .cx-name.r-e{color:var(--r-e)} .cx-name.r-l{color:var(--r-l)}
+.card.r-r::before,.card.r-e::before,.card.r-l::before{content:'';position:absolute;left:4px;right:4px;bottom:1px;height:2px}
+.card.r-r::before{background:var(--r-r)} .card.r-e::before{background:var(--r-e)} .card.r-l::before{background:var(--r-l)}
+.mw{padding-bottom:22px}
+.card .cn{font-size:clamp(9px,2.7vw,11px);letter-spacing:-.03em;max-width:100%;overflow:hidden}
 </style>
 <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/12.19.0/firebase-auth-compat.js"></script>
@@ -251,7 +323,7 @@ window.FIREBASE_CONFIG = {
     if(!window.firebase||!cfg||!cfg.apiKey||!cfg.databaseURL) return (F=null);
     try{ if(!firebase.apps.length) firebase.initializeApp(cfg); }catch(e){ console.error(e); return (F=null); }
     const auth=firebase.auth(), db=firebase.database();
-    if(window.FB_EMULATOR){ auth.useEmulator('http://127.0.0.1:9099'); db.useEmulator('127.0.0.1',9000); }
+    if(window.FB_EMULATOR){ auth.useEmulator('http://127.0.0.1:9099',{disableWarnings:true}); db.useEmulator('127.0.0.1',9000); }
     db.goOffline();   // stay off the connection count until something needs the server
     let signing=null, watching=false, keep=false, offset=0;
     const conn={v:false,hs:new Set()};
@@ -450,20 +522,64 @@ let N=10;
 const CELL=32, TPS=20, TICK=1/TPS;
 const cv=document.getElementById('c'), ctx=cv.getContext('2d');
 
+// rarity: c 일반 · r 희귀 · e 영웅 · l 전설 (legendary towers only come from chests)
+const RAR={c:{name:'일반',col:'#cfc4ad'},r:{name:'희귀',col:'#7fb2ff'},e:{name:'영웅',col:'#c58cff'},l:{name:'전설',col:'#ffd23f'}};
+const RAR_KEYS=['c','r','e','l'];
+const UPA='피해·HP +50%씩, 사거리 +0.25';
+// role drives the AI (what to build and where) and the "attacker" check for decks
 const TOWERS={
-  arrow :{name:'화살탑', cost:3, hp:120, range:2.6, dmg:14, cd:0.9, up:'피해·HP +50%씩, 사거리 +0.25', desc:'가장 가까운 적 병사를 빠르게 쏜다. 기본 방어 타워, 어디에나 무난하다.'},
-  cannon:{name:'대포',   cost:5, hp:140, range:2.2, dmg:30, cd:2.9, splash:1.0, up:'피해·HP +50%씩, 사거리 +0.25', desc:'포탄이 떨어진 자리 1칸 범위를 함께 때린다. 뭉쳐 오는 병사에 강하고, 빠른 척후에는 자주 빗나간다.'},
-  frost :{name:'서리탑', cost:4, hp:110, range:2.2, dmg:4,  cd:1.45, slow:0.4, up:'피해·HP +50%씩, 사거리 +0.25', desc:'범위 안 적 병사를 40% 느리게 만들고 조금씩 피해를 준다. 둔화는 중첩되지 않는다. 대포 옆에 두면 좋다.'},
-  wall  :{name:'성벽',   cost:1, hp:150, range:0, max:3, up:'HP +50%씩', desc:'공격하지 않는 길막기용. 병사는 성벽을 부수며 전진하므로 시간을 번다. 한 번에 3개까지.'},
-  banner:{name:'깃발',   cost:4, hp:90,  range:0, max:1, rally:true, up:'HP +50%씩', desc:'아군 병사가 이 깃발을 먼저 거친 뒤 여기서부터 적 킹으로 진격한다. 적 방어가 약한 쪽으로 길을 틀 때 쓴다. 한 번에 1개.'},
-  shrine:{name:'신전',   cost:4, hp:100, range:2.0, heal:6, cd:1.0, up:'회복 +50%씩, 사거리 +0.25', desc:'범위 안 아군 병사를 초당 6 회복한다. 거한과 궁합이 좋다.'},
-  lightning:{name:'번개탑', cost:5, hp:110, range:2.4, dmg:12, cd:1.5, chain:3, jump:1.6, up:'피해·HP +50%씩, 사거리 +0.25', desc:'가장 가까운 적 병사에게 번개를 쏘고, 1.6칸 안의 다른 병사에게 두 번 더 튄다. 튈 때마다 피해가 20%씩 준다.'},
-  sniper:{name:'저격탑', cost:5, hp:100, range:4.2, dmg:48, cd:2.8, snipe:true, up:'피해·HP +50%씩, 사거리 +0.25', desc:'사거리 안에서 체력이 가장 높은 적 병사 하나를 노려 큰 피해를 준다. 거한과 공성차에 강하다.'},
-  well  :{name:'마나샘', cost:4, hp:80,  range:0, max:2, mana:0.05, up:'마나 증가 +50%씩, HP +50%씩', desc:'공격하지 않고 내 마나 재생을 초당 0.05 올린다. 한 번에 2개까지.'},
-  barracks:{name:'병영', cost:5, hp:120, range:0, max:2, spawn:12, up:'출격 간격 2초씩 단축, HP +50%씩', desc:'12초마다 옆 칸에서 아군 보병을 한 명 더 내보낸다. 한 번에 2개까지.'},
+  // ---- 일반 ----
+  arrow :{name:'화살탑', rar:'c', role:'dps', cost:3, hp:120, range:2.6, dmg:14, cd:0.9, up:UPA, desc:'가장 가까운 적 병사를 빠르게 쏜다. 기본 방어 타워, 어디에나 무난하다.'},
+  cannon:{name:'대포', rar:'c', role:'aoe', cost:5, hp:140, range:2.2, dmg:30, cd:2.9, splash:1.0, up:UPA, desc:'포탄이 떨어진 자리 1칸 범위를 함께 때린다. 뭉쳐 오는 병사에 강하고, 빠른 척후에는 자주 빗나간다.'},
+  frost :{name:'서리탑', rar:'c', role:'ctrl', cost:4, hp:110, range:2.2, dmg:4, cd:1.45, slow:0.4, up:UPA, desc:'범위 안 적 병사를 40% 느리게 만들고 조금씩 피해를 준다. 둔화는 중첩되지 않는다. 대포 옆에 두면 좋다.'},
+  wall  :{name:'성벽', rar:'c', role:'wall', cost:1, hp:150, range:0, max:3, wall:true, up:'HP +50%씩', desc:'공격하지 않는 길막기용. 병사는 성벽을 부수며 전진하므로 시간을 번다. 한 번에 3개까지.'},
+  banner:{name:'깃발', rar:'c', role:'rally', cost:4, hp:90, range:0, max:1, rally:true, up:'HP +50%씩', desc:'아군 병사가 이 깃발을 먼저 거친 뒤 여기서부터 적 킹으로 진격한다. 적 방어가 약한 쪽으로 길을 틀 때 쓴다. 한 번에 1개.'},
+  shrine:{name:'신전', rar:'c', role:'heal', cost:4, hp:100, range:2.0, heal:6, cd:1.0, up:'회복 +50%씩, 사거리 +0.25', desc:'범위 안 아군 병사를 초당 6 회복한다. 거한과 궁합이 좋다.'},
+  lightning:{name:'번개탑', rar:'c', role:'aoe', cost:5, hp:110, range:2.4, dmg:12, cd:1.5, chain:3, jump:1.6, up:UPA, desc:'가장 가까운 적 병사에게 번개를 쏘고, 1.6칸 안의 다른 병사에게 두 번 더 튄다. 튈 때마다 피해가 20%씩 준다.'},
+  // ---- 희귀 ----
+  sniper:{name:'저격탑', rar:'r', role:'heavy', cost:5, hp:100, range:4.2, dmg:48, cd:2.8, snipe:true, up:UPA, desc:'사거리 안에서 체력이 가장 높은 적 병사 하나를 노려 큰 피해를 준다. 거한과 공성차에 강하다.'},
+  well  :{name:'마나샘', rar:'r', role:'eco', cost:4, hp:80, range:0, max:2, mana:0.05, up:'마나 증가 +50%씩, HP +50%씩', desc:'공격하지 않고 내 마나 재생을 초당 0.05 올린다. 한 번에 2개까지.'},
+  // ---- 영웅 ----
+  barracks:{name:'병영', rar:'e', role:'spawn', cost:5, hp:120, range:0, max:2, spawn:12, unit:'footman', up:'출격 간격 2초씩 단축, HP +50%씩', desc:'12초마다 옆 칸에서 아군 보병을 한 명 더 내보낸다. 한 번에 2개까지.'},
+  // ---- 일반 (new) ----
+  bb    :{name:'비비탄', rar:'c', role:'dps', cost:3, hp:100, range:2.3, dmg:4, cd:0.45, multi:2, fx:'pellet', up:UPA, desc:'가까운 적 병사 둘에게 쇠구슬을 빠르게 쏜다. 한 발은 약하지만 척후 떼에 강하다.'},
+  spikes:{name:'가시밭', rar:'c', role:'trap', cost:2, hp:80, range:0.55, dmg:7, cd:0.5, trap:'spike', max:3, up:'피해·내구도 +50%씩', desc:'병사가 지나갈 수 있는 함정. 위에 선 적 병사를 0.5초마다 찌르고 느리게 만든다. 찌를 때마다 내구도가 줄고, 길을 막지 않는다. 한 번에 3개.'},
+  crossbow:{name:'쇠뇌', rar:'c', role:'dps', cost:4, hp:110, range:3.0, dmg:16, cd:1.6, pierce:0.4, up:UPA, desc:'화살이 목표를 꿰뚫고 사거리 끝까지 날아가, 한 줄로 오는 적 병사를 모두 맞힌다.'},
+  thornwall:{name:'가시벽', rar:'c', role:'wall', cost:2, hp:180, range:0, max:2, wall:true, thorns:6, up:'HP·가시 피해 +50%씩', desc:'길막기용 벽. 이 벽을 때린 적 병사는 때릴 때마다 가시 피해 6을 돌려받는다. 한 번에 2개.'},
+  drum  :{name:'전투 북', short:'북', rar:'c', role:'buffS', cost:4, hp:100, range:2.2, haste:0.25, up:'효과·HP +50%씩, 범위 +0.25', desc:'공격하지 않는다. 범위 안 아군 병사의 이동·공격 속도를 25% 올린다.'},
+  // ---- 희귀 (new) ----
+  firesp:{name:'불정령', rar:'r', role:'dps', cost:4, hp:100, range:2.5, dmg:8, cd:1.0, burn:6, burnT:3, fx:'fire', up:'피해·화상·HP +50%씩, 사거리 +0.25', desc:'불덩이로 피해를 주고 3초 동안 불태운다(초당 6). 화상은 겹치지 않고 새로 붙을 때 다시 3초가 된다.'},
+  mortar:{name:'박격포', rar:'r', role:'long', cost:5, hp:120, range:4.5, minr:1.5, dmg:28, cd:4.0, splash:1.0, fx:'shell', up:UPA, desc:'멀리(4.5칸) 포탄을 쏘아 1칸 범위를 때린다. 1.5칸 안으로 들어온 적은 쏘지 못한다.'},
+  mushroom:{name:'독버섯', rar:'r', role:'aoe', cost:4, hp:90, range:2.2, cd:1.8, pulse:true, psn:7, psnT:4, up:'독·HP +50%씩, 범위 +0.25', desc:'1.8초마다 포자를 뿜어 범위 안 적 병사를 모두 4초 동안 중독시킨다(초당 7).'},
+  bounce:{name:'튕김탑', rar:'r', role:'aoe', cost:5, hp:110, range:2.6, dmg:11, cd:1.8, bounce:4, jump:2.0, grow:0.1, up:'피해·HP +50%씩, 튕김 +1, 사거리 +0.25', desc:'공이 적 병사 사이를 네 번 튕기며, 튕길 때마다 피해가 10%씩 커진다. 맞힐 병사가 둘뿐이면 둘 사이를 오간다.'},
+  statue:{name:'용사의 동상', short:'동상', rar:'r', role:'sup', cost:4, hp:140, range:1.5, auraDmg:0.25, up:'효과·HP +50%씩, 범위 +0.25', desc:'공격하지 않는다. 바로 옆(대각선 포함) 아군 타워의 피해를 25% 올린다. 여러 개를 붙여도 겹치지 않는다.'},
+  jelly :{name:'해파리', rar:'r', role:'ctrl', cost:4, hp:100, range:2.2, dmg:6, cd:1.2, pulse:true, vul:0.25, vulT:3, up:'피해·HP +50%씩, 범위 +0.25', desc:'1.2초마다 전기를 뿜어 범위 안 적 병사 모두에게 피해를 주고, 3초 동안 받는 모든 피해를 25% 늘린다.'},
+  icesp :{name:'얼음정령', rar:'r', role:'ctrl', cost:5, hp:110, range:2.4, dmg:12, cd:1.4, freeze:1.2, every:3, fx:'ice', up:UPA, desc:'얼음 조각으로 피해를 주고 둔화시킨다. 세 번째 공격마다 목표를 1.2초 동안 얼린다.'},
+  mine  :{name:'지뢰', rar:'r', role:'trap', cost:3, hp:40, range:0.45, dmg:60, splash:1.0, trap:'mine', max:3, up:'피해·HP +50%씩', desc:'길에 묻는 함정. 설치 1초 뒤부터 적 병사가 밟으면 터져 1칸 범위에 큰 피해(60)를 주고 사라진다. 한 번에 3개.'},
+  battery:{name:'배터리', rar:'r', role:'sup', cost:4, hp:100, range:1.5, auraSpd:0.25, up:'효과·HP +50%씩, 범위 +0.25', desc:'공격하지 않는다. 바로 옆(대각선 포함) 아군 타워의 공격 속도를 25% 올린다. 여러 개를 붙여도 겹치지 않는다.'},
+  // ---- 영웅 (new) ----
+  laser :{name:'레이저탑', rar:'e', role:'heavy', cost:6, hp:120, range:2.8, beam:10, ramp:1.0, rampMax:3, up:UPA, desc:'한 목표에 레이저를 계속 쏜다(초당 10). 같은 목표를 오래 쏠수록 피해가 최대 4배까지 커지고, 목표가 바뀌면 처음부터 다시 오른다.'},
+  skelmage:{name:'해골법사', rar:'e', role:'heavy', cost:5, hp:100, range:2.6, dmg:6, pct:0.1, cd:1.3, fx:'skull', up:'피해·HP +50%씩, 비율 +2.5%p, 사거리 +0.25', desc:'기본 피해에 적 병사 최대 체력의 10%를 더해 때린다. 거한과 강화된 병사에 강하다.'},
+  sapling:{name:'묘목', rar:'e', role:'dps', cost:4, hp:100, range:2.4, dmg:8, cd:1.0, growT:10, growS:0.1, growMax:20, fx:'leaf', up:'피해·HP +50%씩, 사거리 +0.25 (자란 만큼은 그대로)', desc:'갈수록 강해진다. 심은 뒤 10초마다 피해가 10%씩 자라 최대 3배가 된다. 일찍 심을수록 좋다.'},
+  octopus:{name:'문어', rar:'e', role:'dps', cost:4, hp:110, range:2.2, dmg:9, cd:1.0, multi:2, link:0.25, fx:'ink', up:UPA, desc:'적 병사 둘을 함께 때린다. 바로 옆(상하좌우)에 붙은 문어 하나마다 피해 +25%, 넷이 붙으면 2배.'},
+  tomb  :{name:'비석', rar:'e', role:'grave', cost:5, hp:120, range:2.4, raise:2.5, rhp:0.6, up:'해골 능력치·HP +50%씩, 범위 +0.25', desc:'범위 안에서 적 병사가 죽으면 그 자리에서 아군 해골 병사를 일으킨다(2.5초에 한 번). 해골은 보병 체력의 60%.'},
+  meteor:{name:'메테오 제단', short:'메테오', rar:'e', role:'long', cost:7, hp:120, range:5.0, dmg:70, cd:9, splash:1.3, delay:1.0, burn:6, burnT:3, meteor:true, max:2, up:UPA, desc:'9초마다 사거리(5칸) 안에서 적이 가장 몰린 곳에 운석을 부른다. 1초 뒤 1.3칸 범위에 큰 피해(70)와 화상. 한 번에 2개.'},
+  gate  :{name:'수문장', rar:'e', role:'tank', cost:5, hp:320, range:1.3, dmg:22, cd:1.4, melee:true, taunt:true, up:'HP·피해 +50%씩', desc:'체력이 아주 높은 근접 타워. 1.3칸 안 적 병사를 모두 벤다. 옆을 지나는 적 병사는 이 타워부터 공격한다.'},
+  catapult:{name:'투석기', rar:'e', role:'anti', cost:6, hp:130, range:4.3, dmg:40, cd:4.0, siegeT:true, up:UPA, desc:'병사 대신 적 타워를 노린다. 사거리(4.3칸, 대각선으로 3칸까지) 안 가장 가까운 적 타워에 돌을 날린다. 킹은 공격하지 않는다.'},
+  toad  :{name:'화염 두꺼비', short:'두꺼비', rar:'e', role:'aoe', cost:5, hp:130, range:1.6, dmg:5, cd:0.5, pulse:true, burn:4, burnT:2, up:'피해·화상·HP +50%씩, 범위 +0.25', desc:'0.5초마다 1.6칸 안 적 병사 모두에게 불을 뿜고 2초 동안 불태운다.'},
+  rocket:{name:'로켓 발사대', short:'로켓', rar:'e', role:'long', cost:6, hp:110, range:5.0, dmg:28, cd:3.0, splash:0.8, psn:5, psnT:4, front:true, fx:'rocket', up:UPA, desc:'사거리(5칸) 안에서 내 킹에 가장 가까이 온 적 병사를 노려 로켓을 쏜다. 0.8칸 범위 피해와 4초 독.'},
+  // ---- 전설 (chests only) ----
+  dragon:{name:'용의 둥지', short:'용', rar:'l', role:'aoe', cost:8, hp:200, range:3.2, dmg:24, cd:3.0, pierce:0.6, burn:6, burnT:3, max:2, up:'피해·화상·HP +50%씩, 사거리 +0.25', desc:'용이 불을 뿜어 사거리 끝까지 한 줄 위의 적 병사를 모두 태운다(피해 24, 화상 초당 6). 한 번에 2개.'},
+  clock :{name:'시계탑', rar:'l', role:'global', cost:7, hp:150, range:0, max:1, gcd:15, gcd0:5, freezeAll:1.6, up:'멈춤 +0.4초씩, HP +50%씩', desc:'15초마다 전장의 모든 적 병사를 1.6초 동안 멈춘다. 처음은 설치 5초 뒤. 한 번에 1개.'},
+  hole  :{name:'블랙홀', rar:'l', role:'ctrl', cost:7, hp:140, range:2.6, max:2, cd:6, pull:1.6, pullT:1.5, dps:16, up:'피해·끌어당기는 시간·HP +25~50%씩, 범위 +0.25', desc:'6초마다 1.5초 동안 범위 안 적 병사를 가운데로 빨아들이며 피해를 준다. 한 번에 2개.'},
+  thunder:{name:'뇌신의 탑', short:'뇌신', rar:'l', role:'global', cost:7, hp:150, range:0, max:1, gcd:4, gcd0:2, strikes:3, dmg:35, stun:0.4, up:'피해·HP +50%씩', desc:'4초마다 전장 어디든 적 병사 셋에게 벼락을 내린다(피해 35, 잠깐 기절). 한 번에 1개.'},
+  angel :{name:'천사상', rar:'l', role:'global', cost:6, hp:150, range:0, max:1, gcd:10, gcd0:4, healAll:0.3, healT:0.1, up:'회복·HP +50%씩', desc:'10초마다 모든 아군 병사의 체력을 30%, 모든 아군 타워를 10% 회복한다. 한 번에 1개.'},
+  golem :{name:'골렘 공방', short:'골렘', rar:'l', role:'spawn', cost:8, hp:220, range:0, max:1, spawn:18, unit:'brute', unitMul:1.5, up:'출격 간격 2초씩 단축, HP +50%씩', desc:'18초마다 골렘(거한의 1.5배 체력·공격)을 내보낸다. 한 번에 1개.'},
 };
 const TKEYS=Object.keys(TOWERS);
 const BASIC=['arrow','cannon','frost','wall'];
+const ATK_ROLES=new Set(['dps','aoe','heavy','long','tank']);
+const isAtk=k=>ATK_ROLES.has(TOWERS[k].role);
 const SOLDIERS={
   footman:{name:'보병', hp:70,  dmg:8,  spd:0.55, cd:1.45, desc:'기본 병사. 체력·속도·공격이 모두 보통이다.'},
   scout  :{name:'척후', hp:40,  dmg:6,  spd:1.0,  cd:1.1, desc:'빠르지만 약하다. 대포를 피해 먼저 도착해 타워를 흔든다.'},
@@ -501,7 +617,7 @@ function newState(seed,cfg){
     tick:0, t:0, acc:0, running:false, over:false, boost:1, result:null, seed, rng:mulberry32(seed), n,
     kings:{you:{hp:hy,max:hy,cell:[n-1,kc],cd:0}, foe:{hp:hf,max:hf,cell:[0,kc],cd:0}},
     mana:{you:5, foe:5},
-    towers:[], soldiers:[],
+    towers:[], soldiers:[], bombs:[],
     waveTimer:PREP_T, wave:0, aiTimer:2, aiSlow:cfg.aiSlow||1, aiCap:cfg.aiCap||0,
     reinforce:{you:null, foe:null},
     decks:{you:dk.you||null, foe:dk.foe||null}, lv:{you:lv.you||{}, foe:lv.foe||{}},
@@ -510,7 +626,9 @@ function newState(seed,cfg){
 }
 const kingCell=(side,r,c)=>S.kings[side].cell[0]===r&&S.kings[side].cell[1]===c;
 const towerAt=(r,c)=>S.towers.find(t=>t.r===r&&t.c===c&&t.hp>0);
-const blocked=(r,c)=>kingCell('you',r,c)||kingCell('foe',r,c)||!!towerAt(r,c);
+// traps lie on the ground: soldiers walk over them, so they never block a path
+const solidAt=(r,c)=>S.towers.find(t=>t.r===r&&t.c===c&&t.hp>0&&!TOWERS[t.type].trap);
+const blocked=(r,c)=>kingCell('you',r,c)||kingCell('foe',r,c)||!!solidAt(r,c);
 const DIRS=[[1,0],[-1,0],[0,1],[0,-1]];
 
 // open cells next to (r0,c0); `extra` is a cell treated as blocked (a tower about to be placed)
@@ -544,19 +662,28 @@ function spawnCells(side){
     if(!blocked(r,c)&&S.dist[side][r][c]<Infinity) out.push([r,c]);}
   return out;
 }
+// cells a side's soldiers walk through from their spawn to the enemy king (shortest-path walk)
+function pathCells(side){
+  const d=S.dist[side], out=new Set();
+  for(const [r0,c0] of spawnCells(side)){ let r=r0,c=c0;
+    for(let i=0;i<N*N;i++){ out.add(r*N+c); let nr=r,nc=c,bd=d[r][c];
+      for(const [dr,dc] of DIRS){const a=r+dr,b=c+dc; if(a<0||b<0||a>=N||b>=N) continue; if(d[a][b]<bd){bd=d[a][b];nr=a;nc=b;}}
+      if(nr===r&&nc===c) break; r=nr;c=nc; } }
+  return out;
+}
 // each side owns the half next to its king; on odd boards the middle row belongs to no one
 function ownHalf(side,r){const h=Math.floor(N/2); return side==='you'?r>=N-h:r<h;}
 function nearOwnSoldier(side,r,c){return S.soldiers.some(s=>s.side===side&&s.hp>0&&Math.abs(Math.round(s.y)-r)<=1&&Math.abs(Math.round(s.x)-c)<=1);}
 const inDeck=(side,type)=>!S.decks[side]||S.decks[side].includes(type);
 function canPlace(side,r,c,type){
   if(!inDeck(side,type)) return {ok:false,why:'덱에 없는 타워입니다'};
-  if(r<0||c<0||r>=N||c>=N||blocked(r,c)) return {ok:false,why:'빈 칸이 아닙니다'};
+  if(r<0||c<0||r>=N||c>=N||blocked(r,c)||towerAt(r,c)) return {ok:false,why:'빈 칸이 아닙니다'};
   if(S.soldiers.some(s=>s.hp>0&&Math.round(s.y)===r&&Math.round(s.x)===c)) return {ok:false,why:'병사가 서 있습니다'};
   if(!ownHalf(side,r)&&!nearOwnSoldier(side,r,c)) return {ok:false,why:'내 진영 또는 아군 병사 주변 1칸만'};
   const def=TOWERS[type];
   if(def.max&&S.towers.filter(t=>t.side===side&&t.type===type&&t.hp>0).length>=def.max) return {ok:false,why:`${def.name}은 ${def.max}개까지`};
-  const dY=computeDist('foe',[r,c]), dF=computeDist('you',[r,c]);
-  if(!kingReachable('you',dY)||!kingReachable('foe',dF)) return {ok:false,why:'길이 완전히 막힙니다'};
+  if(!def.trap){ const dY=computeDist('foe',[r,c]), dF=computeDist('you',[r,c]);
+    if(!kingReachable('you',dY)||!kingReachable('foe',dF)) return {ok:false,why:'길이 완전히 막힙니다'}; }
   return {ok:true};
 }
 function previewState(side,type,r,c,mana){ // what a drop here would do
@@ -574,7 +701,7 @@ function place(side,type,r,c){
   if(pv.mode==='up'){ return upgrade(side,towerAt(r,c)); }
   S.mana[side]-=def.cost;
   const cl=Math.max(1,Math.min(10,S.lv[side][type]|0||1)), hp=Math.round(def.hp*cardMul(cl));
-  S.towers.push({side,type,r,c,lvl:1,cl,hp,maxhp:hp,cd:def.spawn||0,built:S.t,hitAt:-9});
+  S.towers.push({side,type,r,c,lvl:1,cl,hp,maxhp:hp,cd:def.spawn||def.gcd0||0,built:S.t,born:S.t,hitAt:-9,cnt:0,ramp:0,act:0,rcd:0,tg:null,bDmg:0,bSpd:1});
   vfxBuild(c,r); refreshDist();
   // a new flag also reroutes the soldiers still behind it; the ones already past its row keep going
   if(def.rally) for(const s of S.soldiers) if(s.side===side&&s.hp>0) s.via=side==='you'?Math.round(s.y)>r:Math.round(s.y)<r;
@@ -594,17 +721,21 @@ function sellTower(side,t){
   if(side===ME){ sfx('sell'); toast(`${TOWERS[t.type].name} 판매 +${fmtNum(refundOf(t))}`); }
 }
 
-function spawnSoldier(side,type,r,c,pw){
-  const def=SOLDIERS[type], x=c+(S.rng()-.5)*.3, y=r+(S.rng()-.5)*.3;
-  S.soldiers.push({side,type,pw,x,y,px:x,py:y,hp:def.hp*pw,maxhp:def.hp*pw,cd:S.rng()*def.cd,slow:0,moving:false,ph:Math.floor(S.rng()*2),hitAt:-9,via:!!flagOf(side)});
+// o: {hpMul, skel (raised by a tombstone), exact (no position jitter)}
+function spawnSoldier(side,type,r,c,pw,o){
+  o=o||{}; const def=SOLDIERS[type], x=o.exact?c:c+(S.rng()-.5)*.3, y=o.exact?r:r+(S.rng()-.5)*.3, hp=def.hp*pw*(o.hpMul||1);
+  S.soldiers.push({side,type,pw,x,y,px:x,py:y,hp,maxhp:hp,cd:S.rng()*def.cd,slow:0,stun:0,brn:0,brnT:0,psn:0,psnT:0,vul:0,vulT:0,haste:0,hv:0,
+    moving:false,ph:Math.floor(S.rng()*2),hitAt:-9,seen:-9,via:!!flagOf(side),skel:!!o.skel,by:null});
 }
 function spawnWave(){
   S.wave++;
   const base=2+Math.floor(S.wave/3);
+  // both sides get the same soldiers each wave; only the chosen +1 differs
+  const common=[];
+  for(let i=0;i<base;i++){const roll=S.rng(); common.push(roll<0.15?'siege': roll<0.35?'brute': roll<0.6?'scout':'footman');}
   for(const side of ['you','foe']){
     const cells=spawnCells(side); if(!cells.length) continue;
-    const list=[];
-    for(let i=0;i<base;i++){const roll=S.rng(); list.push(roll<0.15?'siege': roll<0.35?'brute': roll<0.6?'scout':'footman');}
+    const list=common.slice();
     if(side===AI_SIDE&&!S.reinforce[side]){const r=S.rng(); S.reinforce[side]= r<0.35?'footman': r<0.6?'scout': r<0.8?'brute':'siege';}
     if(S.reinforce[side]) list.push(S.reinforce[side]);
     const pw=SOLDIER_BOOST?S.boost:1;
@@ -613,21 +744,28 @@ function spawnWave(){
   }
   sfx('wave');
 }
-// a barracks sends one footman out of the free neighbour cell nearest the enemy king
-function barracksSpawn(t){
+// a barracks (or golem workshop) sends a unit out of the free neighbour cell nearest the enemy king
+function spawnFrom(t,def){
   const d=S.dist[t.side]; let best=null,bd=Infinity;
   for(const [dr,dc] of DIRS){ const r=t.r+dr,c=t.c+dc; if(r<0||c<0||r>=N||c>=N||blocked(r,c)) continue; const v=d[r][c]; if(v<bd||(!best&&v===Infinity)){bd=v;best=[r,c];} }
   if(!best) return;
-  spawnSoldier(t.side,'footman',best[0],best[1],(SOLDIER_BOOST?S.boost:1)*cardMul(t.cl));
-  vfxPoof(best[1],best[0]);
+  spawnSoldier(t.side,def.unit||'footman',best[0],best[1],(SOLDIER_BOOST?S.boost:1)*cardMul(t.cl)*(def.unitMul||1));
+  vfxPoof(best[1],best[0]); if(S.stat) S.stat(t,1,'spawn');
 }
 const dist=(a,b)=>hyp(a.x-b.x,a.y-b.y);
-function damage(obj,amt,bySide){obj.hp-=amt;obj.hitAt=S.t;hit(obj.x??obj.c,obj.y??obj.r,bySide);}
+// soldier hits on soldiers, towers and kings; a 'vulnerable' soldier takes more
+function damage(obj,amt,bySide){ if(obj.vulT>0) amt*=1+obj.vul; obj.hp-=amt;obj.hitAt=S.t;obj.seen=S.t;hit(obj.x??obj.c,obj.y??obj.r,bySide);}
+// tower damage on a soldier (quiet: no hit flash, for beams and pulses)
+function hurt(s,amt,t,quiet){ if(s.hp<=0||!(amt>0)) return; if(s.vulT>0) amt*=1+s.vul; s.hp-=amt; s.seen=S.t; if(!quiet) s.hitAt=S.t; if(t) s.by=t; if(S.stat&&t) S.stat(t,amt,'dmg'); }
+function burnOn(s,v,T,t){ if(s.hp<=0) return; s.brn=Math.max(s.brnT>0?s.brn:0,v); s.brnT=Math.max(s.brnT,T); if(t) s.by=t; }
+function poisonOn(s,v,T,t){ if(s.hp<=0) return; s.psn=Math.max(s.psnT>0?s.psn:0,v); s.psnT=Math.max(s.psnT,T); if(t) s.by=t; }
+function stunOn(s,T,t){ s.stun=Math.max(s.stun||0,T); if(S.stat&&t) S.stat(t,T,'stun'); }
 
 function updateSoldier(s,dt){
+  if(s.stun>0) return;   // frozen: no move, no attack
   const def=SOLDIERS[s.type], enemy=other(s.side);
-  const spdMul=s.slow>0?0.6:1, dmgMul=s.pw||1;
-  s.cd-=dt; s.moving=false;
+  const hs=s.haste>0?1+s.hv:1, spdMul=(s.slow>0?0.6:1)*hs, dmgMul=s.pw||1;
+  s.cd-=dt*hs; s.moving=false;
   const structMul=def.structMul||1;
   let target=null, best=0.75;
   if(!def.siege) for(const e of S.soldiers){ if(e.side===enemy&&e.hp>0){const d=dist(s,e); if(d<best){best=d;target=e;}}}
@@ -644,43 +782,178 @@ function updateSoldier(s,dt){
   for(const [dr,dc] of DIRS){const a=r+dr,b=c+dc; if(a<0||b<0||a>=N||b>=N) continue; if(d[a][b]<bd){bd=d[a][b];nr=a;nc=b;}}
   const noPath=!(bd<Infinity);
   let tw=null;
-  for(const [dr,dc] of DIRS){const t=towerAt(r+dr,c+dc); if(t&&t.side===enemy){ if(noPath||def.siege||t.type==='wall'||S.rng()<0.02){tw=t;break;} }}
-  if(tw&&hyp(tw.r-s.y,tw.c-s.x)<1.2){ if(s.cd<=0){damage(tw,def.dmg*dmgMul*structMul,enemy);s.cd=def.cd;sfx('hit'); if(tw.hp<=0){vfxRubble(tw);S.towers=S.towers.filter(x=>x.hp>0);refreshDist();sfx('death');}} return; }
+  for(const [dr,dc] of DIRS){const t=towerAt(r+dr,c+dc); if(t&&t.side===enemy){ const td=TOWERS[t.type]; if(noPath||def.siege||td.wall||td.taunt||S.rng()<0.02){tw=t;break;} }}
+  if(tw&&hyp(tw.r-s.y,tw.c-s.x)<1.2){ if(s.cd<=0){damage(tw,def.dmg*dmgMul*structMul,enemy);s.cd=def.cd;sfx('hit');
+      const td=TOWERS[tw.type]; if(td.thorns) hurt(s,td.thorns*tpow(tw),tw);
+      if(tw.hp<=0){vfxRubble(tw);S.towers=S.towers.filter(x=>x.hp>0);refreshDist();sfx('death');}} return; }
   if(noPath){ const dir=s.side==='you'?-1:1; s.y+=dir*def.spd*spdMul*dt*0.3; s.y=Math.max(0,Math.min(N-1,s.y)); s.moving=true; return; }
   const dx=nc-s.x, dy=nr-s.y, L=hyp(dx,dy), step=def.spd*spdMul*dt;
   s.moving=true; if(L<=step){s.x=nc;s.y=nr;} else {s.x+=dx/L*step;s.y+=dy/L*step;}
+  // keep a little room between soldiers of one side, but never push one off the board or into a tower
+  const ox=s.x, oy=s.y;
   for(const o of S.soldiers){ if(o!==s&&o.hp>0&&o.side===s.side){const dd=dist(s,o); if(dd<0.35&&dd>0){const k=Math.min(0.02,dt*0.5);s.x+=(s.x-o.x)/dd*k;s.y+=(s.y-o.y)/dd*k;}}}
+  s.x=Math.max(0,Math.min(N-1,s.x)); s.y=Math.max(0,Math.min(N-1,s.y));
+  const r2=Math.round(s.y), c2=Math.round(s.x); if((r2!==Math.round(oy)||c2!==Math.round(ox))&&blocked(r2,c2)){ s.x=ox; s.y=oy; }
 }
+// ---- targeting ----
 function nearestEnemy(p,range,enemy){ let tg=null,best=range; for(const s of S.soldiers) if(s.side===enemy&&s.hp>0){const d=dist(p,s); if(d<=best){best=d;tg=s;}} return tg; }
+function nearestN(p,range,enemy,k){ const a=[]; for(const s of S.soldiers) if(s.side===enemy&&s.hp>0){ const d=dist(p,s); if(d<=range) a.push([d,a.length,s]); } a.sort((x,y)=>x[0]-y[0]||x[1]-y[1]); return a.slice(0,k).map(x=>x[2]); }
+function nearestBeyond(p,range,minr,enemy){ let tg=null,best=range; for(const s of S.soldiers) if(s.side===enemy&&s.hp>0){const d=dist(p,s); if(d>=minr&&d<=best){best=d;tg=s;}} return tg; }
+// the enemy soldier that has come closest to this tower's own king
+function mostAdvanced(t,range,enemy){ const [kr,kc]=S.kings[t.side].cell, p={x:t.c,y:t.r}; let tg=null,best=Infinity; for(const s of S.soldiers) if(s.side===enemy&&s.hp>0&&dist(p,s)<=range){ const d=hyp(s.x-kc,s.y-kr); if(d<best){best=d;tg=s;} } return tg; }
+function inRange(p,range,enemy){ const a=[]; for(const s of S.soldiers) if(s.side===enemy&&s.hp>0&&dist(p,s)<=range) a.push(s); return a; }
+// growth (sapling) and linked neighbours (octopus)
+function extraMul(t,def){ let k=1;
+  if(def.growT) k*=1+def.growS*Math.min(def.growMax,Math.floor((S.t-t.born)/def.growT));
+  if(def.link){ let n=0; for(const [dr,dc] of DIRS){ const o=towerAt(t.r+dr,t.c+dc); if(o&&o.side===t.side&&o.type===t.type) n++; } k*=1+def.link*n; }
+  return k; }
+const growStage=t=>{ const def=TOWERS[t.type]; if(!def.growT) return 0; const g=Math.min(def.growMax,Math.floor((S.t-t.born)/def.growT)); return g>=12?2:g>=5?1:0; };
+
 function updateTower(t,dt){
-  const def=TOWERS[t.type], m=tpow(t), range=def.range+0.25*(t.lvl-1), p={x:t.c,y:t.r}, enemy=other(t.side);
-  t.cd-=dt;
+  if(t.hp<=0) return;
+  const def=TOWERS[t.type], p={x:t.c,y:t.r}, enemy=other(t.side);
+  const range=def.range+(def.trap?0:0.25*(t.lvl-1));
+  t.cd-=dt*(t.bSpd||1);
+  if(def.raise) t.rcd=Math.max(0,(t.rcd||0)-dt);
   if(S.t-t.built<0.3) return; // under construction
-  if(def.spawn){ if(t.cd<=0){ t.cd=def.spawn-2*(t.lvl-1); barracksSpawn(t); } return; }
-  if(def.heal){ if(t.cd<=0){t.cd=def.cd; for(const s of S.soldiers) if(s.side===t.side&&s.hp>0&&s.hp<s.maxhp&&dist(p,s)<=range){s.hp=Math.min(s.maxhp,s.hp+def.heal*m);vfxHeal(s.x,s.y);}} return; }
-  if(def.slow){ if(t.cd<=0){t.cd=def.cd; let any=false; for(const s of S.soldiers) if(s.side===enemy&&s.hp>0&&dist(p,s)<=range){s.slow=1;s.hp-=def.dmg*m;any=true;vfxIce(s.x,s.y);} if(any) vfxFrost(p.x,p.y,range);} return; }
+  const m=tpow(t)*(1+(t.bDmg||0))*extraMul(t,def);
+  if(def.spawn){ if(t.cd<=0){ t.cd=def.spawn-2*(t.lvl-1); spawnFrom(t,def); } return; }
+  if(def.gcd){ if(t.cd<=0){ t.cd=def.gcd; globalFx(t,def,m); } return; }
+  if(def.trap){ trapStep(t,def,m); return; }
+  if(def.haste){ const v=Math.min(0.8,def.haste*m); let n=0; for(const s of S.soldiers) if(s.side===t.side&&s.hp>0&&dist(p,s)<=range){ s.haste=0.25; s.hv=Math.max(s.hv||0,v); n++; } if(n&&S.stat&&S.tick%20===0) S.stat(t,n,'haste'); return; }
+  if(def.heal){ if(t.cd<=0){t.cd=def.cd; for(const s of S.soldiers) if(s.side===t.side&&s.hp>0&&s.hp<s.maxhp&&dist(p,s)<=range){s.hp=Math.min(s.maxhp,s.hp+def.heal*m);vfxHeal(s.x,s.y); if(S.stat) S.stat(t,def.heal*m,'heal');}} return; }
+  if(def.slow){ if(t.cd<=0){t.cd=def.cd; let any=false; for(const s of S.soldiers) if(s.side===enemy&&s.hp>0&&dist(p,s)<=range){s.slow=1;hurt(s,def.dmg*m,t,true);any=true;vfxIce(s.x,s.y);} if(any) vfxFrost(p.x,p.y,range);} return; }
+  if(def.pulse){
+    if(t.cd>0) return; const hitL=inRange(p,range,enemy); if(!hitL.length) return; t.cd=def.cd;
+    for(const s of hitL){ if(def.dmg) hurt(s,def.dmg*m,t,true); if(def.psn) poisonOn(s,def.psn*m,def.psnT,t); if(def.burn) burnOn(s,def.burn*m,def.burnT,t);
+      if(def.vul){ s.vul=Math.max(s.vulT>0?s.vul:0,def.vul); s.vulT=Math.max(s.vulT,def.vulT); } }
+    vfxPulse(t,range,hitL); return; }
+  if(def.beam){
+    let tg=t.tg; if(!tg||tg.hp<=0||tg.side!==enemy||dist(p,tg)>range){ const nt=nearestEnemy(p,range,enemy); if(nt!==tg) t.ramp=0; tg=nt; t.tg=tg||null; }
+    if(!tg){ t.ramp=0; return; }
+    hurt(tg,def.beam*m*(1+t.ramp)*dt,t,true); t.ramp=Math.min(def.rampMax,t.ramp+def.ramp*dt); return; }
+  if(def.pull){
+    if(t.act>0){ t.act-=dt;
+      for(const s of S.soldiers) if(s.side===enemy&&s.hp>0){ const d=dist(p,s); if(d>range) continue; hurt(s,def.dps*m*dt,t,true);
+        if(d>0.65){ const k=Math.min(d-0.65,def.pull*dt), nx=s.x+(p.x-s.x)/d*k, ny=s.y+(p.y-s.y)/d*k, r0=Math.round(s.y), c0=Math.round(s.x), r1=Math.round(ny), c1=Math.round(nx);
+          if((r1===r0&&c1===c0)||!blocked(r1,c1)){ s.x=nx; s.y=ny; } } }
+      return; }
+    if(t.cd>0||!nearestEnemy(p,range,enemy)) return;
+    t.cd=def.cd; t.act=def.pullT*(1+0.25*(t.lvl-1)); vfxHole(t,range,t.act); sfx('hole'); return; }
+  if(def.siegeT){
+    if(t.cd>0) return; let tg=null,b=range; for(const o of S.towers) if(o.side===enemy&&o.hp>0){ const d=hyp(o.c-t.c,o.r-t.r); if(d<=b){b=d;tg=o;} }
+    if(!tg) return; t.cd=def.cd; damage(tg,def.dmg*m,enemy); if(S.stat) S.stat(t,def.dmg*m,'tower'); vfxRock(t,tg); sfx('fire'); return; }
+  if(def.meteor){
+    if(t.cd>0) return; let best=null,bn=0;
+    for(const s of S.soldiers) if(s.side===enemy&&s.hp>0&&dist(p,s)<=range){ let n=0; for(const o of S.soldiers) if(o.side===enemy&&o.hp>0&&dist(s,o)<=def.splash) n++; if(n>bn){bn=n;best=s;} }
+    if(!best) return; t.cd=def.cd;
+    const b={side:t.side,x:best.x,y:best.y,at:S.tick+Math.round(def.delay*TPS),t0:S.tick,dmg:def.dmg*m,r:def.splash,burn:(def.burn||0)*m,burnT:def.burnT||0,src:t};
+    S.bombs.push(b); vfxMeteorCall(t,b); sfx('meteor'); return; }
+  if(def.melee){
+    if(t.cd>0) return; const hitL=inRange(p,range,enemy); if(!hitL.length) return; t.cd=def.cd;
+    for(const s of hitL) hurt(s,def.dmg*m,t); vfxSlash(t,range); sfx('slash'); return; }
   if(def.chain){
     if(t.cd>0) return;
     const first=nearestEnemy(p,range,enemy); if(!first) return;
     t.cd=def.cd;
     const hitL=[first]; let cur=first;
     for(let k=1;k<def.chain;k++){ let nx=null,b=def.jump; for(const s of S.soldiers) if(s.side===enemy&&s.hp>0&&!hitL.includes(s)){const d=dist(cur,s); if(d<=b){b=d;nx=s;}} if(!nx) break; hitL.push(nx); cur=nx; }
-    let dmg=def.dmg*m; for(const s of hitL){ s.hp-=dmg; s.hitAt=S.t; dmg*=0.8; }
+    let dmg=def.dmg*m; for(const s of hitL){ hurt(s,dmg,t); dmg*=0.8; }
     vfxBolt(p,hitL); sfx('zap'); return;
   }
+  if(def.bounce){
+    if(t.cd>0) return; const first=nearestEnemy(p,range,enemy); if(!first) return; t.cd=def.cd;
+    const path=[first], seen=new Set([first]); let cur=first; const nb=def.bounce+(t.lvl-1);
+    for(let k=0;k<nb;k++){ let nx=null,b=def.jump,ny=null,b2=def.jump;
+      for(const s of S.soldiers) if(s.side===enemy&&s.hp>0&&s!==cur){ const d=dist(cur,s); if(!seen.has(s)){ if(d<=b){b=d;nx=s;} } else if(d<=b2){b2=d;ny=s;} }
+      const nn=nx||ny; if(!nn) break; path.push(nn); seen.add(nn); cur=nn; }
+    let dmg=def.dmg*m; for(const s of path){ hurt(s,dmg,t); dmg*=1+def.grow; }
+    vfxBounce(p,path); sfx('bounce'); return; }
   if(def.snipe){
     if(t.cd>0) return;
     let tg=null,best=-1; for(const s of S.soldiers) if(s.side===enemy&&s.hp>0&&dist(p,s)<=range&&s.hp>best){best=s.hp;tg=s;}
     if(!tg) return;
-    t.cd=def.cd; tg.hp-=def.dmg*m; tg.hitAt=S.t; vfxSnipe(p,tg); sfx('snipe'); return;
+    t.cd=def.cd; hurt(tg,def.dmg*m,t); vfxSnipe(p,tg); sfx('snipe'); return;
   }
+  if(def.pierce){
+    if(t.cd>0) return; const tg=nearestEnemy(p,range,enemy); if(!tg) return; t.cd=def.cd;
+    const dx=tg.x-p.x, dy=tg.y-p.y, L=hyp(dx,dy)||1, ux=dx/L, uy=dy/L, len=range+0.3;
+    for(const s of S.soldiers) if(s.side===enemy&&s.hp>0){ const rx=s.x-p.x, ry=s.y-p.y, al=rx*ux+ry*uy; if(al<0||al>len) continue;
+      if(Math.abs(rx*uy-ry*ux)<=def.pierce){ hurt(s,def.dmg*m,t); if(def.burn) burnOn(s,def.burn*m,def.burnT,t); } }
+    vfxPierce(t,p.x+ux*len,p.y+uy*len,def.burn?'fire':'bolt'); sfx(def.burn?'flame':'snipe'); return; }
   if(!def.dmg||t.cd>0) return;
-  const target=nearestEnemy(p,range,enemy);
-  if(!target) return;
-  t.cd=def.cd;
-  vfxShot(def.splash?'ball':'arrow',t.side,p.x,p.y,target.x,target.y,def.splash||0);
-  if(def.splash){ for(const s of S.soldiers) if(s.side===enemy&&s.hp>0&&dist(target,s)<=def.splash){s.hp-=def.dmg*m;s.hitAt=S.t;} sfx('fire'); }
-  else { target.hp-=def.dmg*m; target.hitAt=S.t; }
+  // projectile towers: arrow, cannon, bb, firesp, mortar, icesp, skelmage, sapling, octopus, rocket
+  let targets;
+  if(def.multi) targets=nearestN(p,range,enemy,def.multi);
+  else { const tg=def.minr?nearestBeyond(p,range,def.minr,enemy):def.front?mostAdvanced(t,range,enemy):nearestEnemy(p,range,enemy); targets=tg?[tg]:[]; }
+  if(!targets.length) return;
+  t.cd=def.cd; t.cnt++;
+  for(const tg of targets){
+    vfxShot(def.fx||(def.splash?'ball':'arrow'),t.side,p.x,p.y,tg.x,tg.y,def.splash||0);
+    const hitL=def.splash?inRange(tg,def.splash,enemy):[tg];
+    for(const s of hitL){ let d=def.dmg*m; if(def.pct) d+=s.maxhp*(def.pct+0.025*(t.lvl-1))*cardMul(t.cl);
+      hurt(s,d,t); if(def.burn) burnOn(s,def.burn*m,def.burnT,t); if(def.psn) poisonOn(s,def.psn*m,def.psnT,t);
+      if(def.freeze){ s.slow=1; if(t.cnt%def.every===0){ stunOn(s,def.freeze,t); vfxFreeze(s); } } }
+  }
+  if(def.splash) sfx('fire'); else if(def.fx==='pellet') sfx('pellet');
+}
+function trapStep(t,def,m){
+  const p={x:t.c,y:t.r}, enemy=other(t.side);
+  if(def.trap==='mine'){
+    if(S.t-t.built<1) return;
+    for(const s of S.soldiers) if(s.side===enemy&&s.hp>0&&dist(p,s)<=def.range){
+      for(const e of inRange(p,def.splash,enemy)) hurt(e,def.dmg*m,t);
+      t.hp=0; t.boom=true; vfxMine(p.x,p.y,def.splash); return; }
+    return; }
+  if(t.cd>0) return; let n=0;
+  for(const s of S.soldiers) if(s.side===enemy&&s.hp>0&&dist(p,s)<=def.range){ hurt(s,def.dmg*m,t); s.slow=1; n++; }
+  if(n){ t.cd=def.cd; t.hp-=n; vfxSpike(p.x,p.y); sfx('spike'); }
+}
+// legendary towers that act on the whole board
+function globalFx(t,def,m){
+  const enemy=other(t.side);
+  if(def.freezeAll){ const foes=S.soldiers.filter(s=>s.side===enemy&&s.hp>0); if(!foes.length){ t.cd=1; return; }
+    const d=def.freezeAll+0.4*(t.lvl-1); for(const s of foes) stunOn(s,d,t); vfxClock(t,d); sfx('freeze'); return; }
+  if(def.strikes){ const pool=S.soldiers.filter(s=>s.side===enemy&&s.hp>0); if(!pool.length){ t.cd=1; return; }
+    for(let i=0;i<def.strikes&&pool.length;i++){ const s=pool.splice(Math.floor(S.rng()*pool.length),1)[0]; hurt(s,def.dmg*m,t); stunOn(s,def.stun,t); vfxThunder(s); }
+    sfx('thunder'); return; }
+  if(def.healAll){ const k=Math.min(2,m), hs=S.soldiers.filter(s=>s.side===t.side&&s.hp>0&&s.hp<s.maxhp), ht=S.towers.filter(o=>o.side===t.side&&o.hp>0&&o.hp<o.maxhp);
+    if(!hs.length&&!ht.length){ t.cd=1; return; }
+    for(const s of hs){ const v=Math.min(s.maxhp-s.hp,s.maxhp*def.healAll*k); s.hp+=v; vfxHeal(s.x,s.y); if(S.stat) S.stat(t,v,'heal'); }
+    for(const o of ht) o.hp=Math.min(o.maxhp,o.hp+o.maxhp*def.healT*k);
+    vfxAngel(t); sfx('heal'); return; }
+}
+// statue / battery: each tower takes the best aura of each kind around it (they do not stack)
+function computeAuras(){
+  for(const t of S.towers){ t.bDmg=0; t.bSpd=1; }
+  for(const a of S.towers){ const d=TOWERS[a.type]; if(!(d.auraDmg||d.auraSpd)||a.hp<=0||S.t-a.built<0.3) continue;
+    const rg=d.range+0.25*(a.lvl-1)+1e-9, v=(d.auraDmg||d.auraSpd)*tpow(a);
+    for(const t of S.towers) if(t!==a&&t.side===a.side&&t.hp>0&&hyp(t.c-a.c,t.r-a.r)<=rg){ if(d.auraDmg) t.bDmg=Math.max(t.bDmg,v); else t.bSpd=Math.max(t.bSpd,1+v); } }
+}
+function bombStep(){
+  if(!S.bombs.length) return; const keep=[];
+  for(const b of S.bombs){ if(b.at>S.tick){ keep.push(b); continue; } const enemy=other(b.side);
+    for(const s of S.soldiers) if(s.side===enemy&&s.hp>0&&hyp(s.x-b.x,s.y-b.y)<=b.r){ hurt(s,b.dmg,b.src); if(b.burn) burnOn(s,b.burn,b.burnT,b.src); }
+    vfxMeteorHit(b); }
+  S.bombs=keep;
+}
+// burn / poison ticks, and the timers of every status
+function statusStep(dt){
+  for(const s of S.soldiers){ if(s.hp<=0) continue;
+    if(s.brnT>0){ const v=s.brn*Math.min(dt,s.brnT); s.hp-=v; s.seen=S.t; if(S.stat&&s.by) S.stat(s.by,v,'dmg'); s.brnT-=dt; if(s.brnT<=0){s.brn=0;s.brnT=0;} }
+    if(s.psnT>0){ const v=s.psn*Math.min(dt,s.psnT); s.hp-=v; s.seen=S.t; if(S.stat&&s.by) S.stat(s.by,v,'dmg'); s.psnT-=dt; if(s.psnT<=0){s.psn=0;s.psnT=0;} }
+    if(s.vulT>0){ s.vulT-=dt; if(s.vulT<=0){s.vulT=0;s.vul=0;} }
+    if(s.stun>0) s.stun=Math.max(0,s.stun-dt);
+    if(s.haste>0){ s.haste-=dt; if(s.haste<=0){s.haste=0;s.hv=0;} } }
+}
+// a tombstone raises a skeleton where an enemy soldier fell in its range
+function raiseDead(dead){
+  for(const s of dead) for(const t of S.towers){ const d=TOWERS[t.type];
+    if(!d.raise||t.hp<=0||t.side===s.side||t.rcd>0||S.t-t.built<0.3) continue;
+    if(hyp(t.c-s.x,t.r-s.y)>d.range+0.25*(t.lvl-1)) continue;
+    if(blocked(Math.round(s.y),Math.round(s.x))) continue;
+    spawnSoldier(t.side,'footman',s.y,s.x,(SOLDIER_BOOST?S.boost:1)*tpow(t),{hpMul:d.rhp,skel:true,exact:true});
+    t.rcd=d.raise; vfxRaise(s.x,s.y); if(S.stat) S.stat(t,1,'raise'); break; }
 }
 function hit(x,y,side){vfxHit(x,y,side);}
 function wellBonus(side){ let b=0; for(const t of S.towers) if(t.side===side&&t.type==='well'&&t.hp>0&&S.t-t.built>=0.3) b+=TOWERS.well.mana*tpow(t); return b; }
@@ -689,42 +962,65 @@ function wellBonus(side){ let b=0; for(const t of S.towers) if(t.side===side&&t.
 function aiThink(side){
   const opp=other(side), m=S.mana[side], rng=S.rng, h=Math.floor(N/2), center=(N-1)/2;
   const R=r=>side==='foe'?r:N-1-r;
-  const deck=S.decks[side]||TKEYS, has=k=>deck.includes(k);
+  const deck=S.decks[side]||TKEYS, roleOf=k=>TOWERS[k].role;
   const threats=S.soldiers.filter(s=>s.side===opp&&s.hp>0);
   const heavy=threats.filter(s=>s.type==='brute'||s.type==='siege').length;
   const mine=S.towers.filter(t=>t.side===side);
   const counts=k=>mine.filter(t=>t.type===k).length;
-  const oppGuns=S.towers.filter(t=>t.side===opp&&TOWERS[t.type].dmg);
+  const oppTowers=S.towers.filter(t=>t.side===opp);
+  const oppGuns=oppTowers.filter(t=>isAtk(t.type));
+  const myGuns=mine.filter(t=>isAtk(t.type));
   const scale=N/10;
   let choice=null;
   const capped=S.aiCap&&side===AI_SIDE&&mine.length>=S.aiCap;   // easy stages: the AI only keeps a few towers (it can still upgrade them)
-  const want=(k,cond)=>{ if(!choice&&!capped&&has(k)&&cond) choice=k; };
-  want('cannon', threats.length>=3&&m>=5&&counts('cannon')<Math.ceil(3*scale));
-  want('lightning', threats.length>=3&&m>=5&&counts('lightning')<2);
-  want('sniper', heavy>=1&&m>=5&&counts('sniper')<2);
-  want('well', S.wave>=1&&m>=4&&counts('well')<1&&threats.length<2);
-  want('frost', m>=4&&counts('frost')<2&&S.wave>=2);
-  want('arrow', m>=3&&counts('arrow')<Math.max(2,Math.round(4*scale)));
-  want('barracks', m>=5&&counts('barracks')<1&&S.wave>=2);
-  want('banner', m>=4&&counts('banner')<1&&S.wave>=1&&oppGuns.length>=2);
-  want('shrine', m>=4&&counts('shrine')<1&&S.wave>=3);
-  if(!choice&&!capped&&has('wall')&&m>=1&&rng()<0.4&&counts('wall')<3) choice='wall';
-  if(!choice&&m>=3&&rng()<0.35){ const ups=mine.filter(t=>TOWERS[t.type].dmg&&t.lvl<3&&TOWERS[t.type].cost<=m); if(ups.length){upgrade(side,ups[Math.floor(rng()*ups.length)]);return;} }
-  if(!choice&&!capped&&m>=9){ const atk=deck.filter(k=>TOWERS[k].dmg&&!TOWERS[k].slow); if(atk.length) choice=atk[Math.floor(rng()*atk.length)]; }
+  // the least-built tower of a role that we can afford now
+  const want=(role,cond,lim)=>{ if(choice||capped||!cond) return; let best=null,bc=1e9;
+    for(const k of deck){ if(roleOf(k)!==role) continue; const c=counts(k), mx=Math.min(lim,TOWERS[k].max||99); if(c<mx&&TOWERS[k].cost<=m&&c<bc){bc=c;best=k;} }
+    if(best) choice=best; };
+  // an expensive tower in the deck not built yet (laser, meteor, legendaries...): build it when affordable, otherwise often save up for it
+  const big=deck.filter(k=>TOWERS[k].cost>=6&&counts(k)<1).sort((a,b)=>TOWERS[a].cost-TOWERS[b].cost)[0];
+  const [kr0,kc0]=S.kings[side].cell, danger=threats.filter(s=>hyp(s.x-kc0,s.y-kr0)<3.5).length;
+  if(big&&!capped&&S.wave>=1){ if(m>=TOWERS[big].cost) choice=big; else if(danger<3&&rng()<0.6) return; }
+  want('aoe', threats.length>=3, Math.ceil(2*scale)+1);
+  want('heavy', heavy>=1, 2);
+  want('tank', threats.length>=2, 1);
+  want('global', S.wave>=1, 1);
+  want('eco', S.wave>=1&&threats.length<2, 1);
+  want('ctrl', S.wave>=2, 2);
+  want('dps', true, Math.max(2,Math.round(3*scale)));
+  want('long', S.wave>=2, 2);
+  want('spawn', S.wave>=2, 1);
+  want('grave', S.wave>=2&&threats.length>=2, 1);
+  want('sup', myGuns.length>=2, 1);
+  want('anti', oppTowers.length>=3, 1);
+  want('rally', S.wave>=1&&oppGuns.length>=2, 1);
+  want('heal', S.wave>=3, 1);
+  want('buffS', S.wave>=3, 1);
+  want('trap', S.wave>=1&&rng()<0.6, 3);
+  if(!choice&&rng()<0.4) want('wall', true, 3);
+  if(!choice&&m>=3&&rng()<0.35){ const ups=mine.filter(t=>isAtk(t.type)&&t.lvl<3&&TOWERS[t.type].cost<=m); if(ups.length){upgrade(side,ups[Math.floor(rng()*ups.length)]);return;} }
+  if(!choice&&!capped&&m>=9){ const atk=deck.filter(k=>isAtk(k)&&TOWERS[k].cost<=m&&(!TOWERS[k].max||counts(k)<TOWERS[k].max)); if(atk.length) choice=atk[Math.floor(rng()*atk.length)]; }
   if(!choice) return;
+  const role=roleOf(choice), def=TOWERS[choice];
   const front=[Math.max(1,h-2),h-1], back=[1,Math.min(2,h-1)], all=[]; for(let r=1;r<h;r++) all.push(r);
-  const rowsFor={wall:front,banner:front,barracks:front,shrine:back,well:back};
-  const rows=[...new Set(rowsFor[choice]||all)].map(R);
-  const attack=!!TOWERS[choice].dmg;
+  const rowsFor={wall:front,tank:front,rally:front,spawn:front,buffS:front,anti:front,heal:back,eco:back,global:back,long:back};
+  const rows=[...new Set(rowsFor[role]||all)].map(R);
+  const attack=role==='dps'||role==='aoe'||role==='heavy'||role==='ctrl'||role==='grave';
+  const path=(role==='trap'||role==='wall'||role==='tank')?pathCells(opp):null;
   const cand=[], seen=new Set();
-  const push=(r,c)=>{const k=r*N+c; if(seen.has(k)||r<0||c<0||r>=N||c>=N||blocked(r,c)) return; seen.add(k);
+  const push=(r,c)=>{const k=r*N+c; if(seen.has(k)||r<0||c<0||r>=N||c>=N||blocked(r,c)||towerAt(r,c)) return; seen.add(k);
     let score=rng();
-    if(attack){ for(const s of threats) score+=Math.max(0,3-hyp(s.x-c,s.y-r))*0.5; score+=Math.abs(c-center)<=N*0.25?0.8:0; score-=Math.abs(c-center)*0.1; }
-    if(choice==='wall'){ score+=S.dist[opp][r][c]<Infinity?1:0; score+=Math.abs(c-center)<=1.5?0.6:0; }
-    if(choice==='shrine'||choice==='barracks'){ score+=Math.abs(c-center)<=1.5?1:0; }
-    if(choice==='well'){ score-=Math.abs(c-center)*0.05; }
+    if(attack||role==='long'){ for(const s of threats) score+=Math.max(0,3-hyp(s.x-c,s.y-r))*0.5; score+=Math.abs(c-center)<=N*0.25?0.8:0; score-=Math.abs(c-center)*0.1; }
+    if(role==='wall'){ score+=S.dist[opp][r][c]<Infinity?1:0; score+=Math.abs(c-center)<=1.5?0.6:0; if(path.has(k)) score+=1.2; }
+    if(role==='tank'){ if(path.has(k)) score+=2; score+=Math.abs(c-center)<=1.5?0.5:0; }
+    if(role==='trap'){ score+=path.has(k)?2.5:-1; score+=Math.abs(c-center)<=1.5?0.3:0; }
+    if(role==='spawn'||role==='heal'||role==='buffS'){ score+=Math.abs(c-center)<=1.5?1:0; }
+    if(role==='eco'||role==='global'){ score-=Math.abs(c-center)*0.05; }
+    if(role==='anti'){ for(const o of oppTowers) if(hyp(o.c-c,o.r-r)<=def.range) score+=1; }
+    if(role==='sup'){ for(const o of myGuns) if(hyp(o.c-c,o.r-r)<=def.range+1e-9) score+=1.5; }
+    if(def.link){ for(const [dr,dc] of DIRS){ const o=towerAt(r+dr,c+dc); if(o&&o.side===side&&o.type===choice) score+=1.5; } }
     // the flag goes in front of our half, on the column the opponent's guns cover least
-    if(choice==='banner'){ let cover=0; for(const t of oppGuns) cover+=Math.max(0,3-Math.abs(t.c-c)); score=score*0.3-cover*0.6-Math.abs(c-center)*0.05; }
+    if(role==='rally'){ let cover=0; for(const t of oppGuns) cover+=Math.max(0,3-Math.abs(t.c-c)); score=score*0.3-cover*0.6-Math.abs(c-center)*0.05; }
     cand.push({r,c,score});};
   for(const r of rows) for(let c=0;c<N;c++) push(r,c);
   if(attack) for(const s of S.soldiers) if(s.side===side&&s.hp>0){const r0=Math.round(s.y),c0=Math.round(s.x); for(let dr=-1;dr<=1;dr++) for(let dc=-1;dc<=1;dc++) push(r0+dr,c0+dc);}
@@ -742,11 +1038,15 @@ function step(dt){
   S.waveTimer-=dt; if(S.waveTimer<=0){S.waveTimer=WAVE_T;spawnWave();}
   if(AI_SIDE){ S.aiTimer-=dt; if(S.aiTimer<=0){S.aiTimer=(1.5+S.rng()*1.5)*S.aiSlow;aiThink(AI_SIDE);} }
   for(const s of S.soldiers){s.px=s.x;s.py=s.y;s.slow=Math.max(0,s.slow-dt*0.8);}
+  computeAuras();
   for(const t of S.towers) updateTower(t,dt);
+  bombStep();
+  statusStep(dt);
   for(const s of S.soldiers) if(s.hp>0) updateSoldier(s,dt);
-  for(const side of ['you','foe']){const k=S.kings[side]; k.cd-=dt; if(k.cd<=0){const kp={x:k.cell[1],y:k.cell[0]}; let tg=null,b=2.3; for(const s of S.soldiers) if(s.side===other(side)&&s.hp>0){const d=dist(kp,s); if(d<b){b=d;tg=s;}} if(tg){tg.hp-=10;tg.hitAt=S.t;k.cd=1.6;vfxShot('arrow',side,kp.x,kp.y,tg.x,tg.y,0);}}}
-  const deadS=S.soldiers.some(s=>s.hp<=0); if(deadS){ sfx('death'); for(const s of S.soldiers) if(s.hp<=0) vfxDeath(s); S.soldiers=S.soldiers.filter(s=>s.hp>0); }
-  if(S.towers.some(t=>t.hp<=0)){ if(S.menuTower&&S.menuTower.hp<=0) closeMenu(); for(const t of S.towers) if(t.hp<=0) vfxRubble(t); S.towers=S.towers.filter(t=>t.hp>0);refreshDist(); }
+  for(const side of ['you','foe']){const k=S.kings[side]; k.cd-=dt; if(k.cd<=0){const kp={x:k.cell[1],y:k.cell[0]}; let tg=null,b=2.3; for(const s of S.soldiers) if(s.side===other(side)&&s.hp>0){const d=dist(kp,s); if(d<b){b=d;tg=s;}} if(tg){hurt(tg,10,null);k.cd=1.6;vfxShot('arrow',side,kp.x,kp.y,tg.x,tg.y,0);}}}
+  const dead=S.soldiers.filter(s=>s.hp<=0);
+  if(dead.length){ sfx('death'); for(const s of dead) vfxDeath(s); S.soldiers=S.soldiers.filter(s=>s.hp>0); raiseDead(dead); }
+  if(S.towers.some(t=>t.hp<=0)){ if(S.menuTower&&S.menuTower.hp<=0) closeMenu(); for(const t of S.towers) if(t.hp<=0&&!t.boom) vfxRubble(t); S.towers=S.towers.filter(t=>t.hp>0);refreshDist(); }
   const youDown=S.kings.you.hp<=0, foeDown=S.kings.foe.hp<=0;
   if(youDown||foeDown) endGame(youDown&&foeDown?null:foeDown?'you':'foe');
 }
@@ -760,10 +1060,10 @@ function endGame(winner){
 }
 function stateHash(){
   let h=2166136261>>>0; const mix=v=>{h=Math.imul(h^(v|0),16777619)>>>0;};
-  mix(S.tick); mix(S.n); mix(Math.round(S.kings.you.hp*1000)); mix(Math.round(S.kings.foe.hp*1000)); mix(Math.round(S.mana.you*1e6)); mix(Math.round(S.mana.foe*1e6));
-  for(const t of S.towers){ mix(t.r*16+t.c); mix(TKEYS.indexOf(t.type)); mix(t.lvl); mix(t.cl); mix(Math.round(t.hp*1000)); mix(t.side==='you'?1:2); }
+  mix(S.tick); mix(S.n); mix(Math.round(S.kings.you.hp*1000)); mix(Math.round(S.kings.foe.hp*1000)); mix(Math.round(S.mana.you*1e6)); mix(Math.round(S.mana.foe*1e6)); mix(S.bombs.length);
+  for(const t of S.towers){ mix(t.r*16+t.c); mix(TKEYS.indexOf(t.type)); mix(t.lvl); mix(t.cl); mix(Math.round(t.hp*1000)); mix(t.side==='you'?1:2); mix(t.cnt|0); mix(Math.round((t.ramp||0)*1000)); mix(Math.round((t.act||0)*1000)); }
   mix(S.soldiers.length);
-  for(const s of S.soldiers){ mix(Math.round(s.x*1e6)); mix(Math.round(s.y*1e6)); mix(Math.round(s.hp*1000)); mix(s.via?1:0); }
+  for(const s of S.soldiers){ mix(Math.round(s.x*1e6)); mix(Math.round(s.y*1e6)); mix(Math.round(s.hp*1000)); mix(s.via?1:0); mix(Math.round((s.stun||0)*1000)); mix(Math.round((s.brnT+s.psnT)*1000)); }
   return h;
 }
 
@@ -772,7 +1072,7 @@ let SCALE=4;
 const px=v=>Math.round(v*SCALE)/SCALE;
 const PAL={you:{a:'#5b7fb5',b:'#9fbde6',c:'#2f4a73'},foe:{a:'#b3262b',b:'#e0665f',c:'#5e1114'},
   board:{l:'#cfc4ad',l2:'#e0d6c0',d:'#3a3038',d2:'#4a3f48'},
-  o:'#1b1420',gold:'#ffd23f',goldD:'#b8891a',hp:'#5fd068',ice:'#a8ecff',iceD:'#4fa9d8',fire:'#ff9a3c',white:'#fff7e0',steel:'#cfd2da',steelL:'#eef0f4',steelD:'#6e727f',iron:'#3a3a44',wood:'#8a5a2b',woodD:'#5a3a1e',skin:'#f1c27d'};
+  o:'#1b1420',gold:'#ffd23f',goldD:'#b8891a',hp:'#5fd068',ice:'#a8ecff',iceD:'#4fa9d8',fire:'#ff9a3c',white:'#fff7e0',steel:'#cfd2da',steelL:'#eef0f4',steelD:'#6e727f',iron:'#3a3a44',wood:'#8a5a2b',woodD:'#5a3a1e',skin:'#f1c27d',ember:'#d9452b',leaf:'#8bd44a',leafD:'#4f8a2b',arc:'#b07cf0',arcD:'#6a3fa8',bone:'#e9dcc0'};
 const SPR={
  king:[
  '........oGGooGGooGGo........',
@@ -1427,6 +1727,894 @@ const SPR_FOE={
  '..okkdkko..okkdkko..',
  '...okkko....okkko...']]
 };
+
+// ---- towers added with the 40-tower roster (meta/sprites40.py) ----
+Object.assign(SPR,{
+ bb:[
+ '..........oGoGo.........',
+ '.........oGo.oGo........',
+ '.........oo..oo.........',
+ '........oSSooSSo........',
+ '........osdoosdo........',
+ '........osdoosdo........',
+ '........osdoosdo........',
+ '........osdoosdo........',
+ '........osdoosdo........',
+ '........osdoosdo........',
+ '........osdoosdo........',
+ '.......obssbbssbo.......',
+ '.......oaaaaaaaao.......',
+ '.......oakkkkkkao.......',
+ '.......oakddddkao.......',
+ '.......oakddddkao.......',
+ '.......oakkkkkkao.......',
+ '.......oaaaaaaaao.......',
+ '......ooaaaaaaaaoo......',
+ '.....obbbbbbbbbbbbo.....',
+ '.....oaaaaaaaaaaaao.....',
+ '.....oaaaaaaaaaaaao.....',
+ '....occcccccccccccco....',
+ '....occcccccccccccco....'],
+ spikes:[
+ '........................',
+ '........................',
+ '........................',
+ '........................',
+ '........................',
+ '........................',
+ '........................',
+ '........................',
+ '........................',
+ '........................',
+ '........................',
+ '........................',
+ '...o.....o.....o.....o..',
+ '..oso...oso...oso...oso.',
+ '..oSo.o.oSo.o.oSo.o.oSo.',
+ '..oSoodooSoodooSoodooSo.',
+ '..osoodoosoodoosoodooso.',
+ '..osoodoosoodoosoodooso.',
+ '.osssodosssodosssodossso',
+ '.osssdddsssdddsssdddssso',
+ 'oosssdddsssdddsssdddssso',
+ 'bbbbbbbbbbbbbbbbbbbbbbbb',
+ 'aaaaaaaaaaaaaaaaaaaaaaaa',
+ 'cccccccccccccccccccccccc'],
+ crossbow:[
+ '...........oo...........',
+ '..........oSSo..........',
+ '..........oSSo..........',
+ '.........oSSSSo.........',
+ '..........osso..........',
+ '..........osso..........',
+ '........ooossooo........',
+ '......oowwwsswwwoo......',
+ '...ooowwwwwsswwwwwooo...',
+ '..owwwwwwoossoowwwwwwo..',
+ '.owwwwooo.osso.ooowwwwo.',
+ '.oSSoo....osso....oooSSo',
+ '..ooSSoooovsswo.oooSSoo.',
+ '....ooSSSovsswooSSSoo...',
+ '......oooSSsswSSooo.....',
+ '.......obbbbbbbbo.......',
+ '.......oaaaaaaaao.......',
+ '.......oaaaaaaaao.......',
+ '......ooaaaaaaaaoo......',
+ '.....obbbbbbbbbbbbo.....',
+ '.....oaaaaaaaaaaaao.....',
+ '.....oaaaaaaaaaaaao.....',
+ '....occcccccccccccco....',
+ '....occcccccccccccco....'],
+ thornwall:[
+ '........................',
+ '..oo....oo....oo....oo..',
+ '.oSSooooSSooooSSooooSSo.',
+ '.oSSossoSSossoSSossoSSo.',
+ '.oSSossoSSossoSSossoSSo.',
+ '.oSSossoSSossoSSossoSSo.',
+ 'odsssssssssdsssssssssdso',
+ 'odsssssssssdsssssssssdso',
+ 'odsssssssssdsssssssssdso',
+ 'odsssssssssdsssssssssdso',
+ 'oddddddddddddddddddddddo',
+ 'osssssdsssssssssdsssssso',
+ 'osssssdsssssssssdsssssso',
+ 'osssssdsssssssssdsssssso',
+ 'osssssdsssssssssdsssssso',
+ 'oddddddddddddddddddddddo',
+ 'odsssssssssdsssssssssdso',
+ 'odsssssssssdsssssssssdso',
+ 'odsssssssssdsssssssssdso',
+ 'odsssssssssdsssssssssdso',
+ 'oddddddddddddddddddddddo',
+ 'osssssdsssssssssdsssssso',
+ 'obbbbbbbbbbbbbbbbbbbbbbo',
+ 'oaaaaaaaaaaaaaaaaaaaaaao'],
+ drum:[
+ '...............o........',
+ '..............oBo..o....',
+ '.............oBBBooBo...',
+ '.............owBooBBBo..',
+ '............owoooowBo...',
+ '......ooooooowoowwoo....',
+ '....ooBBBBBBwBBwBBoo....',
+ '...oBBBWWWWwWWwWWBBBo...',
+ '...oBBWWWWWWWWWWWWBBo...',
+ '...oBBBWWWWWWWWWWBBBo...',
+ '...oaaBBBBBBBBBBBBaao...',
+ '...oggggggggggggggggo...',
+ '...oaGaaaGaaaaGaaaGao...',
+ '...oaGaaaGaaaaGaaaGao...',
+ '...oaGaaaGaaaaGaaaGao...',
+ '...oaaGaaaGaaGaaaGaao...',
+ '...oaaGaaaGaaGaaaGaao...',
+ '...oggggggggggggggggo...',
+ '....ooGoaaGaaGaaoGoo....',
+ '.....oooooooooooooo.....',
+ '....obbbbbbbbbbbbbbo....',
+ '....oaaaaaaaaaaaaaao....',
+ '...occcccccccccccccco...',
+ '...occcccccccccccccco...'],
+ firesp:[
+ '........................',
+ '........................',
+ '........................',
+ '........................',
+ '...........o............',
+ '..........oRo...........',
+ '.........oRRo.oo........',
+ '.........oRRooRRo.......',
+ '.........oRRFRRRo.......',
+ '......oo.oRRFRRRo.......',
+ '.....oRRoRRFFRRFRo......',
+ '.....oRRRRRGGFFFRo......',
+ '.....oRRFFoGGoFFRRo.....',
+ '....oRRRFFWGGWFFFRo.....',
+ '....oRRFFGGGGGGFFRRo....',
+ '.....oooddddddddooo.....',
+ '.......okkkkkkkko.......',
+ '.......okkkkkkkko.......',
+ '......ookkkkkkkkoo......',
+ '.....obbbbbbbbbbbbo.....',
+ '.....oaaaaaaaaaaaao.....',
+ '.....oaaaaaaaaaaaao.....',
+ '....occcccccccccccco....',
+ '....occcccccccccccco....'],
+ mortar:[
+ '........................',
+ '..........ooooo.........',
+ '.........okkdkko........',
+ '.........okkkkko........',
+ '.........oSSSSSo........',
+ '.........ossssso........',
+ '.....o...osSssso........',
+ '....oko.ossSssso........',
+ '...odkkoossSssso........',
+ '..okkkkkossSssso........',
+ '...okkkoodddddddo.......',
+ '....oko.ossSsssso.......',
+ '.....o.osssSsssso.......',
+ '.......osssSsssso.......',
+ '.....ooksssSsssskoo.....',
+ '....okkkkkkkkkkkkkko....',
+ '....okkkkkkkkkkkkkko....',
+ '....okkkkkkkkkkkkkko....',
+ '....okkkkkkkkkkkkkko....',
+ '...obbkkkkkkkkkkkkbbo...',
+ '...oaaakkkkkkkkkkaaao...',
+ '...oaaaaaaaaaaaaaaaao...',
+ '..occcccccccccccccccco..',
+ '..occcccccccccccccccco..'],
+ mushroom:[
+ '........................',
+ '...o....................',
+ '..oPo.......o.......o...',
+ '...o..ooooooWooooo.oPo..',
+ '.....oPPPPPWWWPPPPo.o...',
+ '.o.ooPWPPPPPWPPPPPPoo...',
+ 'oPoPPWWWPPPPPPPPPWPPPo..',
+ '.ooPPPWPPPPPPPPPWWWPPo..',
+ '.oPPPPPPPWPPPPPPPWPPPPo.',
+ '.oppppppWWWppppWppppppo.',
+ '.opppppppWppppWWWpppppo.',
+ '.opppppppppppppWppppppo.',
+ '..oPPPPPPPPPPPPPPPPPPo..',
+ '...ooPPPPPPPPPPPPPPoo...',
+ '.....oPPPPPPPPPPPPo.....',
+ '......oWWBBBBBssBo......',
+ '......oWWBBBBBssBo......',
+ '......oWWBBBBBssBo......',
+ '......oWWBBBBBssBo......',
+ '.....ooWWBBBBBssBoo.....',
+ '....obbbbbbbbbbbbbbo....',
+ '....oaaaaaaaaaaaaaao....',
+ '...occcccccccccccccco...',
+ '...occcccccccccccccco...'],
+ bounce:[
+ '...........oo...........',
+ '..........oGGo..........',
+ '.........oGWGGo.........',
+ '........oGWGGGGo........',
+ '........oGGGGGGo...o....',
+ '....o...oGGGGgGo..oGo...',
+ '...oGo...oGGGGo...oo....',
+ '....oo..okkGGkko.oGo....',
+ '....oGookkkkkkkko.o.....',
+ '...o.o.okkkkkkkko...o...',
+ '..oGo..okkkkkkkko..oGo..',
+ '...o....okkkkkko....o...',
+ '........obbbbbbo........',
+ '........oaaaaaao........',
+ '........oaaaaaao........',
+ '........oaaaaaao........',
+ '........oaaaaaao........',
+ '........oaaaaaao........',
+ '......oooaaaaaaooo......',
+ '.....obbbbbbbbbbbbo.....',
+ '.....oaaaaaaaaaaaao.....',
+ '.....oaaaaaaaaaaaao.....',
+ '....occcccccccccccco....',
+ '....occcccccccccccco....'],
+ statue:[
+ '.........oooooo.oWo.....',
+ '........ossSsssooSo.....',
+ '........ossssssooSo.....',
+ '........ossssssooSo.....',
+ '........offffffooSo.....',
+ '........offffffooSo.....',
+ '........offffffooSo.....',
+ '.........offffo.oSo.....',
+ '.....ooooooffooooSo.....',
+ '....osssSSSSSSSSoSo.....',
+ '....osssssaaaassoSoo....',
+ '....osssssaaaasGGGGGo...',
+ '....osssssaaaassoSoo....',
+ '....osssssaaaassoSo.....',
+ '....osssssaaaassoSo.....',
+ '.....ooossaaaassoSo.....',
+ '.......ossssssssoo......',
+ '......oSSSSSSSSSSo......',
+ '......osssssssssso......',
+ '.....oossssssssssoo.....',
+ '....obbbbbbbbbbbbbbo....',
+ '....oaaaaaaaaaaaaaao....',
+ '...occcccccccccccccco...',
+ '...occcccccccccccccco...'],
+ jelly:[
+ '........................',
+ '........................',
+ '.......oooooooooo.......',
+ '.o...ooMMMWMMMMMMoo.....',
+ 'oGo.oMMMWWWWWMMMMMMo....',
+ '.o.oMMMWWWWWWWMMMMMMo.o.',
+ '...oMMMMWWWWWMMMMMMMooGo',
+ '..oMMMMMMMWMMMMMMMMMMoo.',
+ '..oMMMMMMoMMMMoMMMMMMo..',
+ '..oMMMMMMMMMMMMMMMMMMo..',
+ '..ommmmmmmmmmmmmmmmmmo..',
+ '..ommmmmmmmmmmmmmmmmmo..',
+ '...oMMmMMMmMMMmMMMmoMo..',
+ '...oMomMMMmMMMmMMomoMo..',
+ '..ooMomoMomoMomoMomoMo..',
+ '.oGoMomoMomoMomoMomoMGo.',
+ '..o.oMmMoomooMmMoomooMo.',
+ '....oMmMoomooMmMoomooMo.',
+ '....oMoMo.o.oMoMo.o.oMo.',
+ '....oMoMoooooMoMoooooMo.',
+ '...obbbbbbbbbbbbbbbboo..',
+ '...oaaaaaaaaaaaaaaaao...',
+ '..occcccccccccccccccco..',
+ '..occcccccccccccccccco..'],
+ icesp:[
+ '..........oIo...........',
+ '.........oiIIo..........',
+ '...o....oiiIIIo.........',
+ '..oIo..oiiiIIIIo....o...',
+ '...o..oiiiWIIIIIo..oIo..',
+ '.....oiiiWiIIIIIIo..o...',
+ '....oiiiiWiIIIIIIIo.....',
+ '....oiiiiiiIIIIIIIo.....',
+ '.....oiiiiiIIIIIIo......',
+ '......oiioiIIIoIo.......',
+ '......oiiiiIIIIIo.......',
+ '..o....oiiiIIIIo........',
+ '.oIo....oiiIIIo......o..',
+ '..o.....oiiIIIo.....oIo.',
+ '.........oiIIo.......o..',
+ '..........oIo...........',
+ '..........oIo...........',
+ '...........o............',
+ '......oooooooooooo......',
+ '.....obbbbbbbbbbbbo.....',
+ '.....oaaaaaaaaaaaao.....',
+ '.....oaaaaaaaaaaaao.....',
+ '....occcccccccccccco....',
+ '....occcccccccccccco....'],
+ mine:[
+ '........................',
+ '........................',
+ '........................',
+ '........................',
+ '........................',
+ '........................',
+ '........................',
+ '........................',
+ '...........oo...........',
+ '..........oFRo..........',
+ '..........oRRo..........',
+ '.........okkkko.........',
+ '.........okkkko.........',
+ '......ooookkkkoooo......',
+ '....ookkddkkkkddkkoo....',
+ '...okkddddddddddddkko...',
+ '..okkddddddddddddddkko..',
+ '..okkkddddddddddddkkko..',
+ '..okkkkkddddddddkkkkko..',
+ '...okkkkkkkkkkkkkkkko...',
+ '..obbbbbbbbbbbbbbbbbbo..',
+ '..oaaaaaaaaaaaaaaaaaao..',
+ '.occcccccccccccccccccco.',
+ '.occcccccccccccccccccco.'],
+ battery:[
+ '........................',
+ '........................',
+ '..........oooo..........',
+ '.........osssso.........',
+ '.......ooossssooo.......',
+ '......oddddddddddo......',
+ '......okkkkkkkkkko......',
+ '......okkbbbbbbkko......',
+ '......okkaaaaaakko......',
+ '......okkaaGaaakko......',
+ '......okkaaGaaakko......',
+ '......okkaaGGGakko......',
+ '......okkaGGGaakko......',
+ '......okkaaaGaakko......',
+ '......okkaaaaaakko......',
+ '......okkaaGaaakko......',
+ '......okkaaaaaakko......',
+ '......okkaaaaaakko......',
+ '......okkkkkkkkkko......',
+ '.....ookkkkkkkkkkoo.....',
+ '....obbbbbbbbbbbbbbo....',
+ '....oaaaaaaaaaaaaaao....',
+ '...occcccccccccccccco...',
+ '...occcccccccccccccco...'],
+ laser:[
+ '..........oWRo..........',
+ '..........oRRo..........',
+ '..........oRRo..........',
+ '.........ooRRoo.........',
+ '.....o..okkkkkko..o.....',
+ '....odookkkRRkkkoodo....',
+ '.....o.okkRWRRkko.o.....',
+ '.......okkRRRRkko.......',
+ '......ookkRRRRkkoo......',
+ '.....odokkkRRkkkodo.....',
+ '......o.okkkkkko.o......',
+ '........oaakkaao........',
+ '........oaaaaaao........',
+ '........oaaaaaao........',
+ '........oaaaaaao........',
+ '........oaaaaaao........',
+ '........oaaaaaao........',
+ '........oaaaaaao........',
+ '......oooaaaaaaooo......',
+ '.....obbbbbbbbbbbbo.....',
+ '.....oaaaaaaaaaaaao.....',
+ '.....oaaaaaaaaaaaao.....',
+ '....occcccccccccccco....',
+ '....occcccccccccccco....'],
+ skelmage:[
+ '..........omo.....o.....',
+ '.........ommmo...oWo....',
+ '........ommmmmo.oMMMo...',
+ '.......ommmmmmmo.oMo....',
+ '........ooBBBBo..owo....',
+ '........oBBBBBBo.owo....',
+ '........oBoBBoBo.owo....',
+ '........oBBBBBBo.owo....',
+ '.........oWWWWo..owo....',
+ '........oMMBBMMo.owo....',
+ '........ommmmmo..owo....',
+ '.......ommmmmmmo.owo....',
+ '.......ommmmmmmo.owo....',
+ '.......ommmmmmmo.owo....',
+ '......ommmmmmmmmoowo....',
+ '......ommmmmmmmmoowo....',
+ '......ommmmmmmmmoowo....',
+ '.....ommmmmmmmmmmowo....',
+ '.....ommmmmmmmmmmowo....',
+ '.....obbbbbbbbbbbbo.....',
+ '.....oaaaaaaaaaaaao.....',
+ '.....oaaaaaaaaaaaao.....',
+ '....occcccccccccccco....',
+ '....occcccccccccccco....'],
+ sapling:[[
+  '........................',
+  '........................',
+  '........................',
+  '........................',
+  '........................',
+  '........................',
+  '..............o.........',
+  '.........o..ooPoo.......',
+  '.......ooPooPPPPPo......',
+  '......oPPPPPPpPPPPo.....',
+  '.....oPPPPPPPPPPPo......',
+  '......oPPPPPwoPoo.......',
+  '.......ooPowwoo.........',
+  '.........oowwo..........',
+  '..........owwo..........',
+  '..........owwo..........',
+  '......ooooowwooooo......',
+  '.....ovvvvvvvvvvvvo.....',
+  '.....owwwwwwwwwwwwo.....',
+  '....oowwwwwwwwwwwwoo....',
+  '...obbbbbbbbbbbbbbbbo...',
+  '...oaaaaaaaaaaaaaaaao...',
+  '..occcccccccccccccccco..',
+  '..occcccccccccccccccco..'],[
+  '........................',
+  '........................',
+  '........................',
+  '........oooooooo........',
+  '.......oPPPPPWPPo.......',
+  '......oPPWPPPPPPPo......',
+  '.....oPPPPPPPPPPPPo.....',
+  '.....oPPppppppppPPo.....',
+  '.....oPppppppppppPo.....',
+  '......oPppppppppPo......',
+  '.......oPPPPPPPPo.......',
+  '........ooowwooo........',
+  '..........owwo..........',
+  '..........owwo..........',
+  '..........owwo..........',
+  '..........owwo..........',
+  '......ooooowwooooo......',
+  '.....ovvvvvvvvvvvvo.....',
+  '.....owwwwwwwwwwwwo.....',
+  '....oowwwwwwwwwwwwoo....',
+  '...obbbbbbbbbbbbbbbbo...',
+  '...oaaaaaaaaaaaaaaaao...',
+  '..occcccccccccccccccco..',
+  '..occcccccccccccccccco..'],[
+  '......oooooooooooo......',
+  '.....oPPPPPPPPPPPPo.....',
+  '...ooPPPPPPPPPWPPPPoo...',
+  '..oPPPPWPPPPPPPPPPPPPo..',
+  '..oPPPPPPPPPPPPPPPPPPo..',
+  '.oPPPPPPPPPPPPPPPPPPPPo.',
+  '.oPPPppppppppppppWpPPPo.',
+  '.oPPpWppppppppppppppPPo.',
+  '..oppppppppppppGpppppo..',
+  '..oPppppGpppppppppppPo..',
+  '...ooppppppppppppppoo...',
+  '.....oPPPPPPPPPPPPo.....',
+  '......oooowwwwoooo......',
+  '.........owwwwo.........',
+  '.........owwwwo.........',
+  '.........owwwwo.........',
+  '......oooowwwwoooo......',
+  '.....ovvvvvvvvvvvvo.....',
+  '.....owwwwwwwwwwwwo.....',
+  '....oowwwwwwwwwwwwoo....',
+  '...obbbbbbbbbbbbbbbbo...',
+  '...oaaaaaaaaaaaaaaaao...',
+  '..occcccccccccccccccco..',
+  '..occcccccccccccccccco..']],
+ octopus:[
+ '........................',
+ '........oooooooo........',
+ '.......oMMMMMMMMo.......',
+ '......oMMWMMMMMMMo......',
+ '.....oMMWWWMMMMMMMo.....',
+ '.....oMWWWWWMMMMMMo.....',
+ '....oMMMWWWMMMMMMMMo....',
+ '....oMMMMWMMMMMMMMMo....',
+ '....oMMMWWMMMMWWMMMo....',
+ '....oMMMWoMMMMWoMMMo....',
+ '....oMMMMMMMMMMMMMMo....',
+ '.....oMMMMMMMMMMMMo.....',
+ '.....oMMMMMMMMMMMMoo....',
+ '....oMMMMMMMMMMMMoMMo...',
+ '....oMMoMMMMMMMMMoMMo...',
+ '...oMMMMMMooMMoMMMMMMo..',
+ '...oMMoMMo.oMMooMMoMMo..',
+ '..oMMMoMMo.oMMooMMoMMMo.',
+ '..oMMooMMo.oMMooMMooMMo.',
+ '.oMMMoMMMo.oMMooMMMoMMMo',
+ '.oMMooMMooooMMoooMMooMMo',
+ '.oMaaaaaaaaaaaaaaaaaaMMo',
+ '.occcccccccccccccccccco.',
+ '.occcccccccccccccccccco.'],
+ tomb:[
+ '........................',
+ '........................',
+ '........ooooooo......o..',
+ '..o....ossssssso....oMo.',
+ '.oMo..ossssssssso....o..',
+ '..o..ossssssssssso......',
+ '....ossssssddssssso.....',
+ '....osSssssddssssso.....',
+ '....osSssssddssssso.....',
+ '....osSsddddddddsso.....',
+ '....osSsddddddddsso.....',
+ '....osSssssddssssso.....',
+ '....osSssssddssssso.....',
+ '....osSssssddsssPso.....',
+ '....osSssssddsPssso.....',
+ '....osSssssddssssso.....',
+ '....osSssssssssPsso.....',
+ '....osSssssssssssso.....',
+ '....osSssssssssssso.....',
+ '....osSssssssssssso.....',
+ '...oosssssssssssssooo...',
+ '..oaaaaaaaaaaaaaaaaaao..',
+ '.occcccccccccccccccccco.',
+ '.occcccccccccccccccccco.'],
+ meteor:[
+ '................oGGooFFF',
+ '............o.ooGoooFFFF',
+ '.........oooRoGGoFFFFFoo',
+ '........oRRFRRRRFFFFFoRR',
+ '.......oRFGFFFRRFFoRRRoo',
+ '.......oRGGGFFRRRRRooo..',
+ '.......oFFGFFFFRRoo.....',
+ '......oRRFFFFFRRRRo.....',
+ '.......oRFFFFFRRRo......',
+ '.......oRRRFRRRRRo......',
+ '.......oRRRRRRRRRo......',
+ '........oRRRRRRRo.......',
+ '.......oooooRoooo.......',
+ '......oddddddddddo......',
+ '.....okkkkkkkkkkko......',
+ '.....okkkkkkkkkkko......',
+ '....okkkkkkkkkkkkko.....',
+ '....okkkkkkkkkkkkko.....',
+ '...okkkkkkkkkkkkkkko....',
+ '...obbbbbbbbbbbbbbbbo...',
+ '...oaaaaaaaaaaaaaaaao...',
+ '...oaaaaaaaaaaaaaaaao...',
+ '..occcccccccccccccccco..',
+ '..occcccccccccccccccco..'],
+ gate:[
+ '..........oRRo.....oo...',
+ '.......ooooRRoooo.oSSo..',
+ '......oSSSSSSSSSSooSSo..',
+ '......ossssssssssoSSSSo.',
+ '......ossssssssssooddo..',
+ '......osskkkkkkssooddo..',
+ '......ossssssssssooddo..',
+ '......ossssssssssooddo..',
+ '.....oossssssssssooddo..',
+ '.ooooSSSSSSSSSSSSSSddo..',
+ 'oggggssssssssssssssddo..',
+ 'owwwwssssbbbbbbssssddo..',
+ 'owwwwssssaaaaaassssddo..',
+ 'owwwwssssaaaaaassssddo..',
+ 'owwwwssssaaaaaassssddo..',
+ 'owwwwssssaaaaaassssddo..',
+ 'owwwwssssaaaaaassssddo..',
+ 'owwwwssssaaaaaassssddo..',
+ '.oooossssaaaaaassssddo..',
+ '....ossssssssssssssoo...',
+ '...obbbbbbbbbbbbbbbbo...',
+ '...oaaaaaaaaaaaaaaaao...',
+ '..occcccccccccccccccco..',
+ '..occcccccccccccccccco..'],
+ catapult:[
+ '.................odddo..',
+ '................odddddo.',
+ '................ovdddvo.',
+ '................ovvdvvo.',
+ '................ovvvvvo.',
+ '.................owwwo..',
+ '................owwwo...',
+ '...............owwwo....',
+ '..............owwwo.....',
+ '.............owwwo......',
+ '..........oo.owwo.......',
+ '.........owwowwwo.......',
+ '.........owwwwwo........',
+ '.........owwwwo.........',
+ '.........owwwo..........',
+ '....ooooowwwoooooooo....',
+ '...ovvvvwwwvvvvvvvvvo...',
+ '...owwwwwwwwwwwwwwwwo...',
+ '...owwkwwwwwwwwwwkwwo...',
+ '...owkkkwwwwwwwwkkkwo...',
+ '..obkkkkkbbbbbbkkkkkbo..',
+ '..oaakkkaaaaaaaakkkaao..',
+ '.occcckcccccccccckcccco.',
+ '.occcccccccccccccccccco.'],
+ toad:[
+ '........................',
+ '........................',
+ '........................',
+ '........................',
+ '........................',
+ '.......o........o.......',
+ '.....ooRoo....ooRoo.o...',
+ '...ooRRRRRo..oRRRRRoGo..',
+ '..oGoRRWRRo..oRRWRRoo...',
+ '.o.oRRWoWRRooRRWoWRRo.o.',
+ 'oFo.oRRWRRRRRRRRWRRo.oFo',
+ '.oo.oRRRRRRRRRRRRRRo.oo.',
+ '.oFoRRRRRRRRRRRRRRRRoFo.',
+ '..ooRRRRRRRRRRRRRRRRoo..',
+ '..oRRRooooooooooooRRRo..',
+ '..oRRRRFFFFFFFFFFRRRRo..',
+ '..oRRFFFFFFFFFFFFFFRRo..',
+ '...oRFFFFFFFFFFFFFFRo...',
+ '...oRFFFFFFFFFFFFFFRo...',
+ '....oRRFFFFFFFFFFRRo....',
+ '....oooRRRRRRRRRRooo....',
+ '...oaaaaaaaaaaaaaaaao...',
+ '..occcccccccccccccccco..',
+ '..occcccccccccccccccco..'],
+ rocket:[
+ '...........oo...........',
+ '..........oRRo..........',
+ '.........oRRRRo.........',
+ '.........oSssso.........',
+ '.........oSssso.........',
+ '.........oSssso.........',
+ '.........oSssso.........',
+ '.........oSssso.........',
+ '.........oSssso.........',
+ '.........oSssso.........',
+ '........oRddddRo........',
+ '.......oRRSsssRRo.......',
+ '.......oRRSsssRo........',
+ '........oRSssso.........',
+ '.......okkkFFkko........',
+ '......okkkkFFkkko.......',
+ '......okkkkkkkkko.......',
+ '......okkkkkkkkko.......',
+ '.....okkkkkkkkkkkoo.....',
+ '....obbbbbbbbbbbbbbo....',
+ '....oaaaaaaaaaaaaaao....',
+ '....oaaaaaaaaaaaaaao....',
+ '...occcccccccccccccco...',
+ '...occcccccccccccccco...'],
+ dragon:[
+ '........................',
+ '........................',
+ '....................o...',
+ '.......o...........oRo..',
+ '......omo.........oRRGo.',
+ '.....ommmo.......oRRRRRo',
+ '....ommmMMo.....oRRRRRoF',
+ '...ommmMMMRooo.oRRRRRooF',
+ '..ommmMMMMRRRRoRRRRRo..o',
+ '...ooommMMMRRRRRRRRo....',
+ '....oRRRRRFRRRRRRRo.....',
+ '....oRRRFFFFFRRRRo......',
+ '...oRRRFFFFFFFRRRo......',
+ '....oRFFFFFFFFFRo.......',
+ '....oRRFFFFFFFRRo.......',
+ '.....oRRFFFFFRRoooo.....',
+ '...oowwRRRFRRRwwwwwoo...',
+ '..owwvvvvvRvvvvvvvvwwo..',
+ '.owwvvvvvvvvvvvvvvvvwwo.',
+ '.owwwvvvvvvvvvvvvvvwwwo.',
+ '.owwwwwwwwwwwwwwwwwwwwo.',
+ '..owwwwwwwwwwwwwwwwwwo..',
+ '..obbbbbbbbbbbbbbbbbbo..',
+ '..oaaaaaaaaaaaaaaaaaao..'],
+ clock:[
+ '..........oGGo..........',
+ '..........oGGo..........',
+ '..........oao...........',
+ '.........oaaao..........',
+ '........oaabaao.........',
+ '.......oaabbbaao........',
+ '......oaabbbbbaao.......',
+ '.....oaabbbbbbbaao......',
+ '....oaaaaaaaaaaaaao.....',
+ '.....oSSSSSSSSSSSSo.....',
+ '.....osssssWWssssso.....',
+ '.....osssWWkWWWssso.....',
+ '.....ossWWWkWWWWsso.....',
+ '.....ossWWWkWWWWsso.....',
+ '.....ossWWWGkkWWsso.....',
+ '.....ossWWWWWWkWsso.....',
+ '.....ossWWWWWWWWsso.....',
+ '.....osssWWWWWWssso.....',
+ '.....osssssWWssssso.....',
+ '.....osssssssssssso.....',
+ '....obbbbbbbbbbbbbbo....',
+ '....oaaaaaaaaaaaaaao....',
+ '...occcccccccccccccco...',
+ '...occcccccccccccccco...'],
+ hole:[
+ '...........oo...........',
+ '........ooommooo........',
+ '......oommmmmmmmoo......',
+ '.....ommmmmMMmmmmmo.....',
+ '....ommmMMMMMMMMmmWo....',
+ '...oWmmMMMMmmMMMMmmmo...',
+ '...ommMMMmmmmmmMMMmmo...',
+ '..ommmMMmmmkkmmmMMmmmo..',
+ '..ommMMmmmkkkkmmmMMmmo..',
+ '..ommMMmmkkkkkkmmMMmmo..',
+ '..ommMMmmkkookkmmMMmmo..',
+ '..ommMMmmkkkkkkmmMMmmo..',
+ '..ommMMmmmkkkkmmmMMmmo..',
+ '..ommmMMmmmkkmmmMMmmmo..',
+ '...ommMMMmmmmmmMMMmmo...',
+ '...ommmMMMMmmMMMMmmWo...',
+ '....oWmmMMMMMMMMmmmo....',
+ '.....ommmmmMMmmmmmo.....',
+ '......oommmmmmmmoo......',
+ '....ooooooommooooooo....',
+ '...obbbbbbbbbbbbbbbbo...',
+ '...oaaaaaaaaaaaaaaaao...',
+ '..occcccccccccccccccco..',
+ '..occcccccccccccccccco..'],
+ thunder:[
+ '............o...........',
+ '....o......oWo.....o....',
+ '...oso....oGo.....oso...',
+ '..osWso...oGooo..osWso..',
+ '.osWWWso.oGGGGGoosWWWso.',
+ '..osWso.oGGGGGo..osWso..',
+ '...oso.oddddGddo..oso...',
+ '....o.oddddGddddo..o....',
+ '.......oSSSGSSSSo.......',
+ '.......osssssssso.......',
+ '.......ossaaaasso.......',
+ '.......ossaaaasso.......',
+ '.......ossaaaasso.......',
+ '.......ossaaaasso.......',
+ '.......ossaaaasso.......',
+ '.......ossaaaasso.......',
+ '.......ossaaaasso.......',
+ '.......ossaaaasso.......',
+ '.......osssssssso.......',
+ '.....ooossssssssooo.....',
+ '....obbbbbbbbbbbbbbo....',
+ '....oaaaaaaaaaaaaaao....',
+ '...occcccccccccccccco...',
+ '...occcccccccccccccco...'],
+ angel:[
+ '........................',
+ '.........oooooo.........',
+ '........oGGGGGGo........',
+ '..o......oooooo......o..',
+ '.oSo......offo......oSo.',
+ '.oSSo....offffo...ooSSo.',
+ '.oSSSoo..offffo..oSSSSo.',
+ '.oSSWSSo.offffo.oSSWSSo.',
+ '.oSSSSSSo.offo.oSSSSSSo.',
+ '..oSSSSSooSSSSooSSSSSo..',
+ '..oSSWSo.oWWWWo.oSWSSo..',
+ '..oSSSo..oWWWWo..oSSSo..',
+ '..oSSo..oWWWWWWo..oSSo..',
+ '..oSo...oWWWWWWo...oSo..',
+ '...o....oWWWWWWo....o...',
+ '........oWWWWWWo........',
+ '........oWWWWWWo........',
+ '.......oWWWWWWWWo.......',
+ '.......oWWWWWWWWo.......',
+ '.....oooWWWWWWWWooo.....',
+ '....obbbbbbbbbbbbbbo....',
+ '....oaaaaaaaaaaaaaao....',
+ '...occcccccccccccccco...',
+ '...occcccccccccccccco...'],
+ golem:[
+ '................oso.....',
+ '................ooso....',
+ '...............odddo....',
+ '...........o...odddo....',
+ '.........ookoo.odddo....',
+ '........okkkkkoodddo....',
+ '.......okkkkkkkodddo....',
+ '.....ookkkkkkkkkdddo....',
+ '....okkkkkkkkkkkkko.....',
+ '...okkkkkkkkkkkkkkko....',
+ '...osssssssssssssssso...',
+ '...oddddddddddddddddo...',
+ '...oddddddddddddddddo...',
+ '...oddGddkkFFkkdddddo...',
+ '...odGGGdkFGFFkdddddo...',
+ '...oGGgGGkFFFFkdddddo...',
+ '...odGGGdkFFFFkdddddo...',
+ '...oddGddkkFFkkdddddo...',
+ '...odddddkkkkkkdddddo...',
+ '..obbbbbbbbbbbbbbbbbbo..',
+ '..oaaaaaaaaaaaaaaaaaao..',
+ '..oaaaaaaaaaaaaaaaaaao..',
+ '.occcccccccccccccccccco.',
+ '.occcccccccccccccccccco.']
+});
+// lobby tab icons (16x16)
+const UI_ICONS={ shop:[
+ '................',
+ '...oooooooooo...',
+ '..ovvvvvvvvvvo..',
+ '.ovvvvvvvvvvvvo.',
+ '.ovvvvvvvvvvvvo.',
+ 'ovvvvvvvvvvvvvvo',
+ 'oGGGGGGGGGGGGGGo',
+ 'owwwwwwwwwwwwwwo',
+ 'owwwwwwGGwwwwwwo',
+ 'owwwwwwGGwwwwwwo',
+ 'oggggggGGggggggo',
+ 'owwwwwwwwwwwwwwo',
+ 'owwwwwwwwwwwwwwo',
+ 'owwwwwwwwwwwwwwo',
+ '.oooooooooooooo.',
+ '................'],
+ tower:[
+ '...o..o..o..o...',
+ '..oSooSooSooSo..',
+ '..osssssssssso..',
+ '..osssssssssso..',
+ '..osssssssssso..',
+ '...oSSSSSSSSo...',
+ '...osssssssso...',
+ '...osssssssso...',
+ '...osssssssso...',
+ '...ossskkssso...',
+ '...ossskkssso...',
+ '...ossskkssso...',
+ '...ossskkssso...',
+ '..oossskksssoo..',
+ '.oddddddddddddo.',
+ '.oddddddddddddo.'],
+ battle:[
+ '................',
+ '...o........o...',
+ '..oWo......oWo..',
+ '..oSSo.....oSSo.',
+ '..oSSSo...oSSSo.',
+ '...oSSSo.oSSSo..',
+ '....oSSSoSSSo...',
+ '.....oSSSSSo....',
+ '......oSSSo.....',
+ '.....oSSSSSo....',
+ '.ooooSSSoSSSooo.',
+ 'oGGGGSSo.oSGGGGo',
+ 'oGGGGSo...oGGGGo',
+ '.oSSSo.....oSSSo',
+ '.oSSo.......oSSo',
+ '..oo.........oo.'],
+ ranked:[
+ '................',
+ '....oooooooo....',
+ '..ooGGGGGGGGoo..',
+ '.oGoGGWGGGGGoGo.',
+ '.oooGGWGGGGGooo.',
+ 'oGooGGWGGGGGooGo',
+ '.o.oGGWGGGGGo.o.',
+ '...oGGGGGGGGo...',
+ '...oGGGGGGGGo...',
+ '....oGGGGGGo....',
+ '.....ooggoo.....',
+ '......oggo......',
+ '....oooggooo....',
+ '...oggggggggo...',
+ '...oggggggggo...',
+ '....oooooooo....'],
+ outlaw:[
+ '.......oo.......',
+ '.....ooBBoo.....',
+ '....oBBBBBBo....',
+ '...oBBBBBBBBo...',
+ '..oBBBBBBBBBBo..',
+ '..oBBkBBBBkBBo..',
+ '..oBkkkBBkkkBo..',
+ '..oBBkBBBBkBBo..',
+ '..oBBBBkkBBBBo..',
+ '...oBBBkkBBBo...',
+ '...oBBBBBBBBo...',
+ '...oBBBBBBBBo...',
+ '...oBkBkBkBBo...',
+ '....oooooooo....',
+ '................',
+ '................']};
 const soldierFrames=(type,pk)=>pk==='foe'?SPR_FOE[type]:SPR[type];
 const frames=sp=>Array.isArray(sp[0])?sp:[sp,sp];
 // palette key by viewer: my side is always drawn blue, the other side red
@@ -1437,7 +2625,8 @@ const LX=x=>(vx(x)+.5)*CELL, LY=y=>(vy(y)+.5)*CELL;
 const HIT_RED='#e0665f';
 function drawSprite(g,map,x,y,pk,rowFrom=0,flash=false){
   const sp=PAL[pk]||PAL.you;
-  const col={o:PAL.o,a:sp.a,b:sp.b,c:sp.c,W:PAL.white,G:PAL.gold,g:PAL.goldD,s:PAL.steel,S:PAL.steelL,d:PAL.steelD,k:PAL.iron,I:PAL.ice,i:PAL.iceD,w:PAL.wood,v:PAL.woodD,f:PAL.skin};
+  const col={o:PAL.o,a:sp.a,b:sp.b,c:sp.c,W:PAL.white,G:PAL.gold,g:PAL.goldD,s:PAL.steel,S:PAL.steelL,d:PAL.steelD,k:PAL.iron,I:PAL.ice,i:PAL.iceD,w:PAL.wood,v:PAL.woodD,f:PAL.skin,
+    F:PAL.fire,R:PAL.ember,P:PAL.leaf,p:PAL.leafD,M:PAL.arc,m:PAL.arcD,B:PAL.bone};
   for(let r=rowFrom;r<map.length;r++){const row=map[r];for(let c=0;c<row.length;c++){const ch=row[c];if(ch==='.')continue;g.fillStyle=flash&&ch!=='o'?PAL.white:(col[ch]||sp.a);g.fillRect(x+c,y+r,1,1);}}
 }
 // sprites are rasterised once per palette and reused with drawImage
@@ -1450,8 +2639,10 @@ function spriteImg(map,pk,flash){
 }
 const blit=(map,x,y,pk,flash)=>ctx.drawImage(spriteImg(map,pk,!!flash),x,y);
 const jit=()=>((performance.now()/45|0)%2?1:-1);
+// the picture used for a tower on cards, the codex and previews (a grown tree for the sapling)
+const iconMap=k=>frames(SPR[k])[k==='sapling'?2:0];
 function drawTowerAt(t,x,y,anim,flash){
-  const fr=frames(SPR[t.type])[t.type==='banner'?anim:0], img=spriteImg(fr,pal(t.side),flash);
+  const fr=frames(SPR[t.type])[t.type==='banner'?anim:t.type==='sapling'?growStage(t):0], img=spriteImg(fr,pal(t.side),flash);
   const p=Math.min(1,(S.t-t.built)/0.3);
   if(p<1){ ctx.strokeStyle=PAL.steelD; ctx.lineWidth=1; ctx.setLineDash([2,2]); ctx.strokeRect(x+0.5,y+0.5,23,23); ctx.setLineDash([]); const rf=Math.floor(24*(1-p)); if(rf<24) ctx.drawImage(img,0,rf,24,24-rf,x,y+rf,24,24-rf); }
   else ctx.drawImage(img,x,y);
@@ -1489,11 +2680,49 @@ const easeOut=p=>1-(1-p)*(1-p);
 function vfxAdd(e){ if(VFX.length<420) VFX.push(e); }
 function burst(x,y,n,colors,spd,up,grav,life,size){ for(let i=0;i<n;i++){ const a=Math.random()*Math.PI*2, v=rnd(spd*0.4,spd); vfxAdd({k:'p',layer:'air',x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-up,g:grav,t:0,life:rnd(life*0.6,life),c:colors[i%colors.length],s:size||1}); } }
 function smoke(x,y,n,r0){ for(let i=0;i<n;i++) vfxAdd({k:'smoke',layer:'air',x:x+rnd(-r0,r0),y:y+rnd(-r0,r0),vy:rnd(-14,-6),t:0,life:rnd(0.35,0.6),s0:rnd(2,4)}); }
+// projectile looks: [color, edge color, size, speed per cell, arc height, end effect]
+const PROJ={pellet:[PAL.gold,PAL.goldD,1,0.03,0,'spark'], fire:[PAL.fire,PAL.ember,3,0.06,4,'fire'], ice:[PAL.ice,PAL.iceD,2,0.05,2,'ice'],
+  skull:[PAL.arc,PAL.arcD,3,0.07,3,'arc'], leaf:[PAL.leaf,PAL.leafD,2,0.06,3,'leaf'], ink:[PAL.arcD,PAL.o,2,0.05,2,'ink'], rocket:[PAL.white,PAL.steelD,2,0.07,0,'rocket']};
 function vfxShot(kind,side,x0,y0,x1,y1,splash){
   const sx=LX(x0), sy=LY(y0)-8, ex=LX(x1), ey=LY(y1), d=Math.sqrt((ex-sx)*(ex-sx)+(ey-sy)*(ey-sy))/CELL;
   if(kind==='arrow') vfxAdd({k:'arrow',layer:'air',sx,sy,ex,ey,t:0,life:Math.max(0.07,d*0.055),pk:pal(side)});
-  else { vfxAdd({k:'ball',layer:'air',sx,sy,ex,ey,t:0,life:0.34,r:(splash||1)*CELL}); vfxAdd({k:'shadow',layer:'ground',sx,sy:sy+10,ex,ey:ey+4,t:0,life:0.34}); smoke(sx,sy-2,2,2); }
+  else if(kind==='ball'||kind==='shell'){ const life=kind==='shell'?0.62:0.34, arc=kind==='shell'?44:18; vfxAdd({k:'ball',layer:'air',sx,sy,ex,ey,t:0,life,arc,r:(splash||1)*CELL}); vfxAdd({k:'shadow',layer:'ground',sx,sy:sy+10,ex,ey:ey+4,t:0,life}); smoke(sx,sy-2,2,2); }
+  else { const P=PROJ[kind]||PROJ.pellet; vfxAdd({k:'proj',layer:'air',sx,sy,ex,ey,t:0,life:Math.max(0.06,d*P[3]),c1:P[0],c2:P[1],s:P[2],arc:P[4],end:P[5],r:(splash||0)*CELL}); }
 }
+function projEnd(e){ const x=e.ex, y=e.ey-2;
+  switch(e.end){
+    case 'fire': burst(x,y,5,[PAL.fire,PAL.gold,PAL.ember],60,30,160,0.35,1); break;
+    case 'ice': burst(x,y,4,[PAL.ice,PAL.white,PAL.iceD],50,20,140,0.3,1); break;
+    case 'arc': burst(x,y,5,[PAL.arc,PAL.arcD,PAL.white],60,20,120,0.35,1); break;
+    case 'leaf': burst(x,y,3,[PAL.leaf,PAL.leafD],50,20,140,0.3,1); break;
+    case 'ink': burst(x,y,4,[PAL.arcD,PAL.o,PAL.arc],50,10,160,0.35,1); break;
+    case 'rocket': explode(x,y,e.r||18); burst(x,y,6,[PAL.leaf,PAL.leafD],50,30,80,0.6,2); break;
+    default: vfxAdd({k:'spark',layer:'air',x,y,t:0,life:0.08,small:true});
+  } }
+// ---- tower effects added with the 40-tower roster ----
+function vfxPulse(t,range,list){ const X=LX(t.c),Y=LY(t.r)-4, k=t.type;
+  if(k==='toad'){ for(const s of list){ const tx=LX(s.x),ty=LY(s.y); for(let i=0;i<3;i++){ const f=Math.random(); vfxAdd({k:'p',layer:'air',x:X+(tx-X)*f*0.3,y:Y+(ty-Y)*f*0.3,vx:(tx-X)*2.2+rnd(-20,20),vy:(ty-Y)*2.2+rnd(-20,20),g:0,t:0,life:rnd(0.25,0.4),c:[PAL.fire,PAL.gold,PAL.ember][i],s:2}); } } return; }
+  const c=k==='mushroom'?[PAL.leaf,PAL.leafD]:k==='jelly'?[PAL.arc,PAL.gold]:[PAL.fire,PAL.ember];
+  vfxAdd({k:'ringp',layer:'ground',x:X,y:Y+4,t:0,life:0.32,r0:5,r1:range*CELL,c1:c[0],c2:c[1]});
+  for(const s of list) burst(LX(s.x),LY(s.y)-4,2,c,40,20,120,0.35,1);
+  if(k==='jelly') for(const s of list.slice(0,4)) vfxAdd({k:'bolt',layer:'air',x0:X,y0:Y-6,x1:LX(s.x),y1:LY(s.y)-2,t:0,life:0.12,col:PAL.arc});
+}
+function vfxSpike(x,y){ const X=LX(x),Y=LY(y); vfxAdd({k:'spikes',layer:'air',x:X,y:Y,t:0,life:0.18}); }
+function vfxMine(x,y,r){ explode(LX(x),LY(y),r*CELL); burst(LX(x),LY(y),8,[PAL.fire,PAL.ember,PAL.iron],140,60,300,0.6,2); }
+function vfxBounce(p,path){ let x0=LX(p.x), y0=LY(p.y)-12; path.forEach((s,i)=>{ const x1=LX(s.x), y1=LY(s.y)-4; vfxAdd({k:'hop',layer:'air',sx:x0,sy:y0,ex:x1,ey:y1,t:-i*0.09,life:0.1}); x0=x1; y0=y1; }); }
+function vfxPierce(t,x1,y1,kind){ const sx=LX(t.c), sy=LY(t.r)-8, ex=LX(x1), ey=LY(y1);
+  if(kind==='fire'){ vfxAdd({k:'flameline',layer:'air',sx,sy,ex,ey,t:0,life:0.35}); for(let i=0;i<10;i++){ const f=Math.random(); vfxAdd({k:'p',layer:'air',x:sx+(ex-sx)*f,y:sy+(ey-sy)*f,vx:rnd(-20,20),vy:rnd(-40,-10),g:40,t:0,life:rnd(0.3,0.5),c:[PAL.fire,PAL.gold,PAL.ember][i%3],s:2}); } }
+  else vfxAdd({k:'bolt2',layer:'air',sx,sy,ex,ey,t:0,life:0.16}); }
+function vfxFreeze(s){ const X=LX(s.x), Y=LY(s.y); burst(X,Y,6,[PAL.ice,PAL.white,PAL.iceD],70,20,120,0.4,1); vfxAdd({k:'ringp',layer:'air',x:X,y:Y,t:0,life:0.25,r0:3,r1:10,c1:PAL.white,c2:PAL.ice}); }
+function vfxSlash(t,range){ vfxAdd({k:'slash',layer:'air',x:LX(t.c),y:LY(t.r),r:range*CELL,t:0,life:0.22,a0:Math.random()*Math.PI*2}); }
+function vfxRock(t,tg){ const sx=LX(t.c), sy=LY(t.r)-10, ex=LX(tg.c), ey=LY(tg.r); vfxAdd({k:'rock',layer:'air',sx,sy,ex,ey,t:0,life:0.7}); vfxAdd({k:'shadow',layer:'ground',sx,sy:sy+10,ex,ey:ey+4,t:0,life:0.7}); }
+function vfxHole(t,range,dur){ vfxAdd({k:'swirl',layer:'ground',x:LX(t.c),y:LY(t.r),r:range*CELL,t:0,life:dur}); }
+function vfxMeteorCall(t,b){ const X=LX(t.c), Y=LY(t.r)-8; burst(X,Y,6,[PAL.fire,PAL.gold,PAL.arc],60,40,60,0.5,1); }
+function vfxMeteorHit(b){ const X=LX(b.x), Y=LY(b.y); explode(X,Y,b.r*CELL); burst(X,Y,14,[PAL.fire,PAL.ember,PAL.gold,PAL.iron],170,90,320,0.8,2); vfxAdd({k:'scorch',layer:'ground',x:X,y:Y,t:0,life:2.2,r:Math.round(b.r*CELL*0.6)}); sfx('boom'); const bf=$('boardframe'); bf.classList.remove('shake'); void bf.offsetWidth; bf.classList.add('shake'); }
+function vfxClock(t,d){ vfxAdd({k:'tint',layer:'air',t:0,life:Math.min(0.9,d),col:'rgba(168,236,255,.22)'}); vfxAdd({k:'ringp',layer:'air',x:LX(t.c),y:LY(t.r),t:0,life:0.5,r0:6,r1:N*CELL,c1:PAL.white,c2:PAL.ice}); }
+function vfxThunder(s){ const X=LX(s.x), Y=LY(s.y); vfxAdd({k:'zapv',layer:'air',x:X,y:Y,t:0,life:0.18}); vfxAdd({k:'flash',layer:'air',x:X,y:Y,t:0,life:0.08,r:6}); burst(X,Y,5,[PAL.gold,PAL.white],80,30,200,0.3,1); }
+function vfxAngel(t){ vfxAdd({k:'ringp',layer:'air',x:LX(t.c),y:LY(t.r),t:0,life:0.6,r0:6,r1:N*CELL,c1:PAL.gold,c2:PAL.white}); vfxAdd({k:'tint',layer:'air',t:0,life:0.4,col:'rgba(255,210,63,.12)'}); }
+function vfxRaise(x,y){ const X=LX(x), Y=LY(y); smoke(X,Y,4,4); burst(X,Y,7,[PAL.arc,PAL.arcD,PAL.bone],60,50,160,0.5,1); }
 function explode(x,y,r){
   vfxAdd({k:'flash',layer:'air',x,y,t:0,life:0.08,r:7});
   vfxAdd({k:'ringp',layer:'air',x,y,t:0,life:0.28,r0:5,r1:r,c1:PAL.fire,c2:PAL.steelD});
@@ -1519,6 +2748,9 @@ function vfxUpdate(dt){
     if(e.t>=e.life){
       if(e.k==='arrow') vfxAdd({k:'spark',layer:'air',x:e.ex,y:e.ey-2,t:0,life:0.1,small:true});
       else if(e.k==='ball') explode(e.ex,e.ey,e.r);
+      else if(e.k==='proj') projEnd(e);
+      else if(e.k==='hop') burst(e.ex,e.ey,3,[PAL.gold,PAL.white],50,20,160,0.25,1);
+      else if(e.k==='rock'){ burst(e.ex,e.ey,10,[PAL.steel,PAL.steelD,PAL.wood],110,50,300,0.6,2); smoke(e.ex,e.ey,3,5); sfx('boom'); }
       VFX.splice(i,1);
     }
   }
@@ -1527,14 +2759,31 @@ function pixDisc(cx,cy,r){ cx=Math.round(cx); cy=Math.round(cy); for(let dy=-r;d
 function pixRing(cx,cy,r,color,th){ ctx.fillStyle=color; const n=Math.max(12,Math.round(r*Math.PI)); for(let i=0;i<n;i++){ const a=i/n*Math.PI*2; ctx.fillRect(Math.round(cx+Math.cos(a)*r)-1,Math.round(cy+Math.sin(a)*r)-1,th,th); } }
 function outlinedText(txt,x,y,col){ ctx.fillStyle=PAL.o; for(const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]) ctx.fillText(txt,x+dx,y+dy); ctx.fillStyle=col; ctx.fillText(txt,x,y); }
 function vfxDraw(layer){
-  for(const e of VFX){ if(e.layer!==layer) continue; const p=Math.min(1,e.t/e.life);
+  for(const e of VFX){ if(e.layer!==layer||e.t<0) continue; const p=Math.min(1,e.t/e.life);
     switch(e.k){
+      case 'proj': { const X=Math.round(e.sx+(e.ex-e.sx)*p), Y=Math.round(e.sy+(e.ey-e.sy)*p-Math.sin(Math.PI*p)*e.arc), s=e.s;
+        if(e.end==='rocket'||e.end==='fire'){ ctx.globalAlpha=0.5; ctx.fillStyle=e.end==='rocket'?PAL.steel:PAL.ember; const bx=Math.round(e.sx+(e.ex-e.sx)*Math.max(0,p-0.15)), by=Math.round(e.sy+(e.ey-e.sy)*Math.max(0,p-0.15)); ctx.fillRect(bx-1,by-1,2,2); ctx.globalAlpha=1; }
+        ctx.fillStyle=PAL.o; ctx.fillRect(X-Math.ceil(s/2)-1,Y-Math.ceil(s/2)-1,s+2,s+2); ctx.fillStyle=e.c2; ctx.fillRect(X-Math.ceil(s/2),Y-Math.ceil(s/2),s,s); ctx.fillStyle=e.c1; ctx.fillRect(X-Math.ceil(s/2),Y-Math.ceil(s/2),Math.max(1,s-1),Math.max(1,s-1)); break; }
+      case 'hop': { const X=Math.round(e.sx+(e.ex-e.sx)*p), Y=Math.round(e.sy+(e.ey-e.sy)*p-Math.sin(Math.PI*p)*10);
+        ctx.fillStyle=PAL.o; ctx.fillRect(X-2,Y-2,5,5); ctx.fillStyle=PAL.gold; ctx.fillRect(X-1,Y-1,3,3); ctx.fillStyle=PAL.white; ctx.fillRect(X-1,Y-1,1,1); break; }
+      case 'rock': { const X=Math.round(e.sx+(e.ex-e.sx)*p), Y=Math.round(e.sy+(e.ey-e.sy)*p-Math.sin(Math.PI*p)*40);
+        ctx.fillStyle=PAL.o; ctx.fillRect(X-3,Y-3,7,7); ctx.fillStyle=PAL.steelD; ctx.fillRect(X-2,Y-2,5,5); ctx.fillStyle=PAL.steel; ctx.fillRect(X-2,Y-2,2,2); break; }
+      case 'spikes': { const X=Math.round(e.x), Y=Math.round(e.y), up=Math.round(Math.sin(Math.PI*p)*5); ctx.fillStyle=PAL.white; for(const dx of [-8,-3,2,7]) ctx.fillRect(X+dx,Y+4-up,1,up+1); break; }
+      case 'bolt2': { const dx=e.ex-e.sx, dy=e.ey-e.sy, L=Math.max(1,Math.round(Math.max(Math.abs(dx),Math.abs(dy)))), hd=Math.round(L*p);
+        for(let k=Math.max(0,hd-10);k<=hd;k++){ ctx.fillStyle=k>hd-2?PAL.steel:PAL.wood; ctx.fillRect(Math.round(e.sx+dx*k/L),Math.round(e.sy+dy*k/L),1,1); } break; }
+      case 'flameline': { const dx=e.ex-e.sx, dy=e.ey-e.sy, L=Math.max(1,Math.round(Math.max(Math.abs(dx),Math.abs(dy)))); ctx.globalAlpha=1-p;
+        for(let k=0;k<=L;k++){ const X=Math.round(e.sx+dx*k/L), Y=Math.round(e.sy+dy*k/L), w=1+Math.round(2*Math.sin(Math.PI*k/L)); ctx.fillStyle=k%3?PAL.fire:PAL.gold; ctx.fillRect(X-w,Y-w,2*w+1,2*w+1); } ctx.globalAlpha=1; break; }
+      case 'slash': { ctx.globalAlpha=1-p; ctx.fillStyle=PAL.white; const n=14; for(let i=0;i<n;i++){ const a=e.a0+p*Math.PI*1.4+i/n*Math.PI*0.9; ctx.fillRect(Math.round(e.x+Math.cos(a)*e.r*0.8)-1,Math.round(e.y+Math.sin(a)*e.r*0.8)-1,2,2); } ctx.globalAlpha=1; break; }
+      case 'swirl': { const n=18; ctx.globalAlpha=0.85*(1-p*0.5); for(let i=0;i<n;i++){ const a=i/n*Math.PI*2+e.t*6, rr=e.r*(0.35+0.65*(((i*7)%n)/n))*(1-0.4*((e.t*1.5)%1)); ctx.fillStyle=i%2?PAL.arc:PAL.arcD; ctx.fillRect(Math.round(e.x+Math.cos(a)*rr)-1,Math.round(e.y+Math.sin(a)*rr)-1,2,2); }
+        ctx.fillStyle=PAL.o; pixDisc(e.x,e.y,4); ctx.globalAlpha=1; break; }
+      case 'tint': { ctx.globalAlpha=1-p; ctx.fillStyle=e.col; ctx.fillRect(0,0,N*CELL,N*CELL); ctx.globalAlpha=1; break; }
+      case 'zapv': { ctx.globalAlpha=1-p*0.5; let x=e.x; for(let y=0;y<e.y;y+=4){ const nx=e.x+(((y*13+Math.floor(e.t*50))%9)-4)*(1-y/e.y); ctx.fillStyle=PAL.gold; ctx.fillRect(Math.round(Math.min(x,nx))-1,y,Math.abs(Math.round(nx-x))+3,5); ctx.fillStyle=PAL.white; ctx.fillRect(Math.round(nx),y,1,4); x=nx; } ctx.globalAlpha=1; break; }
       case 'arrow': { const x=e.sx+(e.ex-e.sx)*p, y=e.sy+(e.ey-e.sy)*p, dx=e.ex-e.sx, dy=e.ey-e.sy, L=Math.sqrt(dx*dx+dy*dy)||1, ux=dx/L, uy=dy/L;
         ctx.globalAlpha=0.4; ctx.fillStyle=PAL[e.pk].b; for(let i=8;i<=12;i++) ctx.fillRect(Math.round(x-ux*i),Math.round(y-uy*i),1,1); ctx.globalAlpha=1;
         ctx.fillStyle=PAL.wood; for(let i=1;i<=6;i++) ctx.fillRect(Math.round(x-ux*i),Math.round(y-uy*i),1,1);
         ctx.fillStyle=PAL.white; ctx.fillRect(Math.round(x-ux*7-uy),Math.round(y-uy*7+ux),1,1); ctx.fillRect(Math.round(x-ux*7+uy),Math.round(y-uy*7-ux),1,1);
         ctx.fillStyle=PAL.steel; ctx.fillRect(Math.round(x)-1,Math.round(y)-1,2,2); break; }
-      case 'ball': { const X=Math.round(e.sx+(e.ex-e.sx)*p), Y=Math.round(e.sy+(e.ey-e.sy)*p-Math.sin(Math.PI*p)*18);
+      case 'ball': { const X=Math.round(e.sx+(e.ex-e.sx)*p), Y=Math.round(e.sy+(e.ey-e.sy)*p-Math.sin(Math.PI*p)*(e.arc||18));
         ctx.fillStyle=PAL.o; ctx.fillRect(X-2,Y-3,4,6); ctx.fillRect(X-3,Y-2,6,4);
         ctx.fillStyle=PAL.iron; ctx.fillRect(X-1,Y-2,2,4); ctx.fillRect(X-2,Y-1,4,2); break; }
       case 'shadow': { const X=Math.round(e.sx+(e.ex-e.sx)*p), Y=Math.round(e.sy+(e.ey-e.sy)*p); ctx.fillStyle='rgba(12,10,12,.4)'; ctx.fillRect(X-3,Y,6,2); break; }
@@ -1553,7 +2802,7 @@ function vfxDraw(layer){
         ctx.globalAlpha=1-p*0.6;
         for(let i=1;i<=seg;i++){ const f=i/seg, j=i<seg?(((i*7919+Math.floor(e.t*60))%7)-3):0, qx=e.x0+dx*f+nx*j, qy=e.y0+dy*f+ny*j;
           const sx=qx-px0, sy=qy-py0, sl=Math.max(1,Math.round(Math.max(Math.abs(sx),Math.abs(sy))));
-          for(let k=0;k<=sl;k++){ const X=Math.round(px0+sx*k/sl), Y=Math.round(py0+sy*k/sl); ctx.fillStyle=PAL.gold; ctx.fillRect(X-1,Y-1,3,3); ctx.fillStyle=PAL.white; ctx.fillRect(X,Y,1,1); }
+          for(let k=0;k<=sl;k++){ const X=Math.round(px0+sx*k/sl), Y=Math.round(py0+sy*k/sl); ctx.fillStyle=e.col||PAL.gold; ctx.fillRect(X-1,Y-1,3,3); ctx.fillStyle=PAL.white; ctx.fillRect(X,Y,1,1); }
           px0=qx; py0=qy; }
         ctx.globalAlpha=1; break; }
       case 'tracer': { const dx=e.ex-e.sx, dy=e.ey-e.sy, L=Math.max(1,Math.round(Math.max(Math.abs(dx),Math.abs(dy)))), from=Math.floor(L*Math.max(0,p*1.6-0.6)), to=Math.min(L,Math.ceil(L*p*1.6));
@@ -1577,12 +2826,12 @@ function draw(){
   // my orders still on their way (friend match)
   if(MODE==='pvp'&&NET) for(const p of NET.pend){ if(p.tick<=S.tick) continue; const X=vx(p.c)*CELL, Y=vy(p.r)*CELL;
     ctx.strokeStyle=PAL.gold; ctx.lineWidth=1; ctx.setLineDash([3,2]); ctx.strokeRect(X+1.5,Y+1.5,CELL-3,CELL-3); ctx.setLineDash([]);
-    if(p.mode==='place'){ ctx.globalAlpha=0.45; blit(frames(SPR[p.type])[0],X+4,Y+4,'you'); ctx.globalAlpha=1; } }
+    if(p.mode==='place'){ ctx.globalAlpha=0.45; blit(iconMap(p.type),X+4,Y+4,'you'); ctx.globalAlpha=1; } }
   // hover / drag preview
   if(S.hover&&!S.over&&S.running&&S.hover.type){const {r,c,type}=S.hover; if(r>=0&&c>=0&&r<N&&c<N){
     const pv=previewState(ME,type,r,c,availMana()), X=vx(c)*CELL, Y=vy(r)*CELL, tw=towerAt(r,c);
     ctx.fillStyle=pv.ok?(pv.mode==='up'?'rgba(255,210,63,.5)':'rgba(95,208,104,.45)'):'rgba(220,60,50,.45)'; ctx.fillRect(X,Y,CELL,CELL);
-    if(pv.mode==='place'){ctx.globalAlpha=0.65; blit(frames(SPR[type])[0],X+4,Y+4,'you'); ctx.globalAlpha=1;}
+    if(pv.mode==='place'){ctx.globalAlpha=0.65; blit(iconMap(type),X+4,Y+4,'you'); ctx.globalAlpha=1;}
     const rg=TOWERS[type].range+(pv.mode==='up'&&tw?0.25*tw.lvl:0); if(rg) ring(X+CELL/2,Y+CELL/2,rg*CELL,'rgba(255,247,224,.75)');
     if(type==='banner'&&(pv.mode==='place'?pv.ok:tw&&tw.side===ME&&tw.type==='banner')) drawRoute(flagRoute(ME,r,c,pv.mode==='place'));
     showPreviewToast(pv.ok?(pv.mode==='up'&&tw?`강화 Lv${tw.lvl+1}`:null):pv.why,r,c);
@@ -1596,19 +2845,43 @@ function draw(){
   for(const side of ['you','foe']){const k=S.kings[side],X=vx(k.cell[1])*CELL,Y=vy(k.cell[0])*CELL,fl=S.t-(k.hitAt??-9)<0.1;
     blit(SPR.king,X+2+(fl?jit():0),Y+(side===ME?2:1),pal(side),fl);
     ctx.fillStyle=PAL.o;ctx.fillRect(X+2,Y+CELL-2,CELL-4,2);ctx.fillStyle=PAL.gold;ctx.fillRect(X+2,Y+CELL-2,px((CELL-4)*Math.max(0,k.hp/k.max)),2);}
-  // towers
-  for(const t of S.towers){const X=vx(t.c)*CELL,Y=vy(t.r)*CELL,fl=S.t-t.hitAt<0.1;
+  // towers: traps lie flat under everything else
+  const drawT=t=>{const X=vx(t.c)*CELL,Y=vy(t.r)*CELL,fl=S.t-t.hitAt<0.1, def=TOWERS[t.type];
     drawTowerAt(t,X+4+(fl?jit():0),Y+4,anim,fl);
     for(let i=0;i<t.lvl-1;i++){ctx.fillStyle=PAL.o;ctx.fillRect(X+2+i*5,Y+2,4,4);ctx.fillStyle=PAL.gold;ctx.fillRect(X+3+i*5,Y+3,2,2);}
-    if(t.hp<t.maxhp&&S.t-t.hitAt<2){ctx.fillStyle=PAL.o;ctx.fillRect(X+4,Y+30,24,2);ctx.fillStyle=PAL.gold;ctx.fillRect(X+4,Y+30,px(24*t.hp/t.maxhp),2);}}
+    // aura buffs on this tower: red pip = damage (statue), gold pip = speed (battery)
+    if(t.bDmg>0){ctx.fillStyle=PAL.o;ctx.fillRect(X+25,Y+2,5,5);ctx.fillStyle=PAL.ember;ctx.fillRect(X+26,Y+3,3,3);}
+    if(t.bSpd>1){ctx.fillStyle=PAL.o;ctx.fillRect(X+25,Y+8,5,5);ctx.fillStyle=PAL.gold;ctx.fillRect(X+26,Y+9,3,3);}
+    if(t.hp<t.maxhp&&(def.trap||S.t-t.hitAt<2)){ctx.fillStyle=PAL.o;ctx.fillRect(X+4,Y+30,24,2);ctx.fillStyle=def.trap?PAL.steel:PAL.gold;ctx.fillRect(X+4,Y+30,px(24*Math.max(0,t.hp)/t.maxhp),2);}};
+  for(const t of S.towers) if(TOWERS[t.type].trap) drawT(t);
+  for(const t of S.towers) if(!TOWERS[t.type].trap) drawT(t);
+  // lasers: a beam to the locked target, thicker as it heats up
+  for(const t of S.towers){ if(t.type!=='laser'||!t.tg||t.tg.hp<=0||S.t-t.built<0.3) continue; const g=t.tg;
+    const x0=LX(t.c), y0=LY(t.r)-14, x1=LX(g.px+(g.x-g.px)*alpha), y1=LY(g.py+(g.y-g.py)*alpha)-2, w=1+Math.floor(t.ramp||0), dx=x1-x0, dy=y1-y0, L=Math.max(1,Math.round(Math.max(Math.abs(dx),Math.abs(dy))));
+    const fl=(Math.floor(performance.now()/60)%2);
+    for(let k=0;k<=L;k++){ const X=Math.round(x0+dx*k/L), Y=Math.round(y0+dy*k/L); ctx.fillStyle=PAL.ember; ctx.fillRect(X-w,Y-w,2*w+1,2*w+1); }
+    for(let k=0;k<=L;k++){ const X=Math.round(x0+dx*k/L), Y=Math.round(y0+dy*k/L); ctx.fillStyle=fl?PAL.white:PAL.gold; ctx.fillRect(X-(w>2?1:0),Y-(w>2?1:0),w>2?3:1,w>2?3:1); }
+    ctx.fillStyle=PAL.white; pixDisc(x1,y1,1+Math.floor(w/2)); }
+  // meteors on their way: a warning ring, then the rock coming down
+  for(const b of S.bombs){ const q=Math.max(0,Math.min(1,(S.tick+alpha-b.t0)/Math.max(1,b.at-b.t0))), X=LX(b.x), Y=LY(b.y), r=b.r*CELL;
+    ctx.globalAlpha=0.35+0.4*q; pixRing(X,Y,r*(1.15-0.15*q),b.side===ME?PAL.gold:PAL.ember,2); ctx.globalAlpha=0.12+0.15*q; ctx.fillStyle=PAL.ember; pixDisc(X,Y,Math.round(r*q)); ctx.globalAlpha=1;
+    if(q>0.35){ const f=(q-0.35)/0.65, mx=Math.round(X+(1-f)*60), my=Math.round(Y-(1-f)*120); ctx.fillStyle=PAL.o; pixDisc(mx,my,6); ctx.fillStyle=PAL.ember; pixDisc(mx,my,5); ctx.fillStyle=PAL.fire; pixDisc(mx-1,my-1,3);
+      ctx.fillStyle=PAL.gold; for(let i=1;i<5;i++) ctx.fillRect(mx+i*4,my-i*8,2,2); } }
   // soldiers (interpolated, front-to-back by screen row)
   const sold=[...S.soldiers].sort((p,q)=>vy(p.y)-vy(q.y));
+  const blink=Math.floor(performance.now()/120)%2;
   for(const s of sold){const fr=soldierFrames(s.type,pal(s.side)),map=fr[s.moving?(Math.floor(S.t*5+s.ph)%2):0],w=map[0].length,h=map.length,fl=S.t-s.hitAt<0.1;
     const ix=s.px+(s.x-s.px)*alpha, iy=s.py+(s.y-s.py)*alpha, x=px(LX(ix)-w/2)+(fl?jit():0), y=px(LY(iy)-h/2);
-    blit(map,x,y,pal(s.side),fl);
+    if(s.skel) ctx.globalAlpha=0.72;
+    blit(map,x,y,pal(s.side),fl); ctx.globalAlpha=1;
+    if(s.skel){ ctx.fillStyle=PAL.bone; ctx.fillRect(x+Math.floor(w/2)-2,y+2,1,1); ctx.fillRect(x+Math.floor(w/2)+1,y+2,1,1); }
+    if(s.stun>0){ ctx.fillStyle='rgba(168,236,255,.45)'; ctx.fillRect(x-1,y-1,w+2,h+2); ctx.fillStyle=PAL.white; ctx.fillRect(x,y,1,1); ctx.fillRect(x+w-1,y+h-1,1,1); }
     if(s.slow>0){ctx.fillStyle=PAL.ice;ctx.fillRect(x+2,y-2,w-4,1);}
-    if(s.buff>0){ctx.fillStyle=PAL.gold;ctx.fillRect(x+2,y+h+1,w-4,1);}
-    if(S.t-s.hitAt<2&&s.hp<s.maxhp){ctx.fillStyle=PAL.o;ctx.fillRect(x,y-5,w,2);ctx.fillStyle=PAL.hp;ctx.fillRect(x,y-5,px(w*s.hp/s.maxhp),2);}}
+    if(s.haste>0){ctx.fillStyle=PAL.gold;ctx.fillRect(x+2,y+h+1,w-4,1);}
+    if(s.brnT>0){ ctx.fillStyle=blink?PAL.fire:PAL.gold; ctx.fillRect(x+1,y-3+blink,1,2); ctx.fillRect(x+w-2,y-2-blink,1,2); }
+    if(s.psnT>0){ ctx.fillStyle=PAL.leaf; ctx.fillRect(x+Math.floor(w/2)+(blink?1:-1),y-3-blink,2,2); }
+    if(s.vulT>0){ ctx.fillStyle=PAL.arc; ctx.fillRect(x-1,y+Math.floor(h/2),1,2); ctx.fillRect(x+w,y+Math.floor(h/2),1,2); }
+    if(S.t-(s.seen??s.hitAt)<2&&s.hp<s.maxhp){ctx.fillStyle=PAL.o;ctx.fillRect(x,y-5,w,2);ctx.fillStyle=PAL.hp;ctx.fillRect(x,y-5,px(w*Math.max(0,s.hp)/s.maxhp),2);}}
   vfxDraw('air');
   hud();
 }
@@ -1670,7 +2943,18 @@ function sfx(name){ const now=performance.now(); if(lastSfx[name]&&now-lastSfx[n
     case 'wave': tone(523,0.08,'square',0.06); tone(784,0.12,'square',0.06,null,0.09); break;
     case 'zap': tone(1400,0.06,'sawtooth',0.035,500); tone(900,0.05,'square',0.03,300,0.04); break;
     case 'snipe': tone(1800,0.03,'square',0.05,200); tone(120,0.12,'triangle',0.05,60,0.02); break;
+    case 'pellet': tone(900,0.025,'square',0.025,600); break;
+    case 'spike': tone(520,0.04,'triangle',0.04,260); break;
+    case 'slash': tone(700,0.06,'sawtooth',0.04,180); break;
+    case 'bounce': [500,640,800].forEach((f,i)=>tone(f,0.04,'square',0.035,null,i*0.07)); break;
+    case 'meteor': tone(420,0.5,'sawtooth',0.04,90); break;
+    case 'hole': tone(180,0.6,'sine',0.08,60); tone(90,0.6,'triangle',0.05,40); break;
+    case 'freeze': tone(1600,0.12,'triangle',0.05,800); tone(2200,0.1,'sine',0.04,1200,0.06); break;
+    case 'thunder': tone(80,0.3,'sawtooth',0.09,40); tone(1200,0.05,'square',0.04,300); break;
+    case 'heal': [660,880,1100].forEach((f,i)=>tone(f,0.08,'sine',0.05,null,i*0.06)); break;
+    case 'flame': tone(160,0.18,'sawtooth',0.05,110); break;
     case 'chest': [392,523,659].forEach((f,i)=>tone(f,0.1,'square',0.06,null,i*0.08)); break;
+    case 'legend': [523,659,784,1047,1319,1568].forEach((f,i)=>tone(f,0.14,'square',0.07,null,i*0.08)); break;
     case 'unlock': [523,659,784,1047,1319].forEach((f,i)=>tone(f,0.12,'square',0.07,null,i*0.09)); break;
     case 'levelup': tone(660,0.08,'square',0.07); tone(990,0.14,'square',0.07,null,0.08); break;
     case 'win': [523,659,784,1047].forEach((f,i)=>tone(f,0.16,'square',0.08,null,i*0.12)); break;
@@ -1684,16 +2968,16 @@ function buildCards(deck,lvls){
   DECK_UI=(deck||TKEYS.slice(0,6)).slice(0,6); cardsEl.textContent='';
   for(let i=0;i<6;i++){ const k=DECK_UI[i];
     if(!k){ const e=document.createElement('div'); e.className='card frame empty'; cardsEl.appendChild(e); continue; }
-    const d=TOWERS[k], b=document.createElement('button'); b.className='card frame'; b.dataset.k=k; b.id='card-'+k; b.setAttribute('aria-label',`${d.name} ${d.cost}`);
-    const ic=document.createElement('canvas');ic.width=48;ic.height=48;const g=ic.getContext('2d');g.imageSmoothingEnabled=false;g.setTransform(2,0,0,2,0,0);drawSprite(g,frames(SPR[k])[0],0,0,'you');
+    const d=TOWERS[k], b=document.createElement('button'); b.className='card frame r-'+d.rar; b.dataset.k=k; b.id='card-'+k; b.setAttribute('aria-label',`${d.name} ${d.cost}`);
+    const ic=document.createElement('canvas');ic.width=48;ic.height=48;const g=ic.getContext('2d');g.imageSmoothingEnabled=false;g.setTransform(2,0,0,2,0,0);drawSprite(g,iconMap(k),0,0,'you');
     b.appendChild(ic);
-    const cn=document.createElement('span');cn.className='cn';cn.textContent=d.name;b.appendChild(cn);
+    const cn=document.createElement('span');cn.className='cn';cn.textContent=d.short||d.name;b.appendChild(cn);
     const cc=document.createElement('span');cc.className='cc';cc.textContent=d.cost;b.appendChild(cc);
     const lv=lvls&&lvls[k]; if(lv>1){ const l=document.createElement('span'); l.className='clv'; l.textContent='L'+lv; b.appendChild(l); }
     cardsEl.appendChild(b); }
 }
 const ghost=$('ghost'), gctx=ghost.querySelector('canvas').getContext('2d');
-function ghostShow(type,x,y){gctx.setTransform(1,0,0,1,0,0);gctx.clearRect(0,0,48,48);gctx.imageSmoothingEnabled=false;gctx.setTransform(2,0,0,2,0,0);drawSprite(gctx,frames(SPR[type])[0],0,0,'you');ghost.style.display='block';ghost.style.transform=`translate(${x-24}px,${y-24}px)`;}
+function ghostShow(type,x,y){gctx.setTransform(1,0,0,1,0,0);gctx.clearRect(0,0,48,48);gctx.imageSmoothingEnabled=false;gctx.setTransform(2,0,0,2,0,0);drawSprite(gctx,iconMap(type),0,0,'you');ghost.style.display='block';ghost.style.transform=`translate(${x-24}px,${y-24}px)`;}
 function ghostHide(){ghost.style.display='none';}
 
 // screen cell under a point, then mapped back to the simulation cell
@@ -2036,16 +3320,50 @@ for(const [id,pk] of [['pFoe','foe'],['pYou','you']]){const pc=$(id).getContext(
 // ---- codex ----
 const codexEl=$('codex'), cxBody=$('cxBody'); let cxTab='towers', cxWasRunning=false;
 function spriteCanvas(map,pk,size){const c=document.createElement('canvas');c.width=size*2;c.height=size*2;const g=c.getContext('2d');g.imageSmoothingEnabled=false;g.setTransform(2,0,0,2,0,0);const w=map[0].length,h=map.length;drawSprite(g,map,Math.floor((size-w)/2),Math.floor((size-h)/2),pk);return c;}
+// one line of numbers for a tower (mul: card-level multiplier)
+function towerStats(k,mul){ mul=mul||1; const d=TOWERS[k], r=v=>Math.round(v*mul*10)/10, out=[`HP ${Math.round(d.hp*mul)}`];
+  if(d.range&&!d.trap) out.push(`사거리 ${d.range}`);
+  if(d.beam) out.push(`초당 ${r(d.beam)} → 최대 ${r(d.beam*(1+d.rampMax))}`);
+  else if(d.dmg&&!d.slow) out.push(`피해 ${r(d.dmg)}${d.cd?` / ${d.cd}초`:''}`);
+  if(d.pct) out.push(`+최대 체력의 ${Math.round(d.pct*100)}%`);
+  if(d.multi) out.push(`${d.multi}명 동시`);
+  if(d.splash) out.push(`범위 ${d.splash}칸`);
+  if(d.minr) out.push(`${d.minr}칸 안은 못 쏨`);
+  if(d.chain) out.push(`최대 ${d.chain}명`);
+  if(d.bounce) out.push(`${d.bounce}번 튕김`);
+  if(d.pierce) out.push('관통');
+  if(d.burn) out.push(`화상 초당 ${r(d.burn)} · ${d.burnT}초`);
+  if(d.psn) out.push(`독 초당 ${r(d.psn)} · ${d.psnT}초`);
+  if(d.slow) out.push(`둔화 ${Math.round(d.slow*100)}% · ${d.cd}초마다 피해 ${r(d.dmg)}`);
+  if(d.freeze) out.push(`${d.every}번째마다 ${d.freeze}초 얼림`);
+  if(d.vul) out.push(`받는 피해 +${Math.round(d.vul*100)}% · ${d.vulT}초`);
+  if(d.growT) out.push(`${d.growT}초마다 +${Math.round(d.growS*100)}%`);
+  if(d.link) out.push(`옆 문어마다 +${Math.round(d.link*100)}%`);
+  if(d.heal) out.push(`초당 회복 ${r(d.heal)}`);
+  if(d.mana) out.push(`마나 +${Math.round(d.mana*mul*1000)/1000}/초`);
+  if(d.haste) out.push(`속도 +${Math.round(d.haste*mul*100)}%`);
+  if(d.auraDmg) out.push(`옆 타워 피해 +${Math.round(d.auraDmg*mul*100)}%`);
+  if(d.auraSpd) out.push(`옆 타워 공격 속도 +${Math.round(d.auraSpd*mul*100)}%`);
+  if(d.spawn) out.push(`${d.spawn}초마다 ${d.unit==='brute'?'골렘':SOLDIERS[d.unit||'footman'].name}`);
+  if(d.raise) out.push(`해골 ${d.raise}초에 한 번`);
+  if(d.thorns) out.push(`가시 ${r(d.thorns)}`);
+  if(d.gcd) out.push(`${d.gcd}초마다 전장 전체`);
+  if(d.pull) out.push(`${d.cd}초마다 ${d.pullT}초 끌어당김 · 초당 ${r(d.dps)}`);
+  if(d.trap) out.push(d.trap==='mine'?'밟으면 폭발':'길을 막지 않음');
+  if(d.max) out.push(`동시 ${d.max}개`);
+  return out.join(' · '); }
+const towerSrc=k=>BASIC.includes(k)?'기본 타워':UNLOCK_AT[k]?`스테이지 ${UNLOCK_AT[k]} 해금`:'상자에서만';
 function cxRender(){
   cxBody.innerHTML='';
   for(const b of document.querySelectorAll('.cx-tab')) b.classList.toggle('on',b.dataset.tab===cxTab);
   if(cxTab==='towers'){
-    for(const k of TKEYS){const d=TOWERS[k];const it=document.createElement('div');it.className='cx-item';
-      it.appendChild(spriteCanvas(frames(SPR[k])[0],'you',24));
-      const stat=[`HP ${d.hp}`, d.range?`사거리 ${d.range}`:null, d.dmg&&!d.slow?`피해 ${d.dmg} / ${d.cd}초`:null, d.splash?`범위 ${d.splash}칸`:null, d.chain?`최대 ${d.chain}명`:null, d.slow?`둔화 ${Math.round(d.slow*100)}% · ${d.cd}초마다 피해 ${d.dmg}`:null, d.heal?`초당 회복 ${d.heal}`:null, d.mana?`마나 +${d.mana}/초`:null, d.spawn?`${d.spawn}초마다 보병`:null, d.max?`동시 ${d.max}개`:null].filter(Boolean).join(' · ');
-      const src=BASIC.includes(k)?'기본 타워':`스테이지 ${UNLOCK_AT[k]} 해금`;
-      const t=document.createElement('div');t.innerHTML=`<div class="cx-title"><span class="cx-name">${d.name}</span><span class="cx-cost">${d.cost} MANA</span><span class="cx-src">${src}</span></div><div class="cx-stat">${stat}</div><div class="cx-desc">${d.desc} <span class="up">강화: ${d.up} (최대 3)</span></div>`;
-      it.appendChild(t); cxBody.appendChild(it);}
+    const ord=k=>BASIC.includes(k)?0:UNLOCK_AT[k]||99;
+    for(const rk of RAR_KEYS){ const ks=TKEYS.filter(k=>TOWERS[k].rar===rk).sort((x,y)=>ord(x)-ord(y));
+      const hd=document.createElement('div'); hd.className='cx-rar r-'+rk; hd.textContent=`${RAR[rk].name} ${ks.length}종`; cxBody.appendChild(hd);
+      for(const k of ks){const d=TOWERS[k];const it=document.createElement('div');it.className='cx-item';
+        it.appendChild(spriteCanvas(iconMap(k),'you',24));
+        const t=document.createElement('div');t.innerHTML=`<div class="cx-title"><span class="cx-name r-${d.rar}">${d.name}</span><span class="cx-cost">${d.cost} MANA</span><span class="cx-src">${towerSrc(k)}</span></div><div class="cx-stat">${towerStats(k)}</div><div class="cx-desc">${d.desc} <span class="up">강화: ${d.up} (최대 3)</span></div>`;
+        it.appendChild(t); cxBody.appendChild(it);} }
   } else if(cxTab==='units'){
     for(const k of UKEYS){const d=SOLDIERS[k];const it=document.createElement('div');it.className='cx-item';
       it.appendChild(spriteCanvas(soldierFrames(k,'you')[0],'you',24));
@@ -2055,7 +3373,7 @@ function cxRender(){
     const n=document.createElement('div');n.className='cx-rules';n.style.marginTop='8px';n.innerHTML='<p>웨이브는 14초마다 양쪽 킹 옆에서 자동 출격한다. 병사 종류 하나를 골라 두면 바꾸거나 끌 때까지 첫 웨이브부터 매 웨이브에 한 명씩 더 나간다. 기본 병력에도 첫 웨이브부터 네 종류가 섞여 나온다.'+(SOLDIER_BOOST?' 3분마다 새로 나오는 병사의 체력·공격이 마나 재생과 같은 배수(x2, x3 …)로 오른다.':'')+'</p>';cxBody.appendChild(n);
   } else {
     const r=document.createElement('div');r.className='cx-rules';
-    r.innerHTML='<p><b>승리</b> 상대 킹(HP 1000)을 부수면 승리. 시간 제한은 없다.</p><p><b>가속</b> 3분마다 마나 재생이 빨라진다(3분 x2, 6분 x3 …).'+(SOLDIER_BOOST?' 그때부터 나오는 병사의 체력·공격도 같은 배수로 오른다.':'')+'</p><p><b>마나</b> 최대 10, 초당 0.2 회복. 시작 마나 5.</p><p><b>설치</b> 내 진영 절반과 아군 병사 주변 1칸의 빈 칸. 양쪽 킹 사이 길이 완전히 막히는 자리는 설치 불가.</p><p><b>강화</b> 같은 타워를 같은 칸에 다시 놓거나 타워 메뉴에서 강화. 최대 3레벨, 비용은 설치 비용과 같다.</p><p><b>카드 레벨</b> 로비의 덱 화면에서 카드와 골드로 올린다. 레벨이 1 오를 때마다 HP·피해·회복량·마나 증가량 +8%. 대전에도 각자의 레벨이 적용된다.</p><p><b>판매</b> 쓴 마나의 25%를 돌려받는다.</p><p><b>친구 대전</b> 방을 만들어 4자리 코드를 알려 주면 친구가 같은 페이지에서 입장한다. 내 조작은 0.4초 뒤에 양쪽 화면에 함께 반영되고, 일시정지는 없다. 각자 화면에서는 자기 킹이 아래에 보인다.</p><p><b>조작</b> 카드 드래그 또는 카드 탭 → 칸 탭. 내 타워를 누르면 강화·판매 메뉴. 키보드 1~6 선택, 스페이스 일시정지.</p>';
+    r.innerHTML='<p><b>승리</b> 상대 킹(HP 1000)을 부수면 승리. 시간 제한은 없다.</p><p><b>가속</b> 3분마다 마나 재생이 빨라진다(3분 x2, 6분 x3 …).'+(SOLDIER_BOOST?' 그때부터 나오는 병사의 체력·공격도 같은 배수로 오른다.':'')+'</p><p><b>마나</b> 최대 10, 초당 0.2 회복. 시작 마나 5.</p><p><b>설치</b> 내 진영 절반과 아군 병사 주변 1칸의 빈 칸. 양쪽 킹 사이 길이 완전히 막히는 자리는 설치 불가.</p><p><b>강화</b> 같은 타워를 같은 칸에 다시 놓거나 타워 메뉴에서 강화. 최대 3레벨, 비용은 설치 비용과 같다.</p><p><b>카드 레벨</b> 로비의 타워 화면에서 카드와 골드로 올린다. 레벨이 1 오를 때마다 HP·피해·회복량·마나 증가량 +8%. 대전에도 각자의 레벨이 적용된다. 등급(일반·희귀·영웅·전설)이 높을수록 레벨업에 카드가 적게 든다.</p><p><b>타워 얻기</b> 기본 4종으로 시작해 스테이지를 처음 깰 때마다 1종씩 열린다(30종). 전설 6종은 상자에서만 나온다.</p><p><b>상태 효과</b> 화상·독은 시간에 따라 피해, 얼림·기절은 그동안 이동·공격 정지, 약화는 받는 피해 증가. 같은 효과는 겹치지 않고 더 센 쪽·더 긴 쪽이 남는다.</p><p><b>판매</b> 쓴 마나의 25%를 돌려받는다.</p><p><b>친구 대전</b> 방을 만들어 4자리 코드를 알려 주면 친구가 같은 페이지에서 입장한다. 내 조작은 0.4초 뒤에 양쪽 화면에 함께 반영되고, 일시정지는 없다. 각자 화면에서는 자기 킹이 아래에 보인다.</p><p><b>조작</b> 카드 드래그 또는 카드 탭 → 칸 탭. 내 타워를 누르면 강화·판매 메뉴. 키보드 1~6 선택, 스페이스 일시정지.</p>';
     cxBody.appendChild(r);
   }
 }
@@ -2094,21 +3412,35 @@ function frame(now){ let dt=(now-last)/1000; last=now; if(dt>0.25) dt=0.25;
 // ---- meta: profile, stages, deck, card levels, chests, shop, ranked, outlaw ----
 // Profile lives in this browser (localStorage) for now; ranked boards and matchmaking go through window.TC_FB when present.
 const PKEY='tc_profile_v1';
-const UNLOCK_AT={banner:2, shrine:4, lightning:7, sniper:11, well:16, barracks:22};
+// the first clear of each stage unlocks one tower (30); the 6 legendaries only come from chests
+const UNLOCK_AT={bb:1, banner:2, spikes:3, shrine:4, crossbow:5, thornwall:6, lightning:7, drum:8,
+  firesp:9, mortar:10, sniper:11, mushroom:12, bounce:13, statue:14, jelly:15, well:16, icesp:17, mine:18, battery:19,
+  laser:20, skelmage:21, barracks:22, sapling:23, octopus:24, tomb:25, meteor:26, gate:27, catapult:28, toad:29, rocket:30};
 const UNLOCK_BY={}; for(const k in UNLOCK_AT) UNLOCK_BY[UNLOCK_AT[k]]=k;
+const LEGEND=TKEYS.filter(k=>TOWERS[k].rar==='l');
 const STAGE_COUNT=30, MAX_LV=10, OUTLAW_LV=5;
-const LV_CARDS=[0,2,4,10,20,50,100,200,400,800], LV_GOLD=[0,20,50,150,400,1000,2000,4000,8000,20000];
-const CHESTS={wood:{name:'나무 상자',cards:8,kinds:2,gold:20,gem:10}, silver:{name:'은 상자',cards:20,kinds:3,gold:60,gem:30}, gold:{name:'금 상자',cards:50,kinds:4,gold:200,gem:80}};
+// cards needed for the next level, by rarity (rarer towers need fewer cards); gold is the same for all
+const LV_CARDS={c:[0,2,4,10,20,50,100,200,400,800], r:[0,1,2,5,10,25,50,100,200,400], e:[0,1,1,2,4,10,20,40,80,160], l:[0,1,1,1,2,4,8,16,32,64]};
+const LV_GOLD=[0,20,50,150,400,1000,2000,4000,8000,20000];
+const needCards=k=>LV_CARDS[TOWERS[k].rar];
+// chests: card count and kinds; kinds are drawn by rarity weight, rarer kinds give fewer cards; leg = chance of one legendary card
+const CHESTS={wood:{name:'나무 상자',cards:8,kinds:2,gold:20,gem:10,leg:0.02}, silver:{name:'은 상자',cards:20,kinds:3,gold:60,gem:30,leg:0.06}, gold:{name:'금 상자',cards:50,kinds:4,gold:200,gem:80,leg:0.15}};
+const RAR_W={c:6,r:3,e:1.5}, RAR_CARD={c:1,r:0.5,e:0.25,l:0.1};
 const TIX={normal:{name:'일반',gem:5}, gold:{name:'골드',gem:15}, dia:{name:'다이아',gem:40}, outlaw:{name:'무법전',gem:80}};
 const TIERS={normal:{name:'일반 경쟁전',n:7,next:'gold'}, gold:{name:'골드 경쟁전',n:8,next:'dia'}, dia:{name:'다이아 경쟁전',n:10,next:'outlaw'}};
 const stageSize=n=>n<=3?6:n<=6?7:n<=9?8:n<=12?9:10;
-const isAtk=k=>!!TOWERS[k].dmg&&!TOWERS[k].slow;
 
-// stage n: board size, AI deck (basic towers + what is unlocked by then, at most 6), AI card level and thinking speed
+// stage n: board size, AI deck (arrow + the tower this stage unlocks + others unlocked by then), AI card level and thinking speed
 function stageDef(n){
-  let deck=TKEYS.filter(k=>BASIC.includes(k)||UNLOCK_AT[k]<=n);
-  if(deck.length>6){ const r=mulberry32(n*7919), extra=deck.filter(k=>k!=='arrow'&&k!=='cannon'); for(let i=extra.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[extra[i],extra[j]]=[extra[j],extra[i]];} deck=['arrow','cannon',...extra.slice(0,4)]; }
-  const aiLv=1+Math.floor((n-1)/4), lv={}; for(const k of deck) lv[k]=aiLv;
+  const pool=TKEYS.filter(k=>BASIC.includes(k)||(UNLOCK_AT[k]&&UNLOCK_AT[k]<=n));
+  let deck=pool.slice();
+  if(pool.length>6){ const r=mulberry32(n*7919), newest=UNLOCK_BY[n], rest=pool.filter(k=>k!=='arrow'&&k!==newest);
+    for(let i=rest.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[rest[i],rest[j]]=[rest[j],rest[i]];}
+    deck=['arrow']; if(newest) deck.push(newest);
+    for(const k of rest){ if(deck.length>=6) break; deck.push(k); }
+    // at least three towers that hit soldiers
+    for(let i=deck.length-1;i>=0&&deck.filter(isAtk).length<3;i--){ if(deck[i]==='arrow'||deck[i]===newest||isAtk(deck[i])) continue; const sub=rest.find(k=>isAtk(k)&&!deck.includes(k)); if(sub) deck[i]=sub; } }
+  const aiLv=1+Math.floor((n-1)/5), lv={}; for(const k of deck) lv[k]=aiLv;
   return {n,size:stageSize(n),deck,lv,aiLv,aiSlow:Math.round((1.8-(n-1)/29)*1000)/1000,kingHp:Math.min(KING_HP,300+25*n),aiCap:n<20?2+n:0,unlock:UNLOCK_BY[n]||null};
 }
 
@@ -2120,9 +3452,11 @@ function sanitizeProfile(p){
   const o=Object.assign(defaultProfile(),p);
   o.cards=Object.assign({},o.cards); for(const k of BASIC) if(!o.cards[k]) o.cards[k]={l:1,n:0};
   for(const k of Object.keys(o.cards)){ if(!TOWERS[k]){ delete o.cards[k]; continue; } const c=o.cards[k]; o.cards[k]={l:Math.max(1,Math.min(MAX_LV,c.l|0||1)),n:Math.max(0,c.n|0)}; }
+  o.gold=Math.max(0,o.gold|0); o.gems=Math.max(0,o.gems|0); o.stage=Math.max(0,Math.min(STAGE_COUNT,o.stage|0));
+  // stages already cleared give their towers (profiles from before the 40-tower roster)
+  for(let s=1;s<=o.stage;s++){ const u=UNLOCK_BY[s]; if(u&&!o.cards[u]) o.cards[u]={l:1,n:0}; }
   o.deck=[...new Set((o.deck||[]).filter(k=>o.cards[k]))].slice(0,6); if(!o.deck.length) o.deck=BASIC.slice();
   o.tix=Object.assign({normal:0,gold:0,dia:0,outlaw:0},o.tix||{}); for(const k in o.tix) o.tix[k]=Math.max(0,o.tix[k]|0);
-  o.gold=Math.max(0,o.gold|0); o.gems=Math.max(0,o.gems|0); o.stage=Math.max(0,Math.min(STAGE_COUNT,o.stage|0));
   o.name=String(o.name||randName()).slice(0,12); o.best=o.best||{}; o.claimed=o.claimed||{};
   return o;
 }
@@ -2131,7 +3465,7 @@ let P=loadProfile();
 function saveP(){ try{ localStorage.setItem(PKEY,JSON.stringify(P)); }catch(e){} }
 const myLv=()=>{ const o={}; for(const k in P.cards) o[k]=P.cards[k].l; return o; };
 const avgLv=()=>{ const d=P.deck; return Math.max(1,Math.round(d.reduce((a,k)=>a+(P.cards[k]?P.cards[k].l:1),0)/Math.max(1,d.length))); };
-function randomDeck(){ const pool=TKEYS.slice(); for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];} let d=pool.slice(0,6); return fixAtk(d); }
+function randomDeck(){ const pool=TKEYS.slice(); for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];} return fixAtk(pool.slice(0,6)); }
 function fixAtk(d){ d=[...new Set(d)].slice(0,6); for(const k of ['arrow','cannon']){ if(d.filter(isAtk).length>=2) break; if(!d.includes(k)){ const i=d.findIndex(x=>!isAtk(x)); if(i>=0) d[i]=k; else if(d.length<6) d.push(k); } } return [...new Set(d)]; }
 
 // ---- periods (Korean time): week = ISO week starting Monday 00:00, day = date ----
@@ -2150,11 +3484,18 @@ function metaLoadout(kind){
 }
 
 // ---- rewards ----
-const newOut=()=>({gold:0,gems:0,cards:{},chests:[],tix:{},unlock:null});
+const newOut=()=>({gold:0,gems:0,cards:{},chests:[],tix:{},unlock:null,legend:null,newLegend:false});
+function addUnlock(k){ P.cards[k]={l:1,n:0}; if(P.deck.length<6&&!P.deck.includes(k)) P.deck.push(k); }
 function openChest(type,out){
-  const c=CHESTS[type], pool=Object.keys(P.cards); for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
-  const kinds=pool.slice(0,Math.min(c.kinds,pool.length)); let left=c.cards;
-  kinds.forEach((k,i)=>{ const n=i===kinds.length-1?left:Math.min(left-(kinds.length-1-i),Math.max(1,Math.round(left*(0.25+Math.random()*0.3)))); left-=n; P.cards[k].n+=n; out.cards[k]=(out.cards[k]||0)+n; });
+  const c=CHESTS[type], avail=Object.keys(P.cards).filter(k=>TOWERS[k].rar!=='l'), kinds=[];
+  // kinds drawn by rarity weight, without repeats
+  for(let i=0;i<c.kinds&&avail.length;i++){ let tot=0; for(const k of avail) tot+=RAR_W[TOWERS[k].rar]; let x=Math.random()*tot, j=0;
+    for(;j<avail.length-1;j++){ x-=RAR_W[TOWERS[avail[j]].rar]; if(x<=0) break; } kinds.push(avail.splice(j,1)[0]); }
+  let left=c.cards;
+  kinds.forEach((k,i)=>{ const n=i===kinds.length-1?left:Math.min(left-(kinds.length-1-i),Math.max(1,Math.round(left*(0.25+Math.random()*0.3)))); left-=n;
+    const got=Math.max(1,Math.round(n*RAR_CARD[TOWERS[k].rar])); P.cards[k].n+=got; out.cards[k]=(out.cards[k]||0)+got; });
+  if(Math.random()<c.leg){ const k=LEGEND[Math.floor(Math.random()*LEGEND.length)]; out.legend=k;
+    if(!P.cards[k]){ addUnlock(k); out.newLegend=true; } else { P.cards[k].n+=1; out.cards[k]=(out.cards[k]||0)+1; } }
   out.gold+=c.gold; out.chests.push(type);
 }
 function gain(out){ P.gold+=out.gold; P.gems+=out.gems; for(const k in out.tix) P.tix[k]=(P.tix[k]|0)+out.tix[k]; saveP(); }
@@ -2163,14 +3504,14 @@ function stageReward(n,win){
   if(win){
     if(n>P.stage){
       P.stage=n; out.first=true;
-      const u=UNLOCK_BY[n]; if(u&&!P.cards[u]){ P.cards[u]={l:1,n:0}; out.unlock=u; if(P.deck.length<6) P.deck.push(u); }
+      const u=UNLOCK_BY[n]; if(u&&!P.cards[u]){ addUnlock(u); out.unlock=u; }
       out.gold+=30+10*n; let tier=n<=10?0:n<=20?1:2; if(n%5===0) tier=Math.min(2,tier+1); openChest(['wood','silver','gold'][tier],out);
     } else out.gold+=5+2*n;
   }
   gain(out); return out;
 }
-const canLevel=k=>{ const c=P.cards[k]; return !!c&&c.l<MAX_LV&&c.n>=LV_CARDS[c.l]&&P.gold>=LV_GOLD[c.l]; };
-function levelUp(k){ if(!canLevel(k)) return false; const c=P.cards[k]; c.n-=LV_CARDS[c.l]; P.gold-=LV_GOLD[c.l]; c.l++; saveP(); sfx('levelup'); return true; }
+const canLevel=k=>{ const c=P.cards[k]; return !!c&&c.l<MAX_LV&&c.n>=needCards(k)[c.l]&&P.gold>=LV_GOLD[c.l]; };
+function levelUp(k){ if(!canLevel(k)) return false; const c=P.cards[k]; c.n-=needCards(k)[c.l]; P.gold-=LV_GOLD[c.l]; c.l++; saveP(); sfx('levelup'); return true; }
 const RANK_REW={week:[[1,100,'gold'],[3,60,'gold'],[10,30,'silver'],[50,10,'wood'],[1e9,0,'wood']], day:[[1,50,'gold'],[3,30,'silver'],[10,15,'silver'],[50,5,'wood'],[1e9,0,'wood']]};
 function grantRank(kind,rank,per){
   const row=RANK_REW[per].find(r=>rank<=r[0]), mul=kind==='gold'?2:kind==='dia'?3:1, out=newOut();
@@ -2297,34 +3638,47 @@ function el(tag,attrs,...kids){
   for(const c of kids.flat()) if(c!=null&&c!==false) e.appendChild(typeof c==='object'?c:document.createTextNode(String(c)));
   return e;
 }
-function towerIcon(k,cls){ const c=document.createElement('canvas'); c.width=48; c.height=48; c.className=cls||'ti'; const g=c.getContext('2d'); g.imageSmoothingEnabled=false; g.setTransform(2,0,0,2,0,0); drawSprite(g,frames(SPR[k])[0],0,0,'you'); return c; }
-function mbtn(label,on,o){ o=o||{}; return el('button',{class:'btn'+(o.primary?' primary':'')+(o.sm?' sm':''),id:o.id,disabled:o.disabled,on:{click:()=>{ audioInit(); on(); }}},label); }
-function resBar(){
-  return el('div',{class:'res frame'},
+function towerIcon(k,cls){ const c=document.createElement('canvas'); c.width=48; c.height=48; c.className=cls||'ti'; const g=c.getContext('2d'); g.imageSmoothingEnabled=false; g.setTransform(2,0,0,2,0,0); drawSprite(g,iconMap(k),0,0,'you'); return c; }
+function uiIcon(k){ const c=document.createElement('canvas'); c.width=32; c.height=32; c.className='uic'; const g=c.getContext('2d'); g.imageSmoothingEnabled=false; g.setTransform(2,0,0,2,0,0); drawSprite(g,UI_ICONS[k],0,0,'you'); return c; }
+function mbtn(label,on,o){ o=o||{}; return el('button',{class:'btn'+(o.primary?' primary':'')+(o.sm?' sm':'')+(o.cls?' '+o.cls:''),id:o.id,disabled:o.disabled,on:{click:()=>{ audioInit(); on(); }}},label); }
+const rarTag=k=>el('span',{class:'rt-tag r-'+TOWERS[k].rar},RAR[TOWERS[k].rar].name);
+// top bar: who I am, stage progress, gold and gems (+ opens the shop)
+function topBar(){
+  const done=Math.min(STAGE_COUNT,P.stage);
+  return el('header',{class:'ltop'},
+    el('div',{class:'who'},el('span',{class:'av'},uiIcon('battle')),el('div',{class:'wn'},el('b',null,P.name),el('span',{class:'sp'},el('i',{style:`width:${Math.round(done/STAGE_COUNT*100)}%`}),el('em',null,`STAGE ${done}/${STAGE_COUNT}`)))),
     el('div',{class:'cur'},el('span',{class:'coin'}),el('b',{id:'resGold'},P.gold)),
-    el('div',{class:'cur'},el('span',{class:'gem'}),el('b',{id:'resGems'},P.gems)),
-    el('div',{class:'tixs'},...Object.keys(TIX).map(k=>el('span',{class:'tx t-'+k,title:TIX[k].name+' 티켓'},TIX[k].name,' ',el('b',null,P.tix[k]|0)))));
+    el('button',{class:'cur gemb',id:'btnGems','aria-label':'보석 · 상점',on:{click:()=>{ audioInit(); metaShop(); }}},el('span',{class:'gem'}),el('b',{id:'resGems'},P.gems),el('span',{class:'plus'},'+')));
 }
-function metaRender(...kids){ const m=$('meta'); m.textContent=''; m.appendChild(el('div',{class:'mw'},...kids)); hidePanel(); m.hidden=false; m.scrollTop=0; }
+const TABS=[['shop','상점','btnShop',()=>metaShop()],['tower','타워','btnDeck',()=>metaDeck()],['battle','전투','btnHome',()=>metaHome()],['ranked','경쟁전','btnRanked',()=>metaRanked()],['outlaw','무법전','btnOutlaw',()=>metaOutlaw()]];
+function tabBar(active){
+  const dot={tower:TKEYS.some(k=>canLevel(k)), ranked:['normal','gold','dia'].some(k=>(P.tix[k]|0)>0), outlaw:(P.tix.outlaw|0)>0};
+  return el('nav',{class:'ltabs'},...TABS.map(([k,label,id,go])=>el('button',{class:'ltab'+(k===active?' on':'')+(k==='battle'?' mid':''),id,'aria-label':label,on:{click:()=>{ audioInit(); go(); }}},
+    uiIcon(k),el('span',null,label),dot[k]?el('i',{class:'dot'}):null)));
+}
+// tab: which bottom tab is lit (null = no tab bar, for results and matchmaking)
+function metaRender(tab,...kids){ const m=$('meta'); m.textContent='';
+  const body=el('main',{class:'lbody'},el('div',{class:'mw'},...kids));
+  m.append(topBar(),body); if(tab) m.appendChild(tabBar(tab)); m.classList.toggle('notabs',!tab);
+  hidePanel(); m.hidden=false; body.scrollTop=0; }
 const backBtn=()=>el('div',{class:'mback'},mbtn('뒤로',metaHome,{id:'btnMetaBack'}));
 
 function metaHome(){
-  const next=Math.min(STAGE_COUNT,P.stage+1), sd=stageDef(next), done=P.stage>=STAGE_COUNT;
-  metaRender(resBar(),
-    el('h1',{class:'mtitle'},'TOWERCHESS'),
+  const next=Math.min(STAGE_COUNT,P.stage+1), sd=stageDef(next), done=P.stage>=STAGE_COUNT, u=sd.unlock&&!P.cards[sd.unlock]?sd.unlock:null;
+  metaRender('battle',
+    el('div',{class:'logo'},el('h1',{class:'mtitle'},'TOWERCHESS'),el('button',{class:'side-ic',id:'btnCodex','aria-label':'도감',on:{click:()=>{ audioInit(); codexOpen(); }}},uiIcon('tower'),el('span',null,'도감'))),
     el('div',{class:'hero frame'},
       el('div',{class:'lbl'},done?'모든 스테이지 클리어':'다음 스테이지'),
       el('div',{class:'big'},`STAGE ${next}`),
-      el('div',{class:'sub'},`${sd.size}×${sd.size} 필드`+(sd.unlock&&!P.cards[sd.unlock]?` · 깨면 ${TOWERS[sd.unlock].name} 해금`:'')),
-      el('div',{class:'row'},mbtn('스테이지 목록',metaStages,{id:'btnStages'}),mbtn(done?'다시 하기':'시작',()=>startStage(next),{primary:true,id:'btnStage'}))),
-    el('div',{class:'grid2'},
-      mbtn('덱 · 타워',()=>metaDeck(),{id:'btnDeck'}),
-      mbtn('경쟁전',metaRanked,{id:'btnRanked'}),
-      mbtn('무법전',metaOutlaw,{id:'btnOutlaw'}),
-      mbtn('상점',metaShop,{id:'btnShop'}),
-      mbtn('친구 대전',()=>{ CTX={kind:'friend'}; hideMeta(); showFriend(); },{id:'btnFriend'}),
-      mbtn('AI 연습',startAI,{id:'btnAI'})),
-    el('div',{class:'mfoot'},el('span',null,P.name),mbtn('도감',()=>codexOpen(),{sm:true,id:'btnCodex'})));
+      el('div',{class:'sub'},`${sd.size}×${sd.size} 필드 · 상대 카드 L${sd.aiLv}`),
+      u?el('div',{class:'prize'},towerIcon(u),el('div',null,el('span',{class:'muted'},'첫 클리어 보상'),el('b',null,TOWERS[u].name,' ',rarTag(u)))):null,
+      mbtn(done?'다시 하기':'전투 시작',()=>startStage(next),{primary:true,id:'btnStage',cls:'go'})),
+    el('button',{class:'deckbar frame',id:'btnDeckBar',on:{click:()=>{ audioInit(); metaDeck(); }}},
+      el('span',{class:'lbl'},'MY DECK'),el('span',{class:'dk'},...P.deck.map(k=>el('span',{class:'mini r-'+TOWERS[k].rar},towerIcon(k)))),el('span',{class:'edit'},'편집')),
+    el('div',{class:'modes'},
+      el('button',{class:'mode frame',id:'btnStages',on:{click:()=>{ audioInit(); metaStages(); }}},uiIcon('battle'),el('b',null,'스테이지'),el('span',null,`${Math.min(P.stage,STAGE_COUNT)}/${STAGE_COUNT} 클리어`)),
+      el('button',{class:'mode frame',id:'btnAI',on:{click:()=>{ audioInit(); startAI(); }}},uiIcon('tower'),el('b',null,'AI 연습'),el('span',null,'10×10 · 보상 없음')),
+      el('button',{class:'mode frame',id:'btnFriend',on:{click:()=>{ audioInit(); CTX={kind:'friend'}; hideMeta(); showFriend(); }}},uiIcon('ranked'),el('b',null,'친구 대전'),el('span',null,'코드로 1:1'))));
   claimPeriodRewards().then(got=>{ if(!got.length) return; const g=got[0]; const tn=g.kind==='outlaw'?'무법전 (어제)':TIERS[g.kind].name+' (지난주)';
     metaResult({title:'랭킹 보상',sub:`${tn} ${g.rank}위`,out:g.out,btns:[{id:'btnRewardOk',label:'확인',primary:true,on:metaHome}]}); }).catch(()=>{});
 }
@@ -2333,36 +3687,42 @@ function metaStages(){
   const grid=el('div',{class:'stg'});
   for(let n=1;n<=STAGE_COUNT;n++){ const lock=n>next, clr=n<=P.stage, u=UNLOCK_BY[n];
     grid.appendChild(el('button',{class:'sbtn'+(clr?' clr':'')+(n===next&&!clr?' cur':'')+(lock?' lock':''),id:'stage-'+n,disabled:lock,on:{click:()=>startStage(n)}},
-      el('span',{class:'sn'},n),el('span',{class:'ss'},stageSize(n)+'×'+stageSize(n)),u?el('span',{class:'su'},TOWERS[u].name):null)); }
-  metaRender(resBar(),el('h2',{class:'mh'},'스테이지'),el('p',{class:'mnote'},'깬 스테이지는 다시 할 수 있고, 한 판마다 일반 경쟁전 티켓 1장을 받습니다.'),grid,backBtn());
+      el('span',{class:'sn'},n),el('span',{class:'ss'},stageSize(n)+'×'+stageSize(n)),u?el('span',{class:'su r-'+TOWERS[u].rar},TOWERS[u].name):null)); }
+  metaRender('battle',el('h2',{class:'mh'},'스테이지'),el('p',{class:'mnote'},'처음 깰 때마다 타워 1종이 열립니다. 깬 스테이지는 다시 할 수 있고, 한 판마다 일반 경쟁전 티켓 1장을 받습니다.'),grid,backBtn());
 }
+let deckFilter='all';
 function metaDeck(sel){
   const deckRow=el('div',{class:'deck6'});
   for(let i=0;i<6;i++){ const k=P.deck[i];
-    deckRow.appendChild(k?el('button',{class:'slot frame'+(sel===k?' sel':''),id:'slot-'+i,on:{click:()=>metaDeck(k)}},towerIcon(k),el('span',{class:'lv'},'L'+P.cards[k].l))
+    deckRow.appendChild(k?el('button',{class:'slot frame r-'+TOWERS[k].rar+(sel===k?' sel':''),id:'slot-'+i,on:{click:()=>metaDeck(k)}},towerIcon(k),el('span',{class:'lv'},'L'+P.cards[k].l))
                          :el('div',{class:'slot frame empty'},'+')); }
+  const owned=TKEYS.filter(k=>P.cards[k]).length;
+  const chips=el('div',{class:'chips'},...[['all','전체'],...RAR_KEYS.map(r=>[r,RAR[r].name])].map(([v,l])=>el('button',{class:'chip'+(deckFilter===v?' on':'')+(v!=='all'?' r-'+v:''),id:'flt-'+v,on:{click:()=>{ deckFilter=v; metaDeck(sel); }}},l)));
   const coll=el('div',{class:'coll'});
-  for(const k of TKEYS){ const c=P.cards[k];
-    if(!c){ coll.appendChild(el('div',{class:'tcard frame locked'},towerIcon(k),el('span',{class:'tn'},TOWERS[k].name),el('span',{class:'tl'},`스테이지 ${UNLOCK_AT[k]}`))); continue; }
-    const need=LV_CARDS[c.l]||0, pct=c.l>=MAX_LV?100:Math.min(100,Math.round(c.n/Math.max(1,need)*100));
-    coll.appendChild(el('button',{class:'tcard frame'+(P.deck.includes(k)?' indeck':'')+(sel===k?' sel':'')+(canLevel(k)?' canup':''),id:'tc-'+k,on:{click:()=>metaDeck(k)}},
-      towerIcon(k),el('span',{class:'tn'},TOWERS[k].name),el('span',{class:'lv'},'L'+c.l),
+  // owned first (by rarity, then unlock order), then locked in unlock order, legendaries last
+  const ord=k=>(BASIC.includes(k)?0:UNLOCK_AT[k]||99), ri=k=>RAR_KEYS.indexOf(TOWERS[k].rar);
+  const order=TKEYS.slice().sort((x,y)=>(!P.cards[x])-(!P.cards[y])||(P.cards[x]?ri(x)-ri(y):0)||ord(x)-ord(y));
+  for(const k of order){ const d=TOWERS[k], c=P.cards[k]; if(deckFilter!=='all'&&d.rar!==deckFilter) continue;
+    if(!c){ coll.appendChild(el('button',{class:'tcard frame locked r-'+d.rar,id:'tc-'+k,on:{click:()=>metaDeck(k)}},towerIcon(k),el('span',{class:'tn'},d.name),el('span',{class:'tl'},UNLOCK_AT[k]?`스테이지 ${UNLOCK_AT[k]}`:'상자에서'))); continue; }
+    const need=needCards(k)[c.l]||0, pct=c.l>=MAX_LV?100:Math.min(100,Math.round(c.n/Math.max(1,need)*100));
+    coll.appendChild(el('button',{class:'tcard frame r-'+d.rar+(P.deck.includes(k)?' indeck':'')+(sel===k?' sel':'')+(canLevel(k)?' canup':''),id:'tc-'+k,on:{click:()=>metaDeck(k)}},
+      towerIcon(k),el('span',{class:'tn'},d.name),el('span',{class:'lv'},'L'+c.l),
       el('span',{class:'prog'},el('i',{style:`width:${pct}%`})),el('span',{class:'tl'},c.l>=MAX_LV?'MAX':`${c.n}/${need}`))); }
   let detail=null;
-  if(sel&&P.cards[sel]){
-    const k=sel, c=P.cards[k], d=TOWERS[k], inD=P.deck.includes(k), mul=cardMul(c.l), nmul=cardMul(c.l+1);
-    const stats=[`HP ${Math.round(d.hp*mul)}`, d.dmg?`피해 ${Math.round(d.dmg*mul)}`:null, d.heal?`회복 ${Math.round(d.heal*mul*10)/10}`:null, d.mana?`마나 +${Math.round(d.mana*mul*1000)/1000}/초`:null, d.range?`사거리 ${d.range}`:null, `비용 ${d.cost}`].filter(Boolean).join(' · ');
-    const lvTxt=c.l>=MAX_LV?'최대 레벨':`레벨업: 카드 ${c.n}/${LV_CARDS[c.l]} · 골드 ${LV_GOLD[c.l]} → HP·피해 ${Math.round((nmul/mul-1)*1000)/10}% 증가`;
-    detail=el('div',{class:'detail frame'},
-      el('div',{class:'dh'},towerIcon(k),el('div',null,el('div',{class:'dn'},`${d.name} L${c.l}`),el('div',{class:'ds'},stats))),
-      el('p',{class:'dd'},d.desc),el('p',{class:'dl'},lvTxt),
-      el('div',{class:'row'},
-        inD?mbtn('덱에서 빼기',()=>{ if(P.deck.length<=1){ toast('덱에 한 개는 있어야 합니다'); return; } P.deck=P.deck.filter(x=>x!==k); saveP(); metaDeck(k); },{id:'btnDeckOut'})
-           :mbtn(P.deck.length>=6?'덱이 가득 찼습니다':'덱에 넣기',()=>{ P.deck.push(k); saveP(); metaDeck(k); },{id:'btnDeckIn',disabled:P.deck.length>=6}),
-        mbtn(c.l>=MAX_LV?'MAX':'레벨업',()=>{ if(levelUp(k)) metaDeck(k); },{id:'btnLevelUp',primary:canLevel(k),disabled:!canLevel(k)})));
+  if(sel){
+    const k=sel, c=P.cards[k], d=TOWERS[k], inD=P.deck.includes(k), lvl=c?c.l:1, mul=cardMul(lvl), nmul=cardMul(lvl+1);
+    const head=el('div',{class:'dh'},towerIcon(k),el('div',null,el('div',{class:'dn'},`${d.name}${c?' L'+c.l:''} `,rarTag(k)),el('div',{class:'ds'},towerStats(k,mul)+` · 비용 ${d.cost}`)));
+    if(!c) detail=el('div',{class:'detail frame'},head,el('p',{class:'dd'},d.desc),el('p',{class:'dl'},UNLOCK_AT[k]?`스테이지 ${UNLOCK_AT[k]}을 처음 깨면 열립니다.`:'전설 타워는 상자에서만 나옵니다.'));
+    else { const lvTxt=c.l>=MAX_LV?'최대 레벨':`레벨업: 카드 ${c.n}/${needCards(k)[c.l]} · 골드 ${LV_GOLD[c.l]} → HP·피해 ${Math.round((nmul/mul-1)*1000)/10}% 증가`;
+      detail=el('div',{class:'detail frame'},head,el('p',{class:'dd'},d.desc),el('p',{class:'dl'},lvTxt),
+        el('div',{class:'row'},
+          inD?mbtn('덱에서 빼기',()=>{ if(P.deck.length<=1){ toast('덱에 한 개는 있어야 합니다'); return; } P.deck=P.deck.filter(x=>x!==k); saveP(); metaDeck(k); },{id:'btnDeckOut'})
+             :mbtn(P.deck.length>=6?'덱이 가득 찼습니다':'덱에 넣기',()=>{ P.deck.push(k); saveP(); metaDeck(k); },{id:'btnDeckIn',disabled:P.deck.length>=6}),
+          mbtn(c.l>=MAX_LV?'MAX':'레벨업',()=>{ if(levelUp(k)) metaDeck(k); },{id:'btnLevelUp',primary:canLevel(k),disabled:!canLevel(k)}))); }
   }
-  metaRender(resBar(),el('h2',{class:'mh'},`덱 ${P.deck.length}/6`),deckRow,detail,el('h2',{class:'mh'},'타워'),coll,
-    el('p',{class:'mnote'},'타워를 누르면 덱에 넣고 빼거나 레벨을 올릴 수 있습니다. 카드는 상자에서 나옵니다.'),backBtn());
+  metaRender('tower',el('h2',{class:'mh'},`덱 ${P.deck.length}/6`),deckRow,detail,
+    el('div',{class:'collhead'},el('h2',{class:'mh'},`타워 ${owned}/${TKEYS.length}`),chips),coll,
+    el('p',{class:'mnote'},'타워를 누르면 덱에 넣고 빼거나 레벨을 올릴 수 있습니다. 카드는 상자에서 나오고, 등급이 높을수록 레벨업에 카드가 적게 듭니다.'));
 }
 function lbBox(kind,period){
   const box=el('ol',{class:'lb'},el('li',{class:'muted'},'순위 불러오는 중…'));
@@ -2385,51 +3745,53 @@ function metaRanked(){
       el('div',{class:'tm'},`티켓 ${tix}장 · 이번 주 최고 ${best==null?'-':best+'연승'} · 판마다 ${TIX[t.next].name} 티켓`),
       el('div',{class:'row'},mbtn('도전',()=>startRun(k),{primary:tix>0,disabled:tix<1,id:'btnRun-'+k})),
       lbBox(k,wk))); }
-  metaRender(resBar(),el('h2',{class:'mh'},'경쟁전'),el('p',{class:'mnote'},'티켓 1장으로 연승 도전을 시작해 질 때까지 이어 갑니다. 상대는 실시간으로 찾고, 10초 안에 없으면 다른 플레이어의 덱을 쓰는 AI와 붙습니다. 주간 최고 연승으로 순위를 매깁니다.'),
-    ...rows,nameRow(metaRanked),backBtn());
+  metaRender('ranked',el('h2',{class:'mh'},'경쟁전'),el('p',{class:'mnote'},'티켓 1장으로 연승 도전을 시작해 질 때까지 이어 갑니다. 상대는 실시간으로 찾고, 10초 안에 없으면 다른 플레이어의 덱을 쓰는 AI와 붙습니다. 주간 최고 연승으로 순위를 매깁니다.'),
+    ...rows,nameRow(metaRanked));
 }
 function metaOutlaw(){
   const day=dayId(), deck=outlawDeck(day), tix=P.tix.outlaw|0, best=P.best['outlaw@'+day];
-  metaRender(resBar(),el('h2',{class:'mh'},'무법전'),
+  metaRender('outlaw',el('h2',{class:'mh'},'무법전'),
     el('p',{class:'mnote'},'오늘의 공통 덱 6개를 모두 레벨 5로 씁니다. 10×10 필드, 실시간 연승 도전, 오늘 최고 연승으로 순위를 매기고 매일 초기화됩니다.'),
-    el('div',{class:'deck6'},...deck.map(k=>el('div',{class:'slot frame'},towerIcon(k),el('span',{class:'lv'},'L'+OUTLAW_LV)))),
+    el('div',{class:'deck6'},...deck.map(k=>el('div',{class:'slot frame r-'+TOWERS[k].rar},towerIcon(k),el('span',{class:'lv'},'L'+OUTLAW_LV)))),
     el('div',{class:'tier frame t-outlaw'},
       el('div',{class:'tm'},`무법전 티켓 ${tix}장 · 오늘 최고 ${best==null?'-':best+'연승'}`),
       el('div',{class:'row'},mbtn('도전',()=>startRun('outlaw'),{primary:tix>0,disabled:tix<1,id:'btnRun-outlaw'})),
       lbBox('outlaw',day)),
-    nameRow(metaOutlaw),backBtn());
+    nameRow(metaOutlaw));
 }
 function metaShop(){
   const buy=(cost,fn)=>{ if(P.gems<cost){ toast('보석이 부족합니다'); sfx('error'); return; } P.gems-=cost; fn(); };
   const chests=el('div',{class:'shop'},...Object.keys(CHESTS).map(k=>{ const c=CHESTS[k];
-    return el('button',{class:'item frame',id:'buy-'+k,on:{click:()=>buy(c.gem,()=>{ const out=newOut(); openChest(k,out); gain(out); sfx('chest'); metaResult({title:c.name,sub:'상자를 열었습니다',out,btns:[{id:'btnShopAgain',label:'상점',primary:true,on:metaShop},{id:'btnLobby',label:'로비',on:metaHome}]}); })}},
-      el('span',{class:'chest c-'+k}),el('b',null,c.name),el('span',{class:'muted'},`카드 ${c.cards}장 · 골드 ${c.gold}`),el('span',{class:'price'},el('span',{class:'gem'}),c.gem)); }));
+    return el('button',{class:'item frame',id:'buy-'+k,on:{click:()=>buy(c.gem,()=>{ const out=newOut(); openChest(k,out); gain(out); sfx(out.legend?'legend':'chest'); metaResult({title:c.name,sub:out.newLegend?'전설 타워를 얻었습니다!':'상자를 열었습니다',out,btns:[{id:'btnShopAgain',label:'상점',primary:true,on:metaShop},{id:'btnLobby',label:'로비',on:metaHome}]}); })}},
+      el('span',{class:'chest c-'+k}),el('b',null,c.name),el('span',{class:'muted'},`카드 ${c.cards}장 · 골드 ${c.gold}`),el('span',{class:'leg'},`전설 ${Math.round(c.leg*100)}%`),el('span',{class:'price'},el('span',{class:'gem'}),c.gem)); }));
   const tix=el('div',{class:'shop shop4'},...Object.keys(TIX).map(k=>el('button',{class:'item frame',id:'buyt-'+k,on:{click:()=>buy(TIX[k].gem,()=>{ P.tix[k]=(P.tix[k]|0)+1; saveP(); sfx('place'); toast(`${TIX[k].name} 티켓 +1`); metaShop(); })}},
-      el('b',null,`${TIX[k].name} 티켓`),el('span',{class:'price'},el('span',{class:'gem'}),TIX[k].gem))));
-  metaRender(resBar(),el('h2',{class:'mh'},'상점'),el('h3',{class:'mh3'},'카드 상자'),chests,el('h3',{class:'mh3'},'티켓'),tix,
-    el('div',{class:'row'},mbtn('테스트: 보석 +100',()=>{ P.gems+=100; saveP(); metaShop(); },{sm:true,id:'btnGemTest'})),backBtn());
+      el('b',null,`${TIX[k].name} 티켓`),el('span',{class:'muted'},`보유 ${P.tix[k]|0}`),el('span',{class:'price'},el('span',{class:'gem'}),TIX[k].gem))));
+  metaRender('shop',el('h2',{class:'mh'},'상점'),el('h3',{class:'mh3'},'카드 상자'),chests,el('p',{class:'mnote'},'상자에는 가진 타워의 카드가 들어 있고, 정해진 확률로 전설 타워 카드가 1장 나옵니다.'),el('h3',{class:'mh3'},'티켓'),tix,
+    el('div',{class:'row'},mbtn('테스트: 보석 +100',()=>{ P.gems+=100; saveP(); metaShop(); },{sm:true,id:'btnGemTest'})));
 }
 function rewardList(out){
   const box=el('div',{class:'reward'});
-  if(out.unlock) box.appendChild(el('div',{class:'unlock frame'},towerIcon(out.unlock,'big'),el('b',null,`새 타워 해금: ${TOWERS[out.unlock].name}`),el('span',{class:'muted'},P.deck.includes(out.unlock)?'덱에 들어갔습니다':'덱 화면에서 넣을 수 있습니다')));
+  const big=(k,title)=>el('div',{class:'unlock frame r-'+TOWERS[k].rar},towerIcon(k,'big'),el('b',null,title,' ',rarTag(k)),el('span',{class:'muted'},P.deck.includes(k)?'덱에 들어갔습니다':'타워 화면에서 덱에 넣을 수 있습니다'));
+  if(out.unlock) box.appendChild(big(out.unlock,`새 타워 해금: ${TOWERS[out.unlock].name}`));
+  if(out.newLegend) box.appendChild(big(out.legend,`전설 타워: ${TOWERS[out.legend].name}`));
   const items=el('div',{class:'items'});
   if(out.gold) items.appendChild(el('div',{class:'it'},el('span',{class:'coin'}),`+${out.gold}`));
   if(out.gems) items.appendChild(el('div',{class:'it'},el('span',{class:'gem'}),`+${out.gems}`));
   for(const k in out.tix) if(out.tix[k]) items.appendChild(el('div',{class:'it tk'},`${TIX[k].name} 티켓 +${out.tix[k]}`));
   for(const c of out.chests) items.appendChild(el('div',{class:'it'},el('span',{class:'chest c-'+c}),CHESTS[c].name));
-  for(const k in out.cards) items.appendChild(el('div',{class:'it card1'},towerIcon(k),`+${out.cards[k]}`));
+  for(const k in out.cards) items.appendChild(el('div',{class:'it card1 r-'+TOWERS[k].rar},towerIcon(k),`+${out.cards[k]}`));
   if(items.childNodes.length) box.appendChild(items);
   return box;
 }
 function metaResult(o){
-  if(o.out&&(o.out.unlock)) sfx('unlock'); else if(o.out&&o.out.chests.length) sfx('chest');
-  metaRender(resBar(),el('div',{class:'result frame'},el('h2',{class:'rt'},o.title),el('p',{class:'rs'},o.sub||''),o.out?rewardList(o.out):null,
+  if(o.out&&(o.out.unlock||o.out.newLegend)) sfx('unlock'); else if(o.out&&o.out.chests.length) sfx('chest');
+  metaRender(null,el('div',{class:'result frame'},el('h2',{class:'rt'},o.title),el('p',{class:'rs'},o.sub||''),o.out?rewardList(o.out):null,
     el('div',{class:'row wrap'},...(o.btns||[]).map(b=>mbtn(b.label,b.on,{primary:b.primary,id:b.id,disabled:b.disabled})))));
 }
 function metaSearching(run){
   const t0=performance.now(), cnt=el('b',{id:'searchSec'},'10');
   const tname=run.kind==='outlaw'?'무법전':TIERS[run.kind].name;
-  metaRender(resBar(),el('div',{class:'result frame'},el('h2',{class:'rt'},'상대 찾는 중'),el('p',{class:'rs'},`${tname} · ${run.wins}연승 중`),el('p',{class:'big'},cnt),
+  metaRender(null,el('div',{class:'result frame'},el('h2',{class:'rt'},'상대 찾는 중'),el('p',{class:'rs'},`${tname} · ${run.wins}연승 중`),el('p',{class:'big'},cnt),
     el('div',{class:'row'},mbtn('취소',()=>{ run.cancelled=true; if(run.abort) try{ run.abort(); }catch(e){} if(run.played===0){ P.tix[run.kind]=(P.tix[run.kind]|0)+1; saveP(); } RUN=null; showMenu(); },{id:'btnCancelSearch'}))));
   const tick=()=>{ if(RUN!==run||run.cancelled||!$('searchSec')) return; const left=Math.max(0,10-Math.floor((performance.now()-t0)/1000)); $('searchSec').textContent=left; if(left>0) setTimeout(tick,250); };
   tick();
@@ -2440,8 +3802,10 @@ showMenu();
 (()=>{ let q=null; try{ q=new URLSearchParams(location.search).get('room'); }catch(e){} if(q&&/^[a-z0-9]{4}$/i.test(q)) roomP.then(async()=>{ await showFriend(true); if(ROOM) joinRoom(q); }); })();
 if(TEST) window.__TC={ get S(){return S;}, get NET(){return NET;}, get MODE(){return MODE;}, get ME(){return ME;}, get P(){return P;}, get CTX(){return CTX;}, get RUN(){return RUN;}, hash:()=>stateHash(),
   doPlace, doRf, doSell:(r,c)=>{const t=towerAt(r,c); if(t&&t.side===ME) doSell(t);}, doUpgrade:(r,c)=>{const t=towerAt(r,c); if(t&&t.side===ME) doUpgrade(t);},
-  ownCells:()=>{ const out=[]; for(let r=0;r<N;r++) for(let c=0;c<N;c++) if(ownHalf(ME,r)&&!blocked(r,c)) out.push([r,c]); return out; }, vfxCount:()=>VFX.length,
-  startStage, startRun, stageDef, metaHome, setProfile:p=>{ P=sanitizeProfile(p); saveP(); }, endNow:w=>{ if(S&&!S.over) endGame(w?ME:OPP); } };
+  ownCells:()=>{ const out=[]; for(let r=0;r<N;r++) for(let c=0;c<N;c++) if(ownHalf(ME,r)&&!blocked(r,c)&&!towerAt(r,c)) out.push([r,c]); return out; }, vfxCount:()=>VFX.length,
+  startStage, startRun, stageDef, metaHome, metaDeck, metaShop, metaRanked, metaOutlaw, metaStages, codexOpen, TKEYS, TOWERS, UNLOCK_AT, LEGEND,
+  put:(side,type,r,c,lvl)=>{ S.mana[side]=99; const ok=place(side,type,r,c); if(ok&&lvl){ const t=towerAt(r,c); for(let i=1;i<lvl;i++){ S.mana[side]=99; upgrade(side,t);} } S.mana[side]=Math.min(MANA_MAX,S.mana[side]); return ok; },
+  setProfile:p=>{ P=sanitizeProfile(p); saveP(); }, endNow:w=>{ if(S&&!S.over) endGame(w?ME:OPP); } };
 requestAnimationFrame(frame);
 })();
 </script>

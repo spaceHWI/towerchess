@@ -625,7 +625,7 @@ const TOWERS={
   clock :{name:'시계탑', rar:'l', role:'global', cost:7, hp:150, range:0, max:1, gcd:15, gcd0:5, freezeAll:1.6, up:'멈춤 +0.4초씩, HP +50%씩', desc:'15초마다 전장의 모든 적 병사를 1.6초 동안 멈춘다. 처음은 설치 5초 뒤. 한 번에 1개.'},
   hole  :{name:'블랙홀', rar:'l', role:'ctrl', cost:7, hp:140, range:2.6, max:2, cd:6, pull:1.6, pullT:1.5, dps:16, up:'피해·끌어당기는 시간·HP +25~50%씩, 범위 +0.25', desc:'6초마다 1.5초 동안 범위 안 적 병사를 가운데로 빨아들이며 피해를 준다. 한 번에 2개.'},
   thunder:{name:'뇌신의 탑', short:'뇌신', rar:'l', role:'global', cost:7, hp:150, range:0, max:1, gcd:4, gcd0:2, strikes:3, dmg:35, stun:0.4, up:'피해·HP +50%씩', desc:'4초마다 전장 어디든 적 병사 셋에게 벼락을 내린다(피해 35, 잠깐 기절). 한 번에 1개.'},
-  angel :{name:'천사상', rar:'l', role:'global', cost:6, hp:150, range:0, max:1, gcd:10, gcd0:4, healAll:0.3, healT:0.1, up:'회복·HP +50%씩', desc:'10초마다 모든 아군 병사의 체력을 30%, 모든 아군 타워를 10% 회복한다. 한 번에 1개.'},
+  angel :{name:'천사상', rar:'l', role:'global', cost:6, hp:150, range:0, max:1, gcd:10, gcd0:4, healAll:0.3, up:'회복·HP +50%씩', desc:'10초마다 모든 아군 병사의 체력을 30% 회복한다. 한 번에 1개.'},
   golem :{name:'골렘 공방', short:'골렘', rar:'l', role:'spawn', cost:8, hp:220, range:0, max:1, spawn:18, unit:'brute', unitMul:1.5, up:'출격 간격 2초씩 단축, HP +50%씩', desc:'18초마다 골렘(거한의 1.5배 체력·공격)을 내보낸다. 한 번에 1개.'},
 };
 const TKEYS=Object.keys(TOWERS);
@@ -762,7 +762,7 @@ function place(side,type,r,c){
 function upgrade(side,t){
   const def=TOWERS[t.type]; if(t.lvl>=3||S.mana[side]<def.cost) return false;
   S.mana[side]-=def.cost; t.lvl++;
-  const ratio=t.hp/t.maxhp; t.maxhp=Math.round(def.hp*lvlMul(t.lvl)*cardMul(t.cl)); t.hp=Math.min(t.maxhp,Math.round(t.maxhp*ratio)+def.hp*0.5);
+  const ratio=t.hp/t.maxhp; t.maxhp=Math.round(def.hp*lvlMul(t.lvl)*cardMul(t.cl)); t.hp=Math.min(t.maxhp,t.maxhp*ratio);   // towers never heal: an upgrade raises max HP and keeps the HP ratio
   t.built=S.t; if(side===ME&&MODE!=='pvp') sfx('place'); return true;
 }
 const refundOf=t=>TOWERS[t.type].cost*t.lvl*0.25;
@@ -813,18 +813,32 @@ function burnOn(s,v,T,t){ if(s.hp<=0) return; s.brn=Math.max(s.brnT>0?s.brn:0,v)
 function poisonOn(s,v,T,t){ if(s.hp<=0) return; s.psn=Math.max(s.psnT>0?s.psn:0,v); s.psnT=Math.max(s.psnT,T); if(t) s.by=t; }
 function stunOn(s,T,t){ s.stun=Math.max(s.stun||0,T); if(S.stat&&t) S.stat(t,T,'stun'); }
 
+// an enemy soldier in the same cell or right beside it (up, down, left or right)
+function chaseable(r,c,e){ const er=Math.round(e.y), ec=Math.round(e.x); return Math.abs(er-r)+Math.abs(ec-c)<=1&&!blocked(er,ec); }
+// walk toward (gx,gy), keeping a little room between soldiers of one side, but never off the board or into a tower
+function walk(s,gx,gy,step,dt){
+  const dx=gx-s.x, dy=gy-s.y, L=hyp(dx,dy);
+  s.moving=true; if(L<=step){s.x=gx;s.y=gy;} else {s.x+=dx/L*step;s.y+=dy/L*step;}
+  const ox=s.x, oy=s.y;
+  for(const o of S.soldiers){ if(o!==s&&o.hp>0&&o.side===s.side){const dd=dist(s,o); if(dd<0.35&&dd>0){const k=Math.min(0.02,dt*0.5);s.x+=(s.x-o.x)/dd*k;s.y+=(s.y-o.y)/dd*k;}}}
+  s.x=Math.max(0,Math.min(N-1,s.x)); s.y=Math.max(0,Math.min(N-1,s.y));
+  const r2=Math.round(s.y), c2=Math.round(s.x); if((r2!==Math.round(oy)||c2!==Math.round(ox))&&blocked(r2,c2)){ s.x=ox; s.y=oy; }
+}
 function updateSoldier(s,dt){
   if(s.stun>0) return;   // frozen: no move, no attack
   const def=SOLDIERS[s.type], enemy=other(s.side);
   const hs=s.haste>0?1+s.hv:1, spdMul=(s.slow>0?0.6:1)*hs, dmgMul=s.pw||1;
   s.cd-=dt*hs; s.moving=false;
   const structMul=def.structMul||1;
-  let target=null, best=0.75;
-  if(!def.siege) for(const e of S.soldiers){ if(e.side===enemy&&e.hp>0){const d=dist(s,e); if(d<best){best=d;target=e;}}}
+  const r=Math.round(s.y), c=Math.round(s.x);
+  // enemy soldiers: hit one within reach, or notice one in the next cell and go fight it
+  let target=null, best=0.75, near=null, nb=Infinity;
+  if(!def.siege) for(const e of S.soldiers){ if(e.side===enemy&&e.hp>0){const d=dist(s,e); if(d<best){best=d;target=e;} else if(d<nb&&chaseable(r,c,e)){nb=d;near=e;}}}
   if(target){ if(s.cd<=0){damage(target,def.dmg*dmgMul,enemy);s.cd=def.cd;sfx('hit'); if(target.hp<=0) sfx('death');} return; }
-  const r=Math.round(s.y), c=Math.round(s.x), [kr,kc]=S.kings[enemy].cell;
+  const [kr,kc]=S.kings[enemy].cell;
   if(Math.abs(kr-r)+Math.abs(kc-c)===1 && hyp(kr-s.y,kc-s.x)<1.15){
     if(s.cd<=0){const dmg=def.dmg*dmgMul*structMul; S.kings[enemy].hp-=dmg; S.kings[enemy].hitAt=S.t; s.cd=def.cd; hit(kc,kr,enemy); vfxNum(kc,kr,dmg,enemy); sfx('kinghit'); if(enemy===ME) kingFlash();} return; }
+  if(near){ walk(s,near.x,near.y,def.spd*spdMul*dt,dt); return; }
   let d=S.dist[s.side];
   if(s.via){ const f=flagOf(s.side), rd=S.rally[s.side];
     if(!f||!rd||!(rd[r]?.[c]<Infinity)) s.via=false;   // no flag, or it cannot be reached from here
@@ -839,13 +853,7 @@ function updateSoldier(s,dt){
       const td=TOWERS[tw.type]; if(td.thorns) hurt(s,td.thorns*tpow(tw),tw);
       if(tw.hp<=0){vfxRubble(tw);S.towers=S.towers.filter(x=>x.hp>0);refreshDist();sfx('death');}} return; }
   if(noPath){ const dir=s.side==='you'?-1:1; s.y+=dir*def.spd*spdMul*dt*0.3; s.y=Math.max(0,Math.min(N-1,s.y)); s.moving=true; return; }
-  const dx=nc-s.x, dy=nr-s.y, L=hyp(dx,dy), step=def.spd*spdMul*dt;
-  s.moving=true; if(L<=step){s.x=nc;s.y=nr;} else {s.x+=dx/L*step;s.y+=dy/L*step;}
-  // keep a little room between soldiers of one side, but never push one off the board or into a tower
-  const ox=s.x, oy=s.y;
-  for(const o of S.soldiers){ if(o!==s&&o.hp>0&&o.side===s.side){const dd=dist(s,o); if(dd<0.35&&dd>0){const k=Math.min(0.02,dt*0.5);s.x+=(s.x-o.x)/dd*k;s.y+=(s.y-o.y)/dd*k;}}}
-  s.x=Math.max(0,Math.min(N-1,s.x)); s.y=Math.max(0,Math.min(N-1,s.y));
-  const r2=Math.round(s.y), c2=Math.round(s.x); if((r2!==Math.round(oy)||c2!==Math.round(ox))&&blocked(r2,c2)){ s.x=ox; s.y=oy; }
+  walk(s,nc,nr,def.spd*spdMul*dt,dt);
 }
 // ---- targeting ----
 function nearestEnemy(p,range,enemy){ let tg=null,best=range; for(const s of S.soldiers) if(s.side===enemy&&s.hp>0){const d=dist(p,s); if(d<=best){best=d;tg=s;}} return tg; }
@@ -969,10 +977,9 @@ function globalFx(t,def,m){
   if(def.strikes){ const pool=S.soldiers.filter(s=>s.side===enemy&&s.hp>0); if(!pool.length){ t.cd=1; return; }
     for(let i=0;i<def.strikes&&pool.length;i++){ const s=pool.splice(Math.floor(S.rng()*pool.length),1)[0]; hurt(s,def.dmg*m,t); stunOn(s,def.stun,t); vfxThunder(s); }
     sfx('thunder'); return; }
-  if(def.healAll){ const k=Math.min(2,m), hs=S.soldiers.filter(s=>s.side===t.side&&s.hp>0&&s.hp<s.maxhp), ht=S.towers.filter(o=>o.side===t.side&&o.hp>0&&o.hp<o.maxhp);
-    if(!hs.length&&!ht.length){ t.cd=1; return; }
+  if(def.healAll){ const k=Math.min(2,m), hs=S.soldiers.filter(s=>s.side===t.side&&s.hp>0&&s.hp<s.maxhp);
+    if(!hs.length){ t.cd=1; return; }
     for(const s of hs){ const v=Math.min(s.maxhp-s.hp,s.maxhp*def.healAll*k); s.hp+=v; vfxHeal(s.x,s.y); if(S.stat) S.stat(t,v,'heal'); }
-    for(const o of ht) o.hp=Math.min(o.maxhp,o.hp+o.maxhp*def.healT*k);
     vfxAngel(t); sfx('heal'); return; }
 }
 // statue / battery: each tower takes the best aura of each kind around it (they do not stack)
@@ -3316,7 +3323,8 @@ function netReadOpp(pr){
 function startNetMatch(){
   MODE='pvp'; AI_SIDE=null; setSides(NET.role==='h'?'you':'foe');
   const host=NET.role==='h', dkH=host?NET.myDk:NET.oppDk, dkG=host?NET.oppDk:NET.myDk, lvH=host?NET.myLv:NET.oppLv, lvG=host?NET.oppLv:NET.myLv;
-  S=newState(NET.seed,{n:NET.n,decks:{you:dkH,foe:dkG},lv:{you:lvH,foe:lvG}}); refreshDist(); VFX.length=0; resetSync(); NET.state='play'; uiRf=null;
+  S=newState(NET.seed,{n:NET.n,decks:{you:dkH,foe:dkG},lv:{you:lvH,foe:lvG}}); refreshDist(); VFX.length=0; resetSync(); NET.state='play';
+  S.reinforce.you=S.reinforce.foe=uiRf=UKEYS[0];   // both players start with the first soldier type as their +1
   buildCards(NET.myDk,NET.myLv); resize(); matchLabels();
   S.running=true; hidePanel(); hideMeta(); closeMenu(); S.sel=null; S.hover=null; sfx('wave');
   pollOpp();
@@ -3458,10 +3466,10 @@ function cxRender(){
       const spd=d.spd>=0.9?'빠름':d.spd>=0.5?'보통':'느림';
       const t=document.createElement('div');t.innerHTML=`<div class="cx-title"><span class="cx-name">${d.name}</span></div><div class="cx-stat">HP ${d.hp} · 공격 ${d.dmg} / ${d.cd}초 · 속도 ${spd}</div><div class="cx-desc">${d.desc}</div>`;
       it.appendChild(t); cxBody.appendChild(it);}
-    const n=document.createElement('div');n.className='cx-rules';n.style.marginTop='8px';n.innerHTML='<p>웨이브는 14초마다 양쪽 킹 옆에서 자동 출격한다. 병사 종류 하나를 골라 두면 바꾸거나 끌 때까지 첫 웨이브부터 매 웨이브에 한 명씩 더 나간다. 기본 병력에도 첫 웨이브부터 네 종류가 섞여 나온다.'+(SOLDIER_BOOST?' 3분마다 새로 나오는 병사의 체력·공격이 마나 재생과 같은 배수(x2, x3 …)로 오른다.':'')+'</p>';cxBody.appendChild(n);
+    const n=document.createElement('div');n.className='cx-rules';n.style.marginTop='8px';n.innerHTML='<p>웨이브는 14초마다 양쪽 킹 옆에서 자동 출격한다. 고른 병사 종류는 바꾸거나 끌 때까지 첫 웨이브부터 매 웨이브에 한 명씩 더 나가고, 처음에는 보병이 골라져 있다. 기본 병력에도 첫 웨이브부터 네 종류가 섞여 나온다. 병사는 바로 옆 칸(상하좌우)에 적 병사가 보이면 그쪽으로 가서 싸운다. 공성차는 병사를 무시한다.'+(SOLDIER_BOOST?' 3분마다 새로 나오는 병사의 체력·공격이 마나 재생과 같은 배수(x2, x3 …)로 오른다.':'')+'</p>';cxBody.appendChild(n);
   } else {
     const r=document.createElement('div');r.className='cx-rules';
-    r.innerHTML='<p><b>승리</b> 상대 킹(HP 1000)을 부수면 승리. 시간 제한은 없다.</p><p><b>가속</b> 3분마다 마나 재생이 빨라진다(3분 x2, 6분 x3 …).'+(SOLDIER_BOOST?' 그때부터 나오는 병사의 체력·공격도 같은 배수로 오른다.':'')+'</p><p><b>마나</b> 최대 10, 초당 0.2 회복. 시작 마나 5.</p><p><b>설치</b> 내 진영 절반과 아군 병사 주변 1칸의 빈 칸. 양쪽 킹 사이 길이 완전히 막히는 자리는 설치 불가.</p><p><b>강화</b> 같은 타워를 같은 칸에 다시 놓거나 타워 메뉴에서 강화. 최대 3레벨, 비용은 설치 비용과 같다.</p><p><b>카드 레벨</b> 로비의 타워 화면에서 카드와 골드로 올린다. 레벨이 1 오를 때마다 HP·피해·회복량·마나 증가량 +8%. 대전에도 각자의 레벨이 적용된다. 등급(일반·희귀·영웅·전설)이 높을수록 레벨업에 카드가 적게 든다.</p><p><b>타워 얻기</b> 기본 4종으로 시작해 스테이지를 처음 깰 때마다 1종씩 열린다(30종). 전설 6종은 상자에서만 나온다.</p><p><b>상태 효과</b> 화상·독은 시간에 따라 피해, 얼림·기절은 그동안 이동·공격 정지, 약화는 받는 피해 증가. 같은 효과는 겹치지 않고 더 센 쪽·더 긴 쪽이 남는다.</p><p><b>판매</b> 쓴 마나의 25%를 돌려받는다.</p><p><b>친구 대전</b> 방을 만들어 4자리 코드를 알려 주면 친구가 같은 페이지에서 입장한다. 내 조작은 0.4초 뒤에 양쪽 화면에 함께 반영되고, 일시정지는 없다. 각자 화면에서는 자기 킹이 아래에 보인다.</p><p><b>조작</b> 카드 드래그 또는 카드 탭 → 칸 탭. 내 타워를 누르면 강화·판매 메뉴. 키보드 1~6 선택, 스페이스 일시정지.</p>';
+    r.innerHTML='<p><b>승리</b> 상대 킹(HP 1000)을 부수면 승리. 시간 제한은 없다.</p><p><b>가속</b> 3분마다 마나 재생이 빨라진다(3분 x2, 6분 x3 …).'+(SOLDIER_BOOST?' 그때부터 나오는 병사의 체력·공격도 같은 배수로 오른다.':'')+'</p><p><b>마나</b> 최대 10, 초당 0.2 회복. 시작 마나 5.</p><p><b>설치</b> 내 진영 절반과 아군 병사 주변 1칸의 빈 칸. 양쪽 킹 사이 길이 완전히 막히는 자리는 설치 불가.</p><p><b>강화</b> 같은 타워를 같은 칸에 다시 놓거나 타워 메뉴에서 강화. 최대 3레벨, 비용은 설치 비용과 같다. 타워 체력은 회복되지 않는다. 강화하면 최대 HP가 늘고 체력 비율은 그대로다.</p><p><b>카드 레벨</b> 로비의 타워 화면에서 카드와 골드로 올린다. 레벨이 1 오를 때마다 HP·피해·회복량·마나 증가량 +8%. 대전에도 각자의 레벨이 적용된다. 등급(일반·희귀·영웅·전설)이 높을수록 레벨업에 카드가 적게 든다.</p><p><b>타워 얻기</b> 기본 4종으로 시작해 스테이지를 처음 깰 때마다 1종씩 열린다(30종). 전설 6종은 상자에서만 나온다.</p><p><b>상태 효과</b> 화상·독은 시간에 따라 피해, 얼림·기절은 그동안 이동·공격 정지, 약화는 받는 피해 증가. 같은 효과는 겹치지 않고 더 센 쪽·더 긴 쪽이 남는다.</p><p><b>판매</b> 쓴 마나의 25%를 돌려받는다.</p><p><b>친구 대전</b> 방을 만들어 4자리 코드를 알려 주면 친구가 같은 페이지에서 입장한다. 내 조작은 0.4초 뒤에 양쪽 화면에 함께 반영되고, 일시정지는 없다. 각자 화면에서는 자기 킹이 아래에 보인다.</p><p><b>조작</b> 카드 드래그 또는 카드 탭 → 칸 탭. 내 타워를 누르면 강화·판매 메뉴. 키보드 1~6 선택, 스페이스 일시정지.</p>';
     cxBody.appendChild(r);
   }
 }
@@ -3626,7 +3634,7 @@ function matchLabels(){
 }
 function beginAI(cfg){
   audioInit(); leaveNet(); MODE='ai'; AI_SIDE='foe'; setSides('you'); uiRf=null;
-  S=newState(null,cfg); refreshDist(); VFX.length=0; buildCards(cfg.decks.you,cfg.lv.you); resize(); matchLabels();
+  S=newState(null,cfg); S.reinforce[ME]=UKEYS[0]; refreshDist(); VFX.length=0; buildCards(cfg.decks.you,cfg.lv.you); resize(); matchLabels();
   S.running=true; hidePanel(); hideMeta(); closeMenu(); S.sel=null; S.hover=null;
 }
 function startStage(n){ n=Math.max(1,Math.min(STAGE_COUNT,n)); const sd=stageDef(n); CTX={kind:'stage',stage:n};
